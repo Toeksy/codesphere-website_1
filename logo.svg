@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <defs>
+    <!-- Main gradient -->
+    <linearGradient id="cyberGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0891b2"/>
+      <stop offset="50%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Shield gradient -->
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0891b2"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background shield shape -->
+  <g transform="translate(10, 5)">
+    <!-- Outer shield -->
+    <path d="M40 5 L75 15 L75 45 C75 65 40 85 40 85 C40 85 5 65 5 45 L5 15 Z" 
+          fill="none" 
+          stroke="url(#shieldGradient)" 
+          stroke-width="2"
+          opacity="0.8"/>
+    
+    <!-- Inner circuit lines -->
+    <g stroke="url(#cyberGradient)" stroke-width="1.5" fill="none" opacity="0.6">
+      <path d="M40 20 L40 35"/>
+      <path d="M30 30 L50 30"/>
+      <path d="M25 45 L55 45"/>
+      <path d="M30 55 L50 55"/>
+      <circle cx="40" cy="45" r="8" stroke-width="2"/>
+      <circle cx="40" cy="45" r="3" fill="url(#cyberGradient)"/>
+    </g>
+    
+    <!-- Lock icon in center -->
+    <g transform="translate(32, 38)">
+      <rect x="2" y="6" width="12" height="10" rx="2" fill="none" stroke="url(#cyberGradient)" stroke-width="1.5"/>
+      <path d="M5 6 L5 4 C5 1 8 -1 11 1 C12.5 2 11 4 11 6" fill="none" stroke="url(#cyberGradient)" stroke-width="1.5"/>
+    </g>
+  </g>
+  
+  <!-- CYBERIUS text -->
+  <g filter="url(#glow)">
+    <text x="95" y="62" 
+          font-family="Inter, Arial, sans-serif" 
+          font-size="42" 
+          font-weight="800" 
+          letter-spacing="3"
+          fill="url(#cyberGradient)">
+      CYBERIUS
+    </text>
+  </g>
+  
+  <!-- Tagline -->
+  <text x="95" y="82" 
+        font-family="Inter, Arial, sans-serif" 
+        font-size="11" 
+        font-weight="500" 
+        letter-spacing="4"
+        fill="#94a3b8">
+    AINA ASKELEEN EDELLÄ
+  </text>
+  
+  <!-- Decorative tech lines -->
+  <g stroke="url(#cyberGradient)" stroke-width="1" opacity="0.4">
+    <line x1="95" y1="68" x2="380" y2="68"/>
+    <circle cx="380" cy="68" r="2" fill="url(#cyberGradient)"/>
+    <circle cx="95" cy="68" r="2" fill="url(#cyberGradient)"/>
+  </g>
+</svg>

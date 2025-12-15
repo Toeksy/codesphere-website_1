@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBERIUS - Logo Design Concept</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            padding: 2rem;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            color: #22d3ee;
+            font-weight: 300;
+            letter-spacing: 8px;
+            font-size: 0.9rem;
+        }
+
+        .logo-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .logo-variant {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-variant h3 {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animoitu versio */
+        .animated .logo-container {
+            animation: logoEntry 4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes logoEntry {
+            0% {
+                transform: scale(0.01) rotate(0deg);
+                opacity: 0;
+                filter: brightness(3);
+            }
+            5% { opacity: 1; }
+            100% {
+                transform: scale(1) rotate(720deg);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
+
+        .cyberius-logo {
+            filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.3));
+        }
+
+        .animated .cyberius-logo {
+            animation: logoGlow 4s ease-in-out 4s infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(34, 211, 238, 0.5))
+                        drop-shadow(0 0 60px rgba(16, 185, 129, 0.2));
+            }
+        }
+
+        /* Small versions */
+        .small-versions {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .size-test {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .size-test span {
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        .restart-btn {
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .restart-btn:hover {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: rgba(34, 211, 238, 0.5);
+        }
+
+        .note {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(34, 211, 238, 0.05);
+            border-left: 2px solid #22d3ee;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>LOGO DESIGN CONCEPT</h1>
+
+    <div class="logo-showcase">
+        <!-- Päälogo animoituna -->
+        <div class="logo-variant animated">
+            <h3>Primary (Animated)</h3>
+            <div class="logo-container" id="mainLogo">
+                <svg class="cyberius-logo" width="300" height="300" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- C-kaaren gradient -->
+                        <linearGradient id="cArcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#22d3ee"/>
+                            <stop offset="50%" stop-color="#0891b2"/>
+                            <stop offset="100%" stop-color="#0e7490"/>
+                        </linearGradient>
+                        
+                        <!-- Sisärakenteiden gradient -->
+                        <linearGradient id="innerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#155e75"/>
+                            <stop offset="100%" stop-color="#0c4a5e"/>
+                        </linearGradient>
+
+                        <!-- Glow filter -->
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="2" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Ulompi C-kaari - pääelementti -->
+                    <path 
+                        d="M 158 52 A 80 80 0 1 0 158 148" 
+                        fill="none" 
+                        stroke="url(#cArcGradient)" 
+                        stroke-width="14"
+                        stroke-linecap="round"
+                        filter="url(#glow)"/>
+
+                    <!-- Sisempi modulaarinen rakenne - CYBERIUS integroitu -->
+                    <g fill="url(#innerGradient)">
+                        <!-- Rivi 1: CYBE -->
+                        <!-- C -->
+                        <path d="M 40 55 L 40 85 L 46 85 L 46 61 L 60 61 L 60 55 Z"/>
+                        <path d="M 40 79 L 60 79 L 60 85 L 40 85 Z"/>
+                        
+                        <!-- Y -->
+                        <path d="M 65 55 L 65 68 L 71 73 L 71 85 L 77 85 L 77 73 L 83 68 L 83 55 L 77 55 L 77 65 L 74 68 L 71 65 L 71 55 Z"/>
+                        
+                        <!-- B -->
+                        <path d="M 88 55 L 88 85 L 105 85 L 109 81 L 109 72 L 105 70 L 109 68 L 109 59 L 105 55 Z M 94 60 L 102 60 L 104 62 L 104 66 L 102 68 L 94 68 Z M 94 72 L 102 72 L 104 74 L 104 80 L 102 82 L 94 82 Z"/>
+                        
+                        <!-- E -->
+                        <path d="M 114 55 L 114 85 L 132 85 L 132 80 L 120 80 L 120 72 L 129 72 L 129 67 L 120 67 L 120 60 L 132 60 L 132 55 Z"/>
+                        
+                        <!-- Rivi 2: RIUS -->
+                        <!-- R -->
+                        <path d="M 50 95 L 50 125 L 56 125 L 56 113 L 62 113 L 68 125 L 75 125 L 68 112 L 72 108 L 72 99 L 68 95 Z M 56 100 L 65 100 L 67 102 L 67 107 L 65 109 L 56 109 Z"/>
+                        
+                        <!-- I -->
+                        <path d="M 78 95 L 78 125 L 84 125 L 84 95 Z"/>
+                        
+                        <!-- U -->
+                        <path d="M 90 95 L 90 118 L 94 125 L 110 125 L 114 118 L 114 95 L 108 95 L 108 116 L 106 120 L 98 120 L 96 116 L 96 95 Z"/>
+                        
+                        <!-- S -->
+                        <path d="M 120 95 L 120 99 L 124 95 L 140 95 L 144 99 L 144 107 L 140 111 L 126 111 L 126 116 L 144 116 L 144 125 L 120 125 L 120 121 L 124 125 L 120 121 L 120 117 L 140 117 L 140 120 L 126 120 L 124 118 L 124 111 L 140 111 L 144 107 L 144 99 L 140 95 Z"/>
+                    </g>
+
+                    <!-- Pienet aksenttiviivat - kyberneettinen detalji -->
+                    <g stroke="#22d3ee" stroke-width="1.5" opacity="0.6">
+                        <line x1="160" y1="60" x2="170" y2="50"/>
+                        <line x1="160" y1="140" x2="170" y2="150"/>
+                        <circle cx="172" cy="48" r="2" fill="#22d3ee"/>
+                        <circle cx="172" cy="152" r="2" fill="#22d3ee"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Staattinen versio -->
+        <div class="logo-variant">
+            <h3>Static</h3>
+            <div class="logo-container">
+                <svg class="cyberius-logo" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="cArcGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#22d3ee"/>
+                            <stop offset="50%" stop-color="#0891b2"/>
+                            <stop offset="100%" stop-color="#0e7490"/>
+                        </linearGradient>
+                        <linearGradient id="innerGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#155e75"/>
+                            <stop offset="100%" stop-color="#0c4a5e"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M 158 52 A 80 80 0 1 0 158 148" fill="none" stroke="url(#cArcGradient2)" stroke-width="14" stroke-linecap="round"/>
+                    <g fill="url(#innerGradient2)">
+                        <!-- CYBE -->
+                        <path d="M 40 55 L 40 85 L 46 85 L 46 61 L 60 61 L 60 55 Z"/>
+                        <path d="M 40 79 L 60 79 L 60 85 L 40 85 Z"/>
+                        <path d="M 65 55 L 65 68 L 71 73 L 71 85 L 77 85 L 77 73 L 83 68 L 83 55 L 77 55 L 77 65 L 74 68 L 71 65 L 71 55 Z"/>
+                        <path d="M 88 55 L 88 85 L 105 85 L 109 81 L 109 72 L 105 70 L 109 68 L 109 59 L 105 55 Z M 94 60 L 102 60 L 104 62 L 104 66 L 102 68 L 94 68 Z M 94 72 L 102 72 L 104 74 L 104 80 L 102 82 L 94 82 Z"/>
+                        <path d="M 114 55 L 114 85 L 132 85 L 132 80 L 120 80 L 120 72 L 129 72 L 129 67 L 120 67 L 120 60 L 132 60 L 132 55 Z"/>
+                        <!-- RIUS -->
+                        <path d="M 50 95 L 50 125 L 56 125 L 56 113 L 62 113 L 68 125 L 75 125 L 68 112 L 72 108 L 72 99 L 68 95 Z M 56 100 L 65 100 L 67 102 L 67 107 L 65 109 L 56 109 Z"/>
+                        <path d="M 78 95 L 78 125 L 84 125 L 84 95 Z"/>
+                        <path d="M 90 95 L 90 118 L 94 125 L 110 125 L 114 118 L 114 95 L 108 95 L 108 116 L 106 120 L 98 120 L 96 116 L 96 95 Z"/>
+                        <path d="M 120 95 L 120 99 L 124 95 L 140 95 L 144 99 L 144 107 L 140 111 L 126 111 L 126 116 L 144 116 L 144 125 L 120 125 L 120 121 L 124 125 L 120 121 L 120 117 L 140 117 L 140 120 L 126 120 L 124 118 L 124 111 L 140 111 L 144 107 L 144 99 L 140 95 Z"/>
+                    </g>
+                    <g stroke="#22d3ee" stroke-width="1.5" opacity="0.6">
+                        <line x1="160" y1="60" x2="170" y2="50"/>
+                        <line x1="160" y1="140" x2="170" y2="150"/>
+                        <circle cx="172" cy="48" r="2" fill="#22d3ee"/>
+                        <circle cx="172" cy="152" r="2" fill="#22d3ee"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Mustavalkoinen -->
+        <div class="logo-variant">
+            <h3>Monochrome</h3>
+            <div class="logo-container">
+                <svg width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 158 52 A 80 80 0 1 0 158 148" fill="none" stroke="white" stroke-width="14" stroke-linecap="round"/>
+                    <g fill="rgba(255,255,255,0.5)">
+                        <!-- CYBE -->
+                        <path d="M 40 55 L 40 85 L 46 85 L 46 61 L 60 61 L 60 55 Z"/>
+                        <path d="M 40 79 L 60 79 L 60 85 L 40 85 Z"/>
+                        <path d="M 65 55 L 65 68 L 71 73 L 71 85 L 77 85 L 77 73 L 83 68 L 83 55 L 77 55 L 77 65 L 74 68 L 71 65 L 71 55 Z"/>
+                        <path d="M 88 55 L 88 85 L 105 85 L 109 81 L 109 72 L 105 70 L 109 68 L 109 59 L 105 55 Z M 94 60 L 102 60 L 104 62 L 104 66 L 102 68 L 94 68 Z M 94 72 L 102 72 L 104 74 L 104 80 L 102 82 L 94 82 Z"/>
+                        <path d="M 114 55 L 114 85 L 132 85 L 132 80 L 120 80 L 120 72 L 129 72 L 129 67 L 120 67 L 120 60 L 132 60 L 132 55 Z"/>
+                        <!-- RIUS -->
+                        <path d="M 50 95 L 50 125 L 56 125 L 56 113 L 62 113 L 68 125 L 75 125 L 68 112 L 72 108 L 72 99 L 68 95 Z M 56 100 L 65 100 L 67 102 L 67 107 L 65 109 L 56 109 Z"/>
+                        <path d="M 78 95 L 78 125 L 84 125 L 84 95 Z"/>
+                        <path d="M 90 95 L 90 118 L 94 125 L 110 125 L 114 118 L 114 95 L 108 95 L 108 116 L 106 120 L 98 120 L 96 116 L 96 95 Z"/>
+                        <path d="M 120 95 L 120 99 L 124 95 L 140 95 L 144 99 L 144 107 L 140 111 L 126 111 L 126 116 L 144 116 L 144 125 L 120 125 L 120 121 L 124 125 L 120 121 L 120 117 L 140 117 L 140 120 L 126 120 L 124 118 L 124 111 L 140 111 L 144 107 L 144 99 L 140 95 Z"/>
+                    </g>
+                    <g stroke="white" stroke-width="1.5" opacity="0.6">
+                        <line x1="160" y1="60" x2="170" y2="50"/>
+                        <line x1="160" y1="140" x2="170" y2="150"/>
+                        <circle cx="172" cy="48" r="2" fill="white"/>
+                        <circle cx="172" cy="152" r="2" fill="white"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!-- Skaalautuvuustestit -->
+    <div class="small-versions">
+        <div class="size-test">
+            <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 158 52 A 80 80 0 1 0 158 148" fill="none" stroke="#22d3ee" stroke-width="16" stroke-linecap="round"/>
+                <g fill="#0c4a5e" opacity="0.7">
+                    <rect x="45" y="70" width="30" height="60" rx="2"/>
+                    <rect x="80" y="70" width="25" height="60" rx="2"/>
+                    <rect x="110" y="70" width="25" height="60" rx="2"/>
+                    <rect x="140" y="70" width="15" height="60" rx="2"/>
+                </g>
+            </svg>
+            <span>64×64</span>
+        </div>
+        <div class="size-test">
+            <svg width="32" height="32" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 158 52 A 80 80 0 1 0 158 148" fill="none" stroke="#22d3ee" stroke-width="20" stroke-linecap="round"/>
+            </svg>
+            <span>32×32 (symbol)</span>
+        </div>
+        <div class="size-test" style="background: white; padding: 0.5rem; border-radius: 4px;">
+            <svg width="32" height="32" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 158 52 A 80 80 0 1 0 158 148" fill="none" stroke="#0a1628" stroke-width="20" stroke-linecap="round"/>
+            </svg>
+            <span style="color: #333;">Light bg</span>
+        </div>
+    </div>
+
+    <button class="restart-btn" onclick="restartAnimation()">↻ Replay Animation</button>
+
+    <div class="note">
+        <strong>Huom:</strong> Tämä on konseptiesimerkki. Lopullinen tuotantologo vaatii 
+        ammattigraafikon viimeistelyä sisärakenteiden (CYBERIUS-teksti) osalta. 
+        C-kaari ja perusrakenne noudattavat briiffiä.
+    </div>
+
+    <script>
+        function restartAnimation() {
+            const container = document.getElementById('mainLogo');
+            const parent = container.parentElement;
+            parent.classList.remove('animated');
+            void parent.offsetWidth;
+            parent.classList.add('animated');
+        }
+    </script>
+</body>
+</html>

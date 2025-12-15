@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cyberius Oy - Kyberturvallisuutta, tekoälyä ja digitaalisia ratkaisuja. Hämeenlinna.">
+    <title>Cyberius Oy - Kyberturvallisuutta & Tekoälyä</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVIGAATIO -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">
+                <span class="logo-icon">C</span>
+                <span class="logo-text">CYBERIUS</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#palvelut">Palvelut</a></li>
+                <li><a href="#tiimi">Tiimi</a></li>
+                <li><a href="#referenssit">Referenssit</a></li>
+                <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+            </ul>
+            
+            <a href="#yhteystiedot" class="btn btn-primary">Ota yhteyttä</a>
+            
+            <button class="mobile-menu-btn" aria-label="Avaa valikko">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Kyberturvallisuutta & tekoälyä <span class="highlight">inhimillisellä otteella</span></h1>
+                <p class="hero-subtitle">Autamme yrityksiä ja viranomaisia navigoimaan digitaalisen maailman haasteissa. Asiantuntijalausuntoja, AI-ratkaisuja ja ammattitasoisia ilmakuvauksia.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#yhteystiedot" class="btn btn-primary btn-lg">Varaa ilmainen konsultaatio</a>
+                    <a href="#palvelut" class="btn btn-secondary btn-lg">Tutustu palveluihin →</a>
+                </div>
+                
+                <div class="hero-badges">
+                    <div class="badge">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        <span>Asiantuntijalausuntoja</span>
+                    </div>
+                    <div class="badge">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <span>AI-ratkaisuja</span>
+                    </div>
+                    <div class="badge">
+                        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <circle cx="12" cy="13" r="3"/>
+                        </svg>
+                        <span>Ilmakuvauksia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PALVELUT -->
+    <section id="palvelut" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Palvelumme</h2>
+                <p>Erikoisosaamista neljällä osa-alueella</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Kyberturvallisuus -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-cyber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <h3>Kyberturvallisuus</h3>
+                    <p>Asiantuntijalausunnot, tuomioistuintodistelu ja verkkohuijausten tutkinta. Autamme viranomaisia ja yrityksiä.</p>
+                    <ul class="service-list">
+                        <li>Asiantuntijalausunnot</li>
+                        <li>Tuomioistuintodistelu</li>
+                        <li>Kyberrikosten tutkinta</li>
+                    </ul>
+                    <a href="#yhteystiedot" class="service-link">Kysy lisää →</a>
+                </div>
+                
+                <!-- Tekoäly -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-ai">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2z"/>
+                            <circle cx="7.5" cy="14.5" r="1.5"/>
+                            <circle cx="16.5" cy="14.5" r="1.5"/>
+                        </svg>
+                    </div>
+                    <h3>Tekoäly & automaatio</h3>
+                    <p>AI-konsultointi, prosessiautomaatio ja tekoälypohjainen sisällöntuotanto. Konkreettisia ratkaisuja.</p>
+                    <ul class="service-list">
+                        <li>AI-konsultointi</li>
+                        <li>Prosessiautomaatio</li>
+                        <li>AI-sisällöntuotanto</li>
+                    </ul>
+                    <a href="#yhteystiedot" class="service-link">Kysy lisää →</a>
+                </div>
+                
+                <!-- Ilmakuvaus -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-drone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+                            <circle cx="4" cy="4" r="2"/>
+                            <circle cx="20" cy="4" r="2"/>
+                            <circle cx="4" cy="20" r="2"/>
+                            <circle cx="20" cy="20" r="2"/>
+                        </svg>
+                    </div>
+                    <h3>Ilmakuvaus</h3>
+                    <p>Ammattitasoiset drone-kuvaukset kiinteistöihin, tapahtumiin ja mainontaan. Hämeenlinna ja lähialueet.</p>
+                    <ul class="service-list">
+                        <li>Kiinteistökuvaukset</li>
+                        <li>Tapahtumatuotanto</li>
+                        <li>Mainosvideot</li>
+                    </ul>
+                    <a href="#yhteystiedot" class="service-link">Kysy lisää →</a>
+                </div>
+                
+                <!-- Digitaaliset ratkaisut -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-digital">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>
+                        </svg>
+                    </div>
+                    <h3>Digitaaliset ratkaisut</h3>
+                    <p>Web-sivustot, IT-konsultointi ja lohkoketjuratkaisut. Toteutamme digitaaliset tarpeesi.</p>
+                    <ul class="service-list">
+                        <li>Web-sivustot</li>
+                        <li>IT-konsultointi</li>
+                        <li>Lohkoketjuratkaisut</li>
+                    </ul>
+                    <a href="#yhteystiedot" class="service-link">Kysy lisää →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MIKSI CYBERIUS -->
+    <section class="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2>Miksi Cyberius?</h2>
+                <p>Pienyrityksen ketteryys, asiantuntijan osaaminen</p>
+            </div>
+            
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-number">01</div>
+                    <h3>Nopea toimitus</h3>
+                    <p>Ketterä pieni yritys ilman byrokratiaa. Saat vastauksen nopeasti ja projekti etenee ilman viiveitä.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-number">02</div>
+                    <h3>Erikoisosaaminen</h3>
+                    <p>Kyberturvallisuus ja tekoäly ovat ydinaluettamme. Tuomme todellista asiantuntemusta, emme yleiskonsultointia.</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-number">03</div>
+                    <h3>Henkilökohtainen palvelu</h3>
+                    <p>Ei iso konsulttitalo – tunnet tekijät nimeltä. Sama asiantuntija alusta loppuun.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIIMI -->
+    <section id="tiimi" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tiimimme</h2>
+                <p>Kokeneet asiantuntijat palveluksessasi</p>
+            </div>
+            
+            <div class="team-grid">
+                <!-- Mika -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <div class="photo-placeholder">M</div>
+                    </div>
+                    <h3>Mika</h3>
+                    <p class="team-title">Toimitusjohtaja & Kyberturvallisuusasiantuntija</p>
+                    <p class="team-bio">Vuosien kokemus kyberturvallisuudesta ja digitaalisesta forensiikasta. Asiantuntijatodistelu tuomioistuimissa.</p>
+                    <div class="team-skills">
+                        <span>Kyberturvallisuus</span>
+                        <span>Forensiikka</span>
+                        <span>Lausunnot</span>
+                    </div>
+                </div>
+                
+                <!-- Matti -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <div class="photo-placeholder">M</div>
+                    </div>
+                    <h3>Matti Erholtz</h3>
+                    <p class="team-title">Tekoälyarkkitehti & Rihmasto-järjestelmän luoja</p>
+                    <p class="team-bio">Tekoälyjärjestelmien arkkitehti ja Rihmasto-muistijärjestelmän kehittäjä. Älykkäiden, oppivien järjestelmien suunnittelu.</p>
+                    <div class="team-skills">
+                        <span>Tekoäly</span>
+                        <span>Automaatio</span>
+                        <span>Arkkitehtuuri</span>
+                    </div>
+                </div>
+                
+                <!-- Timo -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <div class="photo-placeholder">T</div>
+                    </div>
+                    <h3>Timo Aula</h3>
+                    <p class="team-title">Tutkimusjohtaja & Matemaattinen innovaattori</p>
+                    <p class="team-bio">Monitieteellinen ajattelija, jonka tausta yhdistää matematiikan, keksinnöt ja tekoälytutkimuksen.</p>
+                    <div class="team-skills">
+                        <span>Matematiikka</span>
+                        <span>Tutkimus</span>
+                        <span>Innovaatiot</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REFERENSSIT -->
+    <section id="referenssit" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Asiakkaamme luottavat meihin</h2>
+                <p>Kokemuksia yhteistyöstä</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p>"Toteutitte meille nopealla toimitusaikataululla tarvitsemamme ilmakuvausmateriaalin Hämeenlinna 2035 keskustavisio -hankkeeseen. Yhteistyö oli saumatonta."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Hämeenlinnan kaupunki</strong>
+                        <span>Keskustavisio 2035 -hanke</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p>"Toteutitte meille drone-mainosvideon alusta loppuun saakka. Saimme Web-sivustollemme uuden ilmeen, johon olemme erittäin tyytyväisiä."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Ravintola Rantakasino</strong>
+                        <span>rantakasino.fi</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p>"Toteutitte meille laadukkaasti Mierolan Silta Café Web-sivut, jotka ovat lisänneet yrityksemme näkyvyyttä. Asiakaspalvelunne on ollut kiitettävää."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Mierolan Silta Café</strong>
+                        <span>mierola.fi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Varaa ilmainen alkukartoitus</h2>
+                <p>Keskustellaan tarpeistasi ja etsitään yhdessä oikea ratkaisu. Ei sitoumuksia.</p>
+                <div class="cta-buttons">
+                    <a href="tel:+358465581732" class="btn btn-light btn-lg">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                        </svg>
+                        +358 46 558 1732
+                    </a>
+                    <a href="mailto:cyberius.pro@protonmail.com" class="btn btn-outline-light btn-lg">Lähetä sähköpostia</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YHTEYSTIEDOT -->
+    <section id="yhteystiedot" class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Yhteystiedot</h2>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                        </svg>
+                        <div>
+                            <strong>Puhelin</strong>
+                            <a href="tel:+358465581732">+358 46 558 1732</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <div>
+                            <strong>Sähköposti</strong>
+                            <a href="mailto:cyberius.pro@protonmail.com">cyberius.pro@protonmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <div>
+                            <strong>Sijainti</strong>
+                            <span>Hämeenlinna</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z"/>
+                            <path d="M9 7h6M9 11h6M9 15h4"/>
+                        </svg>
+                        <div>
+                            <strong>Y-tunnus</strong>
+                            <span>3509095-8</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <h3>Lähetä viesti</h3>
+                    <div class="form-group">
+                        <label for="name">Nimi *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Sähköposti *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Aihe</label>
+                        <select id="subject" name="subject">
+                            <option value="">Valitse aihe...</option>
+                            <option value="kyber">Kyberturvallisuus</option>
+                            <option value="ai">Tekoäly & automaatio</option>
+                            <option value="drone">Ilmakuvaus</option>
+                            <option value="web">Digitaaliset ratkaisut</option>
+                            <option value="muu">Muu asia</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Viesti *</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-full">Lähetä viesti</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <span class="logo-icon">C</span>
+                        <span class="logo-text">CYBERIUS</span>
+                    </a>
+                    <p>Kyberturvallisuutta & tekoälyä inhimillisellä otteella.</p>
+                    <p class="footer-company">Cyberius Oy | Y-tunnus: 3509095-8</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Palvelut</h4>
+                    <ul>
+                        <li><a href="#palvelut">Kyberturvallisuus</a></li>
+                        <li><a href="#palvelut">Tekoäly & automaatio</a></li>
+                        <li><a href="#palvelut">Ilmakuvaus</a></li>
+                        <li><a href="#palvelut">Digitaaliset ratkaisut</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Yritys</h4>
+                    <ul>
+                        <li><a href="#tiimi">Tiimi</a></li>
+                        <li><a href="#referenssit">Referenssit</a></li>
+                        <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Yhteystiedot</h4>
+                    <p>+358 46 558 1732</p>
+                    <p>cyberius.pro@protonmail.com</p>
+                    <p>Hämeenlinna</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Cyberius Oy. Kaikki oikeudet pidätetään.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

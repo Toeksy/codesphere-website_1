@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberius Logo V2 - C-kirjain + Selkeä teksti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0f1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        h1 {
+            margin-bottom: 2rem;
+            color: #0891b2;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: ufoFromStar 5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                       ufoHover 5s ease-in-out 5s infinite;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 50px;
+            background: radial-gradient(ellipse, rgba(8, 145, 178, 0.5) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0;
+            animation: shadowAppear 5s forwards, ufoShadow 5s ease-in-out 5s infinite;
+        }
+
+        @keyframes shadowAppear {
+            0%, 80% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes ufoFromStar {
+            0% {
+                transform: scale(0.01) translateY(-1500px) rotateZ(0deg);
+                opacity: 0;
+                filter: brightness(4);
+            }
+            3% { opacity: 1; }
+            100% {
+                transform: scale(1) translateY(0) rotateZ(720deg);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes ufoHover {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            25% { transform: translateY(-15px) scale(1.02); }
+            50% { transform: translateY(-8px) scale(0.99); }
+            75% { transform: translateY(-20px) scale(1.01); }
+        }
+
+        @keyframes ufoShadow {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+            25% { transform: translateX(-50%) scale(0.8); opacity: 0.4; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 0.7; }
+            75% { transform: translateX(-50%) scale(0.9); opacity: 0.5; }
+        }
+
+        .cyberius-logo {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            filter: drop-shadow(0 0 30px rgba(8, 145, 178, 0.6))
+                    drop-shadow(0 0 60px rgba(34, 211, 238, 0.4));
+        }
+
+        /* Alkuperäinen logo keskellä */
+        .center-logo {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 20px rgba(8, 145, 178, 0.5));
+            z-index: 10;
+        }
+
+        /* C-kirjain - paksumpi ja selkeämpi */
+        .c-letter {
+            fill: none;
+            stroke: url(#cGradient);
+            stroke-width: 12;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 15px rgba(8, 145, 178, 0.9));
+            animation: cPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes cPulse {
+            0%, 100% { 
+                stroke-opacity: 1;
+                filter: drop-shadow(0 0 15px rgba(8, 145, 178, 0.9));
+            }
+            50% { 
+                stroke-opacity: 0.8;
+                filter: drop-shadow(0 0 25px rgba(34, 211, 238, 1));
+            }
+        }
+
+        /* Ulompi kehä - ohut */
+        .outer-ring {
+            fill: none;
+            stroke: rgba(8, 145, 178, 0.2);
+            stroke-width: 1;
+        }
+
+        /* Keskiympyrä - tumma tausta tekstille */
+        .center-bg {
+            fill: rgba(10, 15, 26, 0.95);
+        }
+
+        /* Sähköpallot kiertävät C-kirjaimen sisällä */
+        .electric-ball {
+            fill: #22d3ee;
+            filter: drop-shadow(0 0 8px #22d3ee);
+        }
+
+        .ball-1 { animation: orbit1 3s linear infinite; }
+        .ball-2 { animation: orbit2 4s linear infinite; }
+        .ball-3 { animation: orbit3 2.5s linear infinite; }
+        .ball-4 { animation: orbit4 3.5s linear infinite; }
+
+        @keyframes orbit1 {
+            0% { transform: rotate(0deg) translateX(70px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+            0% { transform: rotate(90deg) translateX(70px) rotate(-90deg); }
+            100% { transform: rotate(450deg) translateX(70px) rotate(-450deg); }
+        }
+        @keyframes orbit3 {
+            0% { transform: rotate(180deg) translateX(70px) rotate(-180deg); }
+            100% { transform: rotate(540deg) translateX(70px) rotate(-540deg); }
+        }
+        @keyframes orbit4 {
+            0% { transform: rotate(270deg) translateX(70px) rotate(-270deg); }
+            100% { transform: rotate(630deg) translateX(70px) rotate(-630deg); }
+        }
+
+        /* Sähkökipinät C-kirjaimen päissä */
+        .spark-end {
+            fill: #22d3ee;
+            filter: drop-shadow(0 0 10px #22d3ee) drop-shadow(0 0 20px #0891b2);
+            animation: sparkle 0.5s ease-in-out infinite alternate;
+        }
+
+        .spark-end-2 {
+            animation-delay: 0.25s;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0.6; r: 4; }
+            100% { opacity: 1; r: 6; }
+        }
+
+        /* Teksti - selkeä ilman häiriöitä */
+        .logo-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            fill: #f1f5f9;
+            text-anchor: middle;
+            letter-spacing: 2px;
+        }
+
+        .logo-subtext {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 9px;
+            fill: #94a3b8;
+            text-anchor: middle;
+            letter-spacing: 4px;
+        }
+
+        .restart-btn {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0891b2, #1e3a5f);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .debug {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0,0,0,0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug">V2: C-kirjain + selkeä teksti</div>
+
+    <h1>Cyberius Logo V2</h1>
+
+    <div class="logo-container" id="logoContainer">
+        <svg class="cyberius-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- C-kirjaimen gradient - syaanista vihreään -->
+                <linearGradient id="cGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+                    <stop offset="40%" style="stop-color:#0891b2;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                </linearGradient>
+
+                <!-- Clip path pyöreälle logolle -->
+                <clipPath id="logoClip">
+                    <circle cx="100" cy="100" r="60"/>
+                </clipPath>
+            </defs>
+
+            <!-- Ulompi ohut kehä -->
+            <circle class="outer-ring" cx="100" cy="100" r="95"/>
+            <circle class="outer-ring" cx="100" cy="100" r="90"/>
+
+            <!-- C-KIRJAIN - iso ja selkeä ulkokehällä -->
+            <path class="c-letter" 
+                  d="M 155 55 
+                     A 75 75 0 1 0 155 145"/>
+
+            <!-- Sähkökipinät C-kirjaimen päissä -->
+            <circle class="spark-end" cx="155" cy="55" r="5"/>
+            <circle class="spark-end spark-end-2" cx="155" cy="145" r="5"/>
+
+            <!-- Sähköpallot kiertävät C-kirjaimen sisällä -->
+            <g transform="translate(100, 100)">
+                <circle class="electric-ball ball-1" cx="0" cy="0" r="3"/>
+                <circle class="electric-ball ball-2" cx="0" cy="0" r="2.5"/>
+                <circle class="electric-ball ball-3" cx="0" cy="0" r="3.5"/>
+                <circle class="electric-ball ball-4" cx="0" cy="0" r="2"/>
+            </g>
+        </svg>
+        
+        <!-- Alkuperäinen Cyberius-logo keskellä - C-väritys -->
+        <img src="logo-c-color.png" alt="Cyberius" class="center-logo">
+    </div>
+
+    <button class="restart-btn" onclick="restartAnimation()">🔄 Käynnistä uudelleen</button>
+
+    <script>
+        function restartAnimation() {
+            const container = document.getElementById('logoContainer');
+            container.style.animation = 'none';
+            container.offsetHeight;
+            container.style.animation = `ufoFromStar 5s cubic-bezier(0.16, 1, 0.3, 1) forwards, 
+                                         ufoHover 5s ease-in-out 5s infinite`;
+        }
+    </script>
+</body>
+</html>

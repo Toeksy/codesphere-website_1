@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberius Logo - Vertailu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #030b13 0%, #0a1929 50%, #0d0d1a 100%);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #22d3ee, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+        }
+        
+        .compare-section {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .logo-box {
+            text-align: center;
+        }
+        
+        .logo-box h2 {
+            color: #7c3aed;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .logo-box img {
+            max-width: 400px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.3);
+        }
+        
+        .logo-box p {
+            margin-top: 15px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .sizes-section {
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .sizes-section h2 {
+            color: #22d3ee;
+            margin-bottom: 30px;
+        }
+        
+        .sizes-grid {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .size-item {
+            text-align: center;
+        }
+        
+        .size-item img {
+            background: rgba(10, 20, 30, 0.8);
+            border: 2px solid rgba(34, 211, 238, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+        .size-item p {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .pixel-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(10, 15, 25, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        
+        .pixel-section h2 {
+            color: #7c3aed;
+            margin-bottom: 30px;
+        }
+        
+        .pixel-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .pixel-item img {
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Cyberius Logo - Vertailu</h1>
+    
+    <div class="compare-section">
+        <div class="logo-box">
+            <h2>📸 Referenssikuva</h2>
+            <img src="logo-reference.png" alt="Referenssi">
+            <p>ChatGPT:n generoima konsepti</p>
+        </div>
+        
+        <div class="logo-box">
+            <h2>✨ Uusi Logo</h2>
+            <img src="cyberius-logo-512.png" alt="Uusi logo">
+            <p>Pikselöity versio gradientilla</p>
+        </div>
+    </div>
+    
+    <div class="sizes-section">
+        <h2>📐 Eri Koot</h2>
+        <div class="sizes-grid">
+            <div class="size-item">
+                <img src="cyberius-logo-512.png" width="128" height="128" alt="512px">
+                <p>512×512</p>
+            </div>
+            <div class="size-item">
+                <img src="cyberius-logo-256.png" alt="256px">
+                <p>256×256</p>
+            </div>
+            <div class="size-item">
+                <img src="cyberius-logo-128.png" alt="128px">
+                <p>128×128</p>
+            </div>
+            <div class="size-item">
+                <img src="cyberius-logo-64.png" alt="64px">
+                <p>64×64</p>
+            </div>
+            <div class="size-item">
+                <img src="favicon.png" alt="32px">
+                <p>32×32 (favicon)</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pixel-section">
+        <h2>🔷 Pikseli-versiot</h2>
+        <div class="pixel-grid">
+            <div class="pixel-item">
+                <img src="cyberius-pixel-512.png" width="256" alt="Pixel 512">
+                <p>Pixel-tyyli 512px</p>
+            </div>
+            <div class="pixel-item">
+                <img src="cyberius-pixel-256.png" alt="Pixel 256">
+                <p>Pixel-tyyli 256px</p>
+            </div>
+            <div class="pixel-item">
+                <img src="cyberius-pixel-128.png" alt="Pixel 128">
+                <p>Pixel-tyyli 128px</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

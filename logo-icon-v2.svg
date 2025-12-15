@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+  <defs>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8c00"/>
+      <stop offset="100%" stop-color="#ff5500"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Dynaaminen C-kirjain (nuolimainen) -->
+  <path d="M35 10 L20 10 C12 10 8 18 8 25 C8 32 12 40 20 40 L35 40 L30 34 L20 34 C16 34 14 30 14 25 C14 20 16 16 20 16 L30 16 Z" 
+        fill="url(#orangeGrad)"/>
+  
+  <!-- Nuolen kärki oikealla -->
+  <path d="M32 18 L42 25 L32 32 L32 27 L26 27 L26 23 L32 23 Z" 
+        fill="url(#blueGrad)" opacity="0.8"/>
+  
+  <!-- Circuit pisteet -->
+  <circle cx="42" cy="25" r="2" fill="#0891b2"/>
+  <circle cx="8" cy="25" r="1.5" fill="#ff8c00"/>
+  
+  <!-- Circuit viivat -->
+  <g stroke="#0891b2" stroke-width="1" fill="none" opacity="0.6">
+    <line x1="42" y1="25" x2="48" y2="25"/>
+    <line x1="42" y1="25" x2="46" y2="18"/>
+    <line x1="42" y1="25" x2="46" y2="32"/>
+  </g>
+</svg>

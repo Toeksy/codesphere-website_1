@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberius Logo V3 - Pelkkä logo animoituna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0f1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        h1 {
+            margin-bottom: 2rem;
+            color: #0891b2;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: ufoFromStar 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* UFO saapumisanimaatio */
+        @keyframes ufoFromStar {
+            0% {
+                transform: scale(0.01) translateY(-1500px) rotateZ(0deg);
+                opacity: 0;
+                filter: brightness(4);
+            }
+            3% { opacity: 1; }
+            100% {
+                transform: scale(1) translateY(0) rotateZ(720deg);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
+
+        /* Päälogo */
+        .main-logo {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            animation: logoGlow 4s ease-in-out 5s infinite, 
+                       logoFloat 6s ease-in-out 5s infinite;
+            filter: drop-shadow(0 0 20px rgba(8, 145, 178, 0.5))
+                    drop-shadow(0 0 40px rgba(34, 211, 238, 0.3));
+        }
+
+        /* Hieno hehku-animaatio */
+        @keyframes logoGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(8, 145, 178, 0.5))
+                        drop-shadow(0 0 40px rgba(34, 211, 238, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 35px rgba(8, 145, 178, 0.7))
+                        drop-shadow(0 0 70px rgba(34, 211, 238, 0.5))
+                        drop-shadow(0 0 100px rgba(16, 185, 129, 0.3));
+            }
+        }
+
+        /* Kellunta-animaatio */
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+            }
+            33% {
+                transform: translateY(-12px) scale(1.02);
+            }
+            66% {
+                transform: translateY(-6px) scale(0.99);
+            }
+        }
+
+        /* Varjo logon alla */
+        .logo-shadow {
+            position: absolute;
+            bottom: 20px;
+            width: 200px;
+            height: 40px;
+            background: radial-gradient(ellipse, rgba(8, 145, 178, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0;
+            animation: shadowAppear 5s forwards, shadowPulse 6s ease-in-out 5s infinite;
+        }
+
+        @keyframes shadowAppear {
+            0%, 80% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes shadowPulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.6; 
+            }
+            33% { 
+                transform: scale(0.85); 
+                opacity: 0.4; 
+            }
+            66% { 
+                transform: scale(1.05); 
+                opacity: 0.7; 
+            }
+        }
+
+        /* Sähköpartikkelit logon ympärillä */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #22d3ee;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0;
+            animation: particleOrbit 8s linear 5s infinite;
+        }
+
+        .particle:nth-child(1) { animation-delay: 5s; }
+        .particle:nth-child(2) { animation-delay: 5.5s; }
+        .particle:nth-child(3) { animation-delay: 6s; }
+        .particle:nth-child(4) { animation-delay: 6.5s; }
+        .particle:nth-child(5) { animation-delay: 7s; }
+        .particle:nth-child(6) { animation-delay: 7.5s; }
+
+        @keyframes particleOrbit {
+            0% {
+                transform: rotate(0deg) translateX(190px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: rotate(360deg) translateX(190px) rotate(-360deg);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(2) { 
+            animation-name: particleOrbit2;
+            width: 3px;
+            height: 3px;
+        }
+        @keyframes particleOrbit2 {
+            0% {
+                transform: rotate(60deg) translateX(185px) rotate(-60deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: rotate(420deg) translateX(185px) rotate(-420deg);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(3) { 
+            animation-name: particleOrbit3;
+            animation-duration: 10s;
+            width: 5px;
+            height: 5px;
+            background: #10b981;
+        }
+        @keyframes particleOrbit3 {
+            0% {
+                transform: rotate(120deg) translateX(195px) rotate(-120deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% {
+                transform: rotate(480deg) translateX(195px) rotate(-480deg);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(4) { 
+            animation-name: particleOrbit4;
+            animation-duration: 7s;
+            width: 3px;
+            height: 3px;
+        }
+        @keyframes particleOrbit4 {
+            0% {
+                transform: rotate(180deg) translateX(188px) rotate(-180deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% {
+                transform: rotate(540deg) translateX(188px) rotate(-540deg);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(5) { 
+            animation-name: particleOrbit5;
+            animation-duration: 9s;
+            width: 4px;
+            height: 4px;
+            background: #0891b2;
+        }
+        @keyframes particleOrbit5 {
+            0% {
+                transform: rotate(240deg) translateX(192px) rotate(-240deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% {
+                transform: rotate(600deg) translateX(192px) rotate(-600deg);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(6) { 
+            animation-name: particleOrbit6;
+            animation-duration: 11s;
+            width: 3px;
+            height: 3px;
+            background: #22d3ee;
+        }
+        @keyframes particleOrbit6 {
+            0% {
+                transform: rotate(300deg) translateX(187px) rotate(-300deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% {
+                transform: rotate(660deg) translateX(187px) rotate(-660deg);
+                opacity: 0;
+            }
+        }
+
+        .restart-btn {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0891b2, #1e3a5f);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .debug {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0,0,0,0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug">V3: Pelkkä logo + hieno animaatio</div>
+
+    <h1>Cyberius Logo V3</h1>
+
+    <div class="logo-container" id="logoContainer">
+        <!-- Partikkelit kiertävät logoa -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <!-- Logo -->
+        <img src="logo-c-subtle.png" alt="Cyberius" class="main-logo">
+        
+        <!-- Varjo -->
+        <div class="logo-shadow"></div>
+    </div>
+
+    <button class="restart-btn" onclick="restartAnimation()">🔄 Käynnistä uudelleen</button>
+
+    <script>
+        function restartAnimation() {
+            const container = document.getElementById('logoContainer');
+            container.style.animation = 'none';
+            container.offsetHeight;
+            container.style.animation = 'ufoFromStar 5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+        }
+    </script>
+</body>
+</html>
