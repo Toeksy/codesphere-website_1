@@ -1,0 +1,103 @@
+<svg width="512" height="512" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Päägradienti - cyan ylhäältä violettiin alas -->
+        <linearGradient id="mainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#22d3ee"/>
+            <stop offset="50%" stop-color="#0891b2"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+
+        <!-- Glow efekti -->
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+
+    <!-- ULKOINEN C-KIRJAIN (kapeampi) -->
+    <path d="M 230 55 
+             A 105 105 0 1 0 230 245" 
+          fill="none" 
+          stroke="url(#mainGradient)" 
+          stroke-width="16"
+          stroke-linecap="round"
+          filter="url(#glow)"/>
+
+    <!-- Tumma sisäkehys (ympyrä C:n sisällä) -->
+    <circle cx="150" cy="150" r="88" 
+            fill="none" 
+            stroke="#0a1525" 
+            stroke-width="8"/>
+    <circle cx="150" cy="150" r="84" 
+            fill="#0a0f1a" 
+            stroke="url(#mainGradient)" 
+            stroke-width="1"
+            opacity="0.3"/>
+
+    <!-- CYBERIUS LABYRINTTI -->
+    <g id="maze-text" stroke="url(#mainGradient)" stroke-width="7" fill="none" 
+       stroke-linecap="square" stroke-linejoin="miter">
+        
+        <!-- ===== YLÄRIVI: C Y B E ===== -->
+        <!-- C-kirjain -->
+        <path d="M 100 80 L 75 80 L 75 120 L 100 120"/>
+        
+        <!-- Y-kirjain -->
+        <path d="M 108 80 L 108 92 L 118 105 L 128 92 L 128 80"/>
+        <path d="M 118 105 L 118 120"/>
+        
+        <!-- B-kirjain -->
+        <path d="M 138 80 L 138 120"/>
+        <path d="M 138 80 L 158 80 L 163 87 L 158 97 L 138 97"/>
+        <path d="M 138 97 L 160 97 L 166 107 L 160 120 L 138 120"/>
+        
+        <!-- E-kirjain -->
+        <path d="M 175 80 L 198 80"/>
+        <path d="M 175 80 L 175 120 L 198 120"/>
+        <path d="M 175 100 L 192 100"/>
+
+        <!-- Pystyviiva ylä- ja alarivien välissä -->
+        <path d="M 118 120 L 118 135" stroke-width="4" opacity="0.5"/>
+        <path d="M 175 120 L 175 135" stroke-width="4" opacity="0.5"/>
+
+        <!-- ===== ALARIVI: R I U S ===== -->
+        <!-- R-kirjain -->
+        <path d="M 75 145 L 75 185"/>
+        <path d="M 75 145 L 95 145 L 100 152 L 95 162 L 75 162"/>
+        <path d="M 88 162 L 100 185"/>
+        
+        <!-- I-kirjain -->
+        <path d="M 108 145 L 128 145"/>
+        <path d="M 118 145 L 118 185"/>
+        <path d="M 108 185 L 128 185"/>
+        
+        <!-- U-kirjain -->
+        <path d="M 138 145 L 138 175 L 150 185 L 162 175 L 162 145"/>
+        
+        <!-- S-kirjain -->
+        <path d="M 198 145 L 175 145 L 175 162 L 198 162 L 198 185 L 175 185"/>
+    </g>
+
+    <!-- PIIRILEVYN NODET -->
+    <g id="circuit-nodes" fill="#22d3ee">
+        <!-- Ylärivi -->
+        <circle cx="75" cy="80" r="3.5"/>
+        <circle cx="100" cy="100" r="2.5"/>
+        <circle cx="118" cy="105" r="3"/>
+        <circle cx="138" cy="97" r="2.5"/>
+        <circle cx="163" cy="87" r="2.5"/>
+        <circle cx="175" cy="100" r="2.5"/>
+        <circle cx="198" cy="80" r="3.5"/>
+        
+        <!-- Alarivi -->
+        <circle cx="75" cy="162" r="3"/>
+        <circle cx="100" cy="152" r="2.5"/>
+        <circle cx="118" cy="165" r="2.5"/>
+        <circle cx="150" cy="185" r="3"/>
+        <circle cx="175" cy="162" r="2.5"/>
+        <circle cx="198" cy="185" r="3.5"/>
+    </g>
+</svg>
