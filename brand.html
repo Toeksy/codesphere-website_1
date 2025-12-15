@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brändimateriaali - Cyberius Oy</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --card-bg: #1a1a2e;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #0891b2;
+            --border: #2a2a3e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(8, 145, 178, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #22d3ee, #0891b2, #4338ca);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Download All Button */
+        .download-all {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .download-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0891b2, #4338ca);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(8, 145, 178, 0.3);
+        }
+
+        .download-all-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(8, 145, 178, 0.4);
+        }
+
+        .download-all-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Brand Grid */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .brand-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px rgba(8, 145, 178, 0.15);
+        }
+
+        .brand-preview {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-preview.dark-bg {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+
+        .brand-preview.light-bg {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f5 100%);
+        }
+
+        .brand-preview.transparent-bg {
+            background: repeating-conic-gradient(#404040 0% 25%, #303030 0% 50%) 50% / 20px 20px;
+        }
+
+        .brand-preview img {
+            max-width: 140px;
+            max-height: 140px;
+            object-fit: contain;
+        }
+
+        .brand-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .brand-card .meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+        }
+
+        .brand-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: rgba(8, 145, 178, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-download:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-copy {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .btn-copy:hover {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-download svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Colors Section */
+        .colors-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .colors-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .colors-grid {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-item:hover {
+            transform: scale(1.05);
+        }
+
+        .color-swatch {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .color-item span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .color-item strong {
+            display: block;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Hero Banner Preview */
+        .hero-preview {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .hero-preview h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #0891b2, #10b981);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(8, 145, 178, 0.4);
+        }
+
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="cyberius-logo-64.png" alt="Cyberius">
+            <span>CYBERIUS</span>
+        </a>
+        <a href="index.html" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Takaisin
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Brändimateriaali</h1>
+            <p>Lataa Cyberius-logot ja -materiaalit käyttöösi. Klikkaa "Kopioi" kopioidaksesi leikepöydälle tai lataa haluamassasi formaatissa.</p>
+        </div>
+
+        <!-- Download All -->
+        <div class="download-all">
+            <a href="brand/cyberius-brand-pack.zip" download class="download-all-btn" id="downloadAllBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7,10 12,15 17,10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Lataa kaikki (ZIP)
+            </a>
+        </div>
+
+        <!-- Brand Grid -->
+        <div class="brand-grid">
+            <!-- Värillinen logo -->
+            <div class="brand-card">
+                <div class="brand-preview dark-bg">
+                    <img src="brand/cyberius-logo-color.png" alt="Cyberius logo värillinen" id="img-color">
+                </div>
+                <h3>Päälogo - Värillinen</h3>
+                <p>Käytä tummalla taustalla. Ensisijainen logo.</p>
+                <div class="meta">PNG • 640×640px • Läpinäkyvä tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-logo-color.png" download="cyberius-logo-color.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <a href="brand/cyberius-logo.svg" download="cyberius-logo.svg" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        SVG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-logo-color.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Valkoinen logo -->
+            <div class="brand-card">
+                <div class="brand-preview dark-bg">
+                    <img src="brand/cyberius-logo-white.png" alt="Cyberius logo valkoinen" id="img-white">
+                </div>
+                <h3>Valkoinen logo</h3>
+                <p>Yksivärinen versio tummalle taustalle.</p>
+                <div class="meta">PNG • 640×640px • Läpinäkyvä tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-logo-white.png" download="cyberius-logo-white.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-logo-white.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Musta logo -->
+            <div class="brand-card">
+                <div class="brand-preview light-bg">
+                    <img src="brand/cyberius-logo-black.png" alt="Cyberius logo musta" id="img-black">
+                </div>
+                <h3>Musta logo</h3>
+                <p>Yksivärinen versio vaalealle taustalle.</p>
+                <div class="meta">PNG • 640×640px • Läpinäkyvä tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-logo-black.png" download="cyberius-logo-black.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-logo-black.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sininen logo -->
+            <div class="brand-card">
+                <div class="brand-preview transparent-bg">
+                    <img src="brand/cyberius-logo-blue.png" alt="Cyberius logo sininen" id="img-blue">
+                </div>
+                <h3>Cyberius sininen</h3>
+                <p>Brändiväri, läpinäkyvä tausta.</p>
+                <div class="meta">PNG • 640×640px • Läpinäkyvä tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-logo-blue.png" download="cyberius-logo-blue.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-logo-blue.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Logo tummalla taustalla -->
+            <div class="brand-card">
+                <div class="brand-preview dark-bg">
+                    <img src="brand/cyberius-logo-color-dark-bg.png" alt="Cyberius logo tummalla taustalla" style="max-width: 180px; max-height: 180px;">
+                </div>
+                <h3>Some & esitykset (tumma)</h3>
+                <p>Valmis käytettäväksi sosiaalisessa mediassa.</p>
+                <div class="meta">PNG • 700×700px • Tumma tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-logo-color-dark-bg.png" download="cyberius-some-dark.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-logo-color-dark-bg.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Logo vaalealla taustalla -->
+            <div class="brand-card">
+                <div class="brand-preview light-bg">
+                    <img src="brand/cyberius-logo-black-light-bg.png" alt="Cyberius logo vaalealla taustalla" style="max-width: 180px; max-height: 180px;">
+                </div>
+                <h3>Tulostus & painatus</h3>
+                <p>Valmis tulostukseen ja painatukseen.</p>
+                <div class="meta">PNG • 700×700px • Vaalea tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-logo-black-light-bg.png" download="cyberius-print-light.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-logo-black-light-bg.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Header banner -->
+            <div class="brand-card">
+                <div class="brand-preview dark-bg">
+                    <img src="brand/cyberius-header.png" alt="Cyberius header" style="max-width: 280px; max-height: 100px;">
+                </div>
+                <h3>Header / Banner</h3>
+                <p>Logo + teksti yhdistelmä.</p>
+                <div class="meta">PNG • 400×100px • Läpinäkyvä tausta</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-header.png" download="cyberius-header.png" class="btn-download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        PNG
+                    </a>
+                    <button class="btn-download btn-copy" onclick="copyImage('brand/cyberius-header.png')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Kopioi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Favicon / Icon -->
+            <div class="brand-card">
+                <div class="brand-preview transparent-bg">
+                    <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                        <img src="brand/cyberius-icon-256.png" alt="Icon 256" style="width: 64px; height: 64px;">
+                        <img src="brand/cyberius-icon-128.png" alt="Icon 128" style="width: 48px; height: 48px;">
+                        <img src="brand/cyberius-icon-64.png" alt="Icon 64" style="width: 32px; height: 32px;">
+                        <img src="brand/cyberius-icon-32.png" alt="Icon 32" style="width: 24px; height: 24px;">
+                    </div>
+                </div>
+                <h3>Favicon & Ikonit</h3>
+                <p>Eri kokoiset ikonit sovelluksiin.</p>
+                <div class="meta">PNG • 256, 128, 64, 32, 16px</div>
+                <div class="brand-actions">
+                    <a href="brand/cyberius-icon-256.png" download="cyberius-icon-256.png" class="btn-download">256</a>
+                    <a href="brand/cyberius-icon-128.png" download="cyberius-icon-128.png" class="btn-download">128</a>
+                    <a href="brand/cyberius-icon-64.png" download="cyberius-icon-64.png" class="btn-download">64</a>
+                    <a href="brand/cyberius-icon-32.png" download="cyberius-icon-32.png" class="btn-download">32</a>
+                    <a href="favicon.ico" download="favicon.ico" class="btn-download">ICO</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colors Section -->
+        <div class="colors-section">
+            <h2>Brändivärit</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Klikkaa väriä kopioidaksesi HEX-koodin</p>
+            <div class="colors-grid">
+                <div class="color-item" onclick="copyColor('#0891b2')">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #0891b2, #22d3ee);"></div>
+                    <span>Accent / Primary</span>
+                    <strong>#0891b2</strong>
+                </div>
+                <div class="color-item" onclick="copyColor('#4338ca')">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #4338ca, #6366f1);"></div>
+                    <span>Secondary</span>
+                    <strong>#4338ca</strong>
+                </div>
+                <div class="color-item" onclick="copyColor('#10b981')">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #10b981, #34d399);"></div>
+                    <span>Success</span>
+                    <strong>#10b981</strong>
+                </div>
+                <div class="color-item" onclick="copyColor('#0a0a0f')">
+                    <div class="color-swatch" style="background: #0a0a0f; border: 1px solid #333;"></div>
+                    <span>Background Dark</span>
+                    <strong>#0a0a0f</strong>
+                </div>
+                <div class="color-item" onclick="copyColor('#1a1a2e')">
+                    <div class="color-swatch" style="background: #1a1a2e;"></div>
+                    <span>Card Background</span>
+                    <strong>#1a1a2e</strong>
+                </div>
+                <div class="color-item" onclick="copyColor('#e2e8f0')">
+                    <div class="color-swatch" style="background: #e2e8f0;"></div>
+                    <span>Text Light</span>
+                    <strong>#e2e8f0</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Cyberius Oy • <a href="index.html">cyberius.fi</a></p>
+        </footer>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Copy image to clipboard
+        async function copyImage(imageSrc) {
+            try {
+                const response = await fetch(imageSrc);
+                const blob = await response.blob();
+                await navigator.clipboard.write([
+                    new ClipboardItem({ [blob.type]: blob })
+                ]);
+                showNotification('Logo kopioitu leikepöydälle! ✓');
+            } catch (err) {
+                console.error('Clipboard error:', err);
+                // Fallback: open image
+                window.open(imageSrc, '_blank');
+                showNotification('Kuva avattu uuteen välilehteen');
+            }
+        }
+
+        // Copy color code
+        function copyColor(color) {
+            navigator.clipboard.writeText(color).then(() => {
+                showNotification(`Värikoodi ${color} kopioitu! ✓`);
+            });
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2500);
+        }
+
+        // Download all button - create ZIP on the fly or use pre-made
+        document.getElementById('downloadAllBtn').addEventListener('click', function(e) {
+            // If ZIP doesn't exist, show notification
+            showNotification('Ladataan brändipakettia...');
+        });
+    </script>
+</body>
+</html>
