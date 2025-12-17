@@ -539,6 +539,16 @@
       .footer { font-size: 10px; gap: 6px; }
       .footer a, .footer button { padding: 7px 8px; font-size: 11px; }
     }
+
+    /* Final override for very short viewports (phone landscape):
+       ensure the card keeps a real height (aspect-ratio must not become auto). */
+    @media (max-height: 520px) {
+      .card {
+        aspect-ratio: 1050 / 600;
+        width: min(100%, calc((100dvh - 24px) * 1.75));
+        min-height: 0;
+      }
+    }
   </style>
 </head>
 <body>

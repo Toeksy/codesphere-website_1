@@ -8,3 +8,6 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# UI smoke test artifacts
+/tools/ui-smoke-artifacts/
