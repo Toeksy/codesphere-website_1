@@ -376,8 +376,8 @@
       backdrop-filter: blur(8px);
     }
 
-    /* Small screens: pin content vertically (default). Landscape overrides below. */
-    @media (max-width: 900px) {
+    /* Narrow screens: stack content vertically */
+    @media (max-width: 720px) {
       body { padding: 8px; }
       
       .card {
@@ -439,13 +439,14 @@
       .viewport { height: calc(100% - 40px); }
     }
 
-    /* Landscape mobile: säilytä kaksipalstaisuus */
-    @media (max-width: 900px) and (orientation: landscape) {
+    /* Wider mobiles / small tablets: keep two columns (no orientation dependency) */
+    @media (min-width: 721px) and (max-width: 900px) {
       body { padding: 10px; }
       .card {
         aspect-ratio: auto;
         border-radius: 18px;
         min-height: 85vh;
+        min-height: 85dvh;
       }
       .inner {
         grid-template-columns: 1fr 1fr;
@@ -853,9 +854,11 @@
       return normalizeLang(navigator.language || 'fi');
     }
 
-    const BUILD = 'f757071';
     const buildTag = document.getElementById('buildTag');
-    if (buildTag) buildTag.textContent = `build ${BUILD}`;
+    if (buildTag) {
+      const v = new URLSearchParams(location.search).get('v');
+      buildTag.textContent = `build ${v || 'main'}`;
+    }
 
     initLangUI();
     applyLang(pickInitialLang());
