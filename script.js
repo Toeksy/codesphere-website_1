@@ -1,5 +1,5 @@
 /**
- * CYBERIUS OY - Website JavaScript
+ * Codesphere – Website JavaScript
  * Moderni, minimaalinen funktionaalisuus
  */
 
