@@ -62,8 +62,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
+        }
+
+        /* Ensure content layers above the background canvas */
+        body > :not(#bg-canvas) {
+            position: relative;
+            z-index: 1;
         }
 
         /* ========================================
@@ -2229,17 +2235,21 @@
         let connections = [];
         let mouseX = 0, mouseY = 0;
         
+        const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData = !!(navigator.connection && navigator.connection.saveData);
+        const smallScreen = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+
         // Configuration
         const config = {
-            particleCount: 80,
-            particleRadius: 2,
-            connectionDistance: 150,
+            particleCount: (prefersReducedMotion || saveData) ? 35 : (smallScreen ? 55 : 110),
+            particleRadius: (prefersReducedMotion || saveData) ? 1.6 : 2,
+            connectionDistance: (prefersReducedMotion || saveData) ? 120 : 165,
             mouseRadius: 200,
-            baseSpeed: 0.3,
+            baseSpeed: (prefersReducedMotion || saveData) ? 0.12 : 0.38,
             colors: {
-                particle: 'rgba(0, 255, 255, 0.55)',
-                connection: 'rgba(0, 255, 255, 0.14)',
-                connectionHover: 'rgba(0, 255, 255, 0.28)'
+                particle: 'rgba(0, 255, 255, 0.65)',
+                connection: 'rgba(0, 255, 255, 0.16)',
+                connectionHover: 'rgba(0, 255, 255, 0.30)'
             }
         };
         
