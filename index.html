@@ -19,9 +19,10 @@
         :root {
             --primary: #1e3a5f;
             --primary-light: #2d5a87;
-            --accent: #0891b2;
-            --accent-glow: rgba(8, 145, 178, 0.4);
-            --success: #10b981;
+            --accent: #00ffff;
+            --accent-rgb: 0, 255, 255;
+            --accent-glow: rgba(var(--accent-rgb), 0.35);
+            --success: #00ffff;
             --bg-dark: #0a0f1a;
             --bg-card: rgba(255, 255, 255, 0.03);
             --bg-card-hover: rgba(255, 255, 255, 0.06);
@@ -88,30 +89,33 @@
             align-items: center;
             gap: 0.75rem;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: inherit;
         }
 
         .logo-icon {
-            width: 44px;
-            height: 44px;
+            width: 53px;
+            height: 53px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .logo-icon svg {
-            filter: drop-shadow(0 0 8px rgba(8, 145, 178, 0.4));
+            filter: drop-shadow(0 0 8px var(--accent-glow));
         }
 
         .nav-logo-img {
-            height: 44px;
+            height: 53px;
             width: auto;
-            filter: drop-shadow(0 0 8px rgba(8, 145, 178, 0.5));
+            /* Hillitty glow - ei liian kirkas */
+            filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.5));
             transition: filter 0.3s ease;
         }
 
         .nav-logo-img:hover {
-            filter: drop-shadow(0 0 15px rgba(8, 145, 178, 0.8));
+            filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.7));
         }
 
         .nav-links {
@@ -144,6 +148,26 @@
             text-decoration: none;
         }
 
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-lang {
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid rgba(var(--accent-rgb), 0.20);
+            background: rgba(0,0,0,0.22);
+            color: rgba(241,245,249,0.9);
+            padding: 0 0.65rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .nav-lang option { background: var(--bg-dark); }
+
         .nav-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px var(--accent-glow);
@@ -159,18 +183,30 @@
             }
             
             .logo {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
             
             .nav-logo-img {
-                height: 32px;
+                height: 38px;
             }
             
             .nav-cta {
                 padding: 0.5rem 1rem;
                 font-size: 0.85rem;
             }
+
+            .nav-lang {
+                height: 34px;
+                font-size: 0.8rem;
+                padding: 0 0.55rem;
+            }
         }
+
+        /* RTL (esim. arabia) – pidetään layout kasassa */
+        html[dir="rtl"] body { direction: rtl; }
+        html[dir="rtl"] .nav { flex-direction: row-reverse; }
+        html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+        html[dir="rtl"] .nav-actions { flex-direction: row-reverse; }
 
         /* ========================================
            HERO SECTION
@@ -196,7 +232,7 @@
             margin-top: 3rem;
             position: relative;
             perspective: 3000px;
-            height: 400px;
+            height: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -204,8 +240,8 @@
 
         /* Logo-container - UFO-tyylinen animaatio */
         .logo-container {
-            width: 340px;
-            height: 340px;
+            width: 540px;
+            height: 540px;
             position: relative;
             animation: ufoFromStar 4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
                        ufoHover 5s ease-in-out 4s infinite;
@@ -221,55 +257,132 @@
             }
             
             .hero-logo {
-                height: 250px;
+                height: 300px;
                 margin-top: 1rem;
                 margin-bottom: 1rem;
             }
             
             .logo-container {
-                width: 200px;
-                height: 200px;
+                width: 240px;
+                height: 240px;
             }
         }
 
-        /* Varjo logon alle */
+        /* Pulssirenkaat (ääni-/signaaliaallot) logon ympärille */
+        .logo-container::before,
         .logo-container::after {
             content: '';
             position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 40px;
-            background: radial-gradient(ellipse, rgba(0, 255, 255, 0.4) 0%, transparent 70%);
+            inset: -4.8%;
             border-radius: 50%;
-            filter: blur(15px);
+            border: 2px solid rgba(var(--accent-rgb), 0.34);
+            box-shadow: 0 0 28px rgba(var(--accent-rgb), 0.22);
             opacity: 0;
-            animation: shadowAppear 4s forwards, ufoShadow 5s ease-in-out 4s infinite;
+            pointer-events: none;
+            z-index: 30;
+            animation: pulse-waves 3.6s ease-out infinite;
         }
 
-        @keyframes shadowAppear {
-            0%, 80% { opacity: 0; }
-            100% { opacity: 1; }
+        .logo-container::after {
+            inset: -8%;
+            border-color: rgba(var(--accent-rgb), 0.24);
+            box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.16);
+            animation-duration: 4.8s;
+            animation-delay: 0.9s;
         }
 
+        @keyframes pulse-waves {
+            0% {
+                transform: scale(0.88);
+                opacity: 0;
+            }
+            12% {
+                opacity: 0.75;
+            }
+            100% {
+                transform: scale(1.34);
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .logo-container::before,
+            .logo-container::after {
+                animation: none;
+                opacity: 0.18;
+            }
+        }
+
+        /* LOGO TYYLIT */
         .hero-logo-img {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 40px rgba(0, 255, 255, 0.6)) 
-                    drop-shadow(0 0 80px rgba(180, 100, 255, 0.4));
-            transition: filter 0.3s ease;
+            /* Normaali tila - selkeä syaani glow */
+            filter: drop-shadow(0 0 22px rgba(0, 255, 255, 0.85))
+                drop-shadow(0 0 48px rgba(0, 255, 255, 0.55))
+                drop-shadow(0 0 96px rgba(0, 255, 255, 0.28))
+                drop-shadow(0 0 156px rgba(0, 200, 255, 0.16));
+            transition: opacity 0.3s ease, filter 0.3s ease;
         }
 
-        .hero-logo-img:hover {
-            filter: drop-shadow(0 0 60px rgba(0, 255, 255, 0.9)) 
-                    drop-shadow(0 0 120px rgba(180, 100, 255, 0.6));
+        /* Pikselöity hover-logo */
+        .hero-logo-pixel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            /* SELKEÄMPI GLOW pikselöidylle */
+                filter: drop-shadow(0 0 10px rgba(0, 255, 255, 1))
+                    drop-shadow(0 0 24px rgba(0, 255, 255, 0.8))
+                    drop-shadow(0 0 48px rgba(0, 200, 255, 0.5));
+            transition: opacity 0.3s ease;
+            z-index: 5;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        /* Hover - piilota normaali logo */
+        .logo-container:hover .hero-logo-img,
+        .logo-container.rgb-active .hero-logo-img {
+            opacity: 0;
+        }
+
+        /* Näytä pikselilogo hover-tilassa (taustalla canvasille) */
+        .logo-container:hover .hero-logo-pixel,
+        .logo-container.rgb-active .hero-logo-pixel {
+            /* Piilota IMG: canvas piirtää pixel-perfect kokonaislukuskaalalla */
+            opacity: 0;
+        }
+
+        /* RGB Canvas - piirretään JavaScriptillä */
+        #rgb-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+            image-rendering: pixelated;
+            /* Glow myös canvasille */
+                filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.9))
+                    drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+        }
+
+        /* Hover/click aktivoi RGB canvas */
+        .logo-container:hover #rgb-canvas,
+        .logo-container.rgb-active #rgb-canvas {
+            opacity: 1;
         }
 
         /* UFO saapuu tähdestä - matalammalta jotta näkyy */
         @keyframes ufoFromStar {
             0% {
-                transform: scale(0.01) translateY(-600px) rotateZ(0deg);
+                transform: scale(0.01) translateY(-720px) rotateZ(0deg);
                 opacity: 0;
                 filter: brightness(4);
             }
@@ -289,13 +402,13 @@
                 transform: translateY(0px) rotateX(5deg) scale(1);
             }
             25% {
-                transform: translateY(-15px) rotateX(8deg) scale(1.02);
+                transform: translateY(-18px) rotateX(8deg) scale(1.02);
             }
             50% {
-                transform: translateY(-8px) rotateX(3deg) scale(0.99);
+                transform: translateY(-10px) rotateX(3deg) scale(0.99);
             }
             75% {
-                transform: translateY(-20px) rotateX(6deg) scale(1.01);
+                transform: translateY(-24px) rotateX(6deg) scale(1.01);
             }
         }
 
@@ -319,20 +432,9 @@
             }
         }
 
-        /* Hehku pulssi animaation jälkeen */
+        /* Hehku pulssi animaation jälkeen - EI GLOWIA, puhdas logo */
         .logo-container.animation-done .hero-logo-img {
-            animation: logoGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes logoGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 40px rgba(0, 255, 255, 0.5)) 
-                        drop-shadow(0 0 80px rgba(180, 100, 255, 0.3));
-            }
-            50% {
-                filter: drop-shadow(0 0 60px rgba(0, 255, 255, 0.8)) 
-                        drop-shadow(0 0 120px rgba(180, 100, 255, 0.6));
-            }
+            filter: none;
         }
 
         /* Audio Toggle Button */
@@ -343,14 +445,14 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.9), rgba(180, 100, 255, 0.9));
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(var(--accent-rgb), 0.55));
             border: 2px solid rgba(255, 255, 255, 0.2);
             color: white;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.35);
             transition: all 0.3s ease;
             z-index: 1000;
             backdrop-filter: blur(10px);
@@ -358,10 +460,11 @@
 
         .audio-toggle:hover {
             transform: scale(1.1) rotateZ(15deg);
-            box-shadow: 0 6px 30px rgba(0, 255, 255, 0.6);
+            box-shadow: 0 6px 30px rgba(var(--accent-rgb), 0.55);
         }
 
-        /* Pulse ring efekti - käynnistyy animaation jälkeen */
+        /* Pulse ring efekti - POISTETTU - häiritsi käyttäjää */
+        /* 
         .hero-logo::before,
         .hero-logo::after {
             content: '';
@@ -374,18 +477,14 @@
             opacity: 0;
             animation: pulse-ring 3s ease-out 3s infinite;
         }
+        */
 
         .hero-logo::before {
-            width: 320px;
-            height: 320px;
-            animation-delay: 3s;
+            display: none;
         }
 
         .hero-logo::after {
-            width: 360px;
-            height: 360px;
-            border-color: rgba(180, 100, 255, 0.25);
-            animation-delay: 4.5s;
+            display: none;
         }
 
         @keyframes pulse-ring {
@@ -469,6 +568,14 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .btn .btn-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.25));
         }
 
         .btn-primary {
@@ -662,8 +769,8 @@
 
         .service-tag {
             padding: 0.25rem 0.75rem;
-            background: rgba(8, 145, 178, 0.1);
-            border: 1px solid rgba(8, 145, 178, 0.2);
+            background: rgba(var(--accent-rgb), 0.08);
+            border: 1px solid rgba(var(--accent-rgb), 0.18);
             border-radius: 50px;
             font-size: 0.8rem;
             color: var(--accent);
@@ -675,7 +782,7 @@
             color: var(--success);
             margin: 1rem 0;
             padding: 0.5rem 1rem;
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(var(--accent-rgb), 0.08);
             border-radius: 8px;
             display: inline-block;
         }
@@ -707,7 +814,7 @@
         .team-card:hover {
             transform: translateY(-10px);
             border-color: var(--accent);
-            box-shadow: 0 20px 60px rgba(8, 145, 178, 0.15);
+            box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.12);
         }
 
         .team-avatar {
@@ -780,7 +887,7 @@
            TESTIMONIALS
            ======================================== */
         .testimonials {
-            background: linear-gradient(180deg, transparent, rgba(8, 145, 178, 0.05), transparent);
+            background: linear-gradient(180deg, transparent, rgba(var(--accent-rgb), 0.045), transparent);
         }
 
         .testimonial-grid {
@@ -1003,7 +1110,7 @@
            ======================================== */
         .brand-section {
             padding: 5rem 2rem;
-            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(var(--accent-rgb), 0.03) 100%);
         }
 
         .brand-grid {
@@ -1015,7 +1122,7 @@
         }
 
         .brand-card {
-            background: var(--card-bg);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 1.5rem;
@@ -1026,7 +1133,7 @@
         .brand-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
-            box-shadow: 0 15px 40px rgba(8, 145, 178, 0.15);
+            box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.12);
         }
 
         .brand-preview {
@@ -1062,7 +1169,7 @@
         .brand-card h4 {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
-            color: var(--text);
+            color: var(--text-white);
         }
 
         .brand-card p {
@@ -1083,7 +1190,7 @@
             align-items: center;
             gap: 0.3rem;
             padding: 0.4rem 0.8rem;
-            background: rgba(8, 145, 178, 0.1);
+            background: rgba(var(--accent-rgb), 0.08);
             border: 1px solid var(--accent);
             border-radius: 6px;
             color: var(--accent);
@@ -1229,18 +1336,21 @@
 
     <!-- Navigation -->
     <nav class="nav">
-        <div class="logo">
+        <a class="logo" href="#">
             <img src="codesphere-logo-128.png" alt="Codesphere" class="nav-logo-img">
             <span>CODESPHERE</span>
-        </div>
+        </a>
         <ul class="nav-links">
-            <li><a href="#palvelut">Palvelut</a></li>
-            <li><a href="#tiimi">Tiimi</a></li>
-            <li><a href="#referenssit">Referenssit</a></li>
-            <li><a href="#aloitus">Yhteistyö</a></li>
-            <li><a href="#yhteystiedot">Yhteystiedot</a></li>
+            <li><a href="#palvelut" data-i18n="navServices">Palvelut</a></li>
+            <li><a href="#tiimi" data-i18n="navTeam">Tiimi</a></li>
+            <li><a href="#referenssit" data-i18n="navReferences">Referenssit</a></li>
+            <li><a href="#aloitus" data-i18n="navCoop">Yhteistyö</a></li>
+            <li><a href="#yhteystiedot" data-i18n="navContact">Yhteystiedot</a></li>
         </ul>
-        <a href="#aloitus" class="nav-cta">Aloita keskustelu</a>
+        <div class="nav-actions">
+            <select class="nav-lang" id="langSelect" aria-label="Language"></select>
+            <a href="#aloitus" class="nav-cta" data-i18n="navCta">Aloita keskustelu</a>
+        </div>
     </nav>
 
     <!-- SVG Icon Definitions -->
@@ -1248,12 +1358,12 @@
         <defs>
             <!-- Gradient definitions -->
             <linearGradient id="grad-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0891b2"/>
-                <stop offset="100%" stop-color="#10b981"/>
+                <stop offset="0%" stop-color="#00ffff"/>
+                <stop offset="100%" stop-color="#2d5a87"/>
             </linearGradient>
             <linearGradient id="grad-ai" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#8b5cf6"/>
-                <stop offset="100%" stop-color="#0891b2"/>
+                <stop offset="0%" stop-color="#1e3a5f"/>
+                <stop offset="100%" stop-color="#00ffff"/>
             </linearGradient>
             <linearGradient id="grad-fire" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#f59e0b"/>
@@ -1332,7 +1442,7 @@
     </svg>
 
     <!-- Audio Control -->
-    <button class="audio-toggle" id="audioToggle" title="Taustamusiikki">
+    <button class="audio-toggle" id="audioToggle" title="Taustamusiikki" data-i18n-title="audioTitle">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 18V5l12-2v13M9 18c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>
             <circle cx="18" cy="16" r="3"/>
@@ -1345,30 +1455,32 @@
             <!-- Logo lentää kaukaa -->
             <div class="hero-logo">
                 <div class="logo-container">
-                    <img src="codesphere-logo-512.png" alt="Codesphere Logo" class="hero-logo-img" id="mainLogo">
+                    <img src="codesphere-logo-680.png?v=2" alt="Codesphere Logo" class="hero-logo-img" id="mainLogo">
+                    <img src="codesphere-logo-64.png?v=2" alt="Codesphere Pixel" class="hero-logo-pixel" id="pixelLogo">
+                    <canvas id="rgb-canvas"></canvas>
                 </div>
             </div>
-            <h1>Koodia, joka muuttaa maailmaa</h1>
-            <p class="hero-subtitle">Globaalia ohjelmistokehitystä ja moderneja digitaalisia ratkaisuja</p>
-            <p>Verkkosivut, sovellukset ja ohjelmistot - suunnittelemme ja toteutamme visiosi todellisuudeksi.</p>
+            <h1 data-i18n="heroTitle">Koodia, joka muuttaa maailmaa</h1>
+            <p class="hero-subtitle" data-i18n="heroSubtitle">Globaalia ohjelmistokehitystä ja moderneja digitaalisia ratkaisuja</p>
+            <p data-i18n="heroBody">Verkkosivut, sovellukset ja ohjelmistot - suunnittelemme ja toteutamme visiosi todellisuudeksi.</p>
             <div class="hero-buttons">
                 <a href="#yhteystiedot" class="btn btn-primary">
-                    Aloita projekti
+                    <span data-i18n="heroPrimaryCta">Aloita projekti</span>
                     <svg width="20" height="20"><use href="#icon-arrow"/></svg>
                 </a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
                     <div class="stat-value">4</div>
-                    <div class="stat-label">Erikoisalaa</div>
+                    <div class="stat-label" data-i18n="heroStat1">Erikoisalaa</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">3</div>
-                    <div class="stat-label">Asiantuntijaa</div>
+                    <div class="stat-label" data-i18n="heroStat2">Asiantuntijaa</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">100%</div>
-                    <div class="stat-label">Asiakastyytyväisyys</div>
+                    <div class="stat-label" data-i18n="heroStat3">Asiakastyytyväisyys</div>
                 </div>
             </div>
         </div>
@@ -1378,25 +1490,25 @@
     <section id="ongelmakehys">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Kun vastuu kasvaa, rakenteet paljastuvat</h2>
-                <p>Kasvun myötä järjestelmät, vastuut ja toimittajat monimutkaistuvat. Ilman selkeää rakennetta kokonaisuus alkaa hajota.</p>
+                <h2 data-i18n="pfTitle">Kun vastuu kasvaa, rakenteet paljastuvat</h2>
+                <p data-i18n="pfBody">Kasvun myötä järjestelmät, vastuut ja toimittajat monimutkaistuvat. Ilman selkeää rakennetta kokonaisuus alkaa hajota.</p>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                 <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 12px; padding: 1.5rem; border-left: 4px solid #ef4444;">
-                    <h3 style="color: #ef4444; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ Riippuvuus yksilöistä</h3>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Kriittinen tieto yhden henkilön päässä. Kun hän lähtee, tieto lähtee mukana.</p>
+                    <h3 style="color: #ef4444; font-size: 1.1rem; margin-bottom: 0.75rem;" data-i18n="pfCard1Title">⚠️ Riippuvuus yksilöistä</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;" data-i18n="pfCard1Body">Kriittinen tieto yhden henkilön päässä. Kun hän lähtee, tieto lähtee mukana.</p>
                 </div>
                 <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 12px; padding: 1.5rem; border-left: 4px solid #f59e0b;">
-                    <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ Hajautunut vastuu</h3>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Monta toimittajaa, ei yhtä vastuunkantajaa. Ongelmat pompotellaan ympäriinsä.</p>
+                    <h3 style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.75rem;" data-i18n="pfCard2Title">⚠️ Hajautunut vastuu</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;" data-i18n="pfCard2Body">Monta toimittajaa, ei yhtä vastuunkantajaa. Ongelmat pompotellaan ympäriinsä.</p>
                 </div>
-                <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 12px; padding: 1.5rem; border-left: 4px solid #8b5cf6;">
-                    <h3 style="color: #8b5cf6; font-size: 1.1rem; margin-bottom: 0.75rem;">⚠️ Dokumentaatio puuttuu</h3>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">Järjestelmät toimivat, mutta kukaan ei tiedä miten. Muutokset ovat riskejä.</p>
+                <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 12px; padding: 1.5rem; border-left: 4px solid var(--accent);">
+                    <h3 style="color: var(--accent); font-size: 1.1rem; margin-bottom: 0.75rem;" data-i18n="pfCard3Title">⚠️ Dokumentaatio puuttuu</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;" data-i18n="pfCard3Body">Järjestelmät toimivat, mutta kukaan ei tiedä miten. Muutokset ovat riskejä.</p>
                 </div>
             </div>
             <div class="fade-in" style="text-align: center; margin-top: 2.5rem;">
-                <p style="font-size: 1.1rem; color: #10b981; font-weight: 500;">→ Codesphere ratkaisee nämä rakenteella, ei yksittäisillä sankareilla.</p>
+                <p style="font-size: 1.1rem; color: var(--accent); font-weight: 500;" data-i18n="pfCta">→ Codesphere ratkaisee nämä rakenteella, ei yksittäisillä sankareilla.</p>
             </div>
         </div>
     </section>
@@ -1405,56 +1517,56 @@
     <section id="palvelut">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Mitä kannamme vastuullemme</h2>
-                <p>Neljä erikoisalaa, yksi kokonaisvaltainen kumppani. Toteutamme ratkaisut alusta loppuun – vastuu säilyy meillä.</p>
+                <h2 data-i18n="servicesTitle">Mitä kannamme vastuullemme</h2>
+                <p data-i18n="servicesBody">Neljä erikoisalaa, yksi kokonaisvaltainen kumppani. Toteutamme ratkaisut alusta loppuun – vastuu säilyy meillä.</p>
             </div>
             <div class="services-grid">
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <svg width="32" height="32"><use href="#icon-shield"/></svg>
                     </div>
-                    <h3>Tekninen vastuu ja asiantuntijatodistelu</h3>
-                    <p>Asiantuntijalausunnot, tuomioistuintodistelu ja verkkohuijausten tutkinta. Autamme viranomaisia ja yrityksiä selvittämään monimutkaisia kybertapauksia – ja kannamme vastuun lausunnoistamme.</p>
+                    <h3 data-i18n="service1Title">Tekninen vastuu ja asiantuntijatodistelu</h3>
+                    <p data-i18n="service1Body">Asiantuntijalausunnot, tuomioistuintodistelu ja verkkohuijausten tutkinta. Autamme viranomaisia ja yrityksiä selvittämään monimutkaisia kybertapauksia – ja kannamme vastuun lausunnoistamme.</p>
                     <div class="service-tags">
-                        <span class="service-tag">Lausunnot</span>
-                        <span class="service-tag">Forensiikka</span>
-                        <span class="service-tag">Tutkinta</span>
+                        <span class="service-tag" data-i18n="service1Tag1">Lausunnot</span>
+                        <span class="service-tag" data-i18n="service1Tag2">Forensiikka</span>
+                        <span class="service-tag" data-i18n="service1Tag3">Tutkinta</span>
                     </div>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <svg width="32" height="32"><use href="#icon-brain"/></svg>
                     </div>
-                    <h3>Älykkäät järjestelmät ja automaatio</h3>
-                    <p>AI-konsultointi, prosessiautomaatio ja tekoälypohjainen sisällöntuotanto. Konkreettisia ratkaisuja, jotka säästävät aikaa ja resursseja – järjestelmien ylläpito ja kehitys sisältyvat.</p>
+                    <h3 data-i18n="service2Title">Älykkäät järjestelmät ja automaatio</h3>
+                    <p data-i18n="service2Body">AI-konsultointi, prosessiautomaatio ja tekoälypohjainen sisällöntuotanto. Konkreettisia ratkaisuja, jotka säästävät aikaa ja resursseja – järjestelmien ylläpito ja kehitys sisältyvat.</p>
                     <div class="service-tags">
-                        <span class="service-tag">AI-konsultointi</span>
-                        <span class="service-tag">Automaatio</span>
-                        <span class="service-tag">Sisällöntuotanto</span>
+                        <span class="service-tag" data-i18n="service2Tag1">AI-konsultointi</span>
+                        <span class="service-tag" data-i18n="service2Tag2">Automaatio</span>
+                        <span class="service-tag" data-i18n="service2Tag3">Sisällöntuotanto</span>
                     </div>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <svg width="32" height="32"><use href="#icon-drone"/></svg>
                     </div>
-                    <h3>Visuaalinen data ja dokumentaatio</h3>
-                    <p>Ammattitasoiset drone-kuvaukset kiinteistöihin, tapahtumiin ja viralliseen dokumentaatioon. Laadukasta materiaalia – käyttöoikeudet ja arkistointi sisältyvät.</p>
+                    <h3 data-i18n="service3Title">Visuaalinen data ja dokumentaatio</h3>
+                    <p data-i18n="service3Body">Ammattitasoiset drone-kuvaukset kiinteistöihin, tapahtumiin ja viralliseen dokumentaatioon. Laadukasta materiaalia – käyttöoikeudet ja arkistointi sisältyvät.</p>
                     <div class="service-tags">
-                        <span class="service-tag">Kiinteistöt</span>
-                        <span class="service-tag">Dokumentaatio</span>
-                        <span class="service-tag">Mainokset</span>
+                        <span class="service-tag" data-i18n="service3Tag1">Kiinteistöt</span>
+                        <span class="service-tag" data-i18n="service3Tag2">Dokumentaatio</span>
+                        <span class="service-tag" data-i18n="service3Tag3">Mainokset</span>
                     </div>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <svg width="32" height="32"><use href="#icon-code"/></svg>
                     </div>
-                    <h3>Kokonaisarkkitehtuuri ja kehitys</h3>
-                    <p>Web-sivustot, IT-konsultointi ja lohkoketjuratkaisut. Toteutamme digitaaliset kokonaisuudet alusta loppuun – ylläpito ja tuki mukana.</p>
+                    <h3 data-i18n="service4Title">Kokonaisarkkitehtuuri ja kehitys</h3>
+                    <p data-i18n="service4Body">Web-sivustot, IT-konsultointi ja lohkoketjuratkaisut. Toteutamme digitaaliset kokonaisuudet alusta loppuun – ylläpito ja tuki mukana.</p>
                     <div class="service-tags">
-                        <span class="service-tag">Web-sivut</span>
-                        <span class="service-tag">IT-konsultointi</span>
-                        <span class="service-tag">Lohkoketju</span>
+                        <span class="service-tag" data-i18n="service4Tag1">Web-sivut</span>
+                        <span class="service-tag" data-i18n="service4Tag2">IT-konsultointi</span>
+                        <span class="service-tag" data-i18n="service4Tag3">Lohkoketju</span>
                     </div>
                 </div>
             </div>
@@ -1465,10 +1577,10 @@
     <section id="tiimi">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Tiimimme</h2>
-                <p>Kokeneet asiantuntijat palveluksessasi. Yhdistämme vuosikymmenien kokemuksen kyberturvallisuudesta, tekoälystä ja matemaattisesta tutkimuksesta.</p>
-                <div style="background: linear-gradient(135deg, rgba(8, 145, 178, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 12px; padding: 1.5rem 2rem; margin-top: 1.5rem; border: 1px solid rgba(8, 145, 178, 0.3); text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;">
-                    <p style="font-size: 1.1rem; font-weight: 500; color: #e2e8f0; margin: 0;">
+                <h2 data-i18n="teamTitle">Tiimimme</h2>
+                <p data-i18n="teamBody">Kokeneet asiantuntijat palveluksessasi. Yhdistämme vuosikymmenien kokemuksen kyberturvallisuudesta, tekoälystä ja matemaattisesta tutkimuksesta.</p>
+                <div style="background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.12), rgba(45, 90, 135, 0.12)); border-radius: 12px; padding: 1.5rem 2rem; margin-top: 1.5rem; border: 1px solid rgba(var(--accent-rgb), 0.3); text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 1.1rem; font-weight: 500; color: #e2e8f0; margin: 0;" data-i18n-html="teamBoxHtml">
                         <strong>Toimitus perustuu malliin, ei yksittäiseen henkilöön.</strong><br>
                         <span style="font-size: 0.95rem; opacity: 0.9;">Codesphere toimii tiimimallilla, jossa osaaminen, dokumentaatio ja vastuu jakautuvat.<br>Asiakkaan projekti ei ole koskaan yhden ihmisen varassa.</span>
                     </p>
@@ -1476,24 +1588,25 @@
             </div>
             <div class="team-grid">
                 <div class="team-card fade-in">
-                    <div class="team-avatar" style="background: linear-gradient(135deg, #0891b2, #10b981);">
-                        <!-- Shield/Security Icon -->
+                    <div class="team-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                        <!-- Lightbulb/Innovation Icon -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 50%; height: 50%;">
-                            <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
-                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M9 21h6M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z"/>
+                            <path d="M10 17v1a2 2 0 0 0 4 0v-1"/>
+                            <path d="M12 3V1M4.22 4.22l1.42 1.42M1 12h2M4.22 19.78l1.42-1.42M22 12h-2M19.78 4.22l-1.42 1.42"/>
                         </svg>
                     </div>
-                    <h3>Mika Leppänen</h3>
-                    <p class="team-title">Toimitusjohtaja & Kyberturvallisuusasiantuntija</p>
-                    <p class="team-bio">Vuosien kokemus kyberturvallisuudesta ja digitaalisesta forensiikasta. Asiantuntijatodistelu tuomioistuimissa.</p>
+                    <h3>Timo Aula</h3>
+                    <p class="team-title" data-i18n="timoTitle">Toimitusjohtaja, Böethius Oy</p>
+                    <p class="team-bio" data-i18n="timoBio">Böethius Oy:n (Y: 3552254-6) toimitusjohtaja. Tuotekehitys, tutkimus ja suunnittelupalvelut. Matemaattinen innovaattori.</p>
                     <div class="team-skills">
-                        <span class="team-skill">Kyberturvallisuus</span>
-                        <span class="team-skill">Forensiikka</span>
-                        <span class="team-skill">Lausunnot</span>
+                        <span class="team-skill" data-i18n="timoSkill1">Matematiikka</span>
+                        <span class="team-skill" data-i18n="timoSkill2">Tutkimus</span>
+                        <span class="team-skill" data-i18n="timoSkill3">Innovaatiot</span>
                     </div>
                 </div>
                 <div class="team-card fade-in">
-                    <div class="team-avatar" style="background: linear-gradient(135deg, #8b5cf6, #0891b2);">
+                    <div class="team-avatar" style="background: linear-gradient(135deg, var(--primary-light), var(--accent));">
                         <!-- Neural Network/AI Brain Icon -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 50%; height: 50%;">
                             <circle cx="12" cy="12" r="3"/>
@@ -1507,30 +1620,29 @@
                         </svg>
                     </div>
                     <h3>Matti Erholtz</h3>
-                    <p class="team-title">Tekoälyarkkitehti & Rihmasto AI -järjestelmän luoja</p>
-                    <p class="team-bio">Rihmasto AI -oppivan muistijärjestelmän arkkitehti ja kehittäjä. Älykkäiden, itseorganisoituvien järjestelmien suunnittelu.</p>
+                    <p class="team-title" data-i18n="mattiTitle">Hallituksen jäsen • Markkinointijohtaja & Tekoälyarkkitehti</p>
+                    <p class="team-bio" data-i18n="mattiBio">Rihmasto AI -oppivan muistijärjestelmän arkkitehti. Älykkäiden järjestelmien ja markkinointistrategioiden suunnittelu.</p>
                     <div class="team-skills">
-                        <span class="team-skill">Tekoäly</span>
-                        <span class="team-skill">Automaatio</span>
-                        <span class="team-skill">Arkkitehtuuri</span>
+                        <span class="team-skill" data-i18n="mattiSkill1">Tekoäly</span>
+                        <span class="team-skill" data-i18n="mattiSkill2">Automaatio</span>
+                        <span class="team-skill" data-i18n="mattiSkill3">Arkkitehtuuri</span>
                     </div>
                 </div>
                 <div class="team-card fade-in">
-                    <div class="team-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
-                        <!-- Lightbulb/Innovation Icon -->
+                    <div class="team-avatar" style="background: linear-gradient(135deg, var(--accent), var(--primary-light));">
+                        <!-- Shield/Security Icon -->
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 50%; height: 50%;">
-                            <path d="M9 21h6M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z"/>
-                            <path d="M10 17v1a2 2 0 0 0 4 0v-1"/>
-                            <path d="M12 3V1M4.22 4.22l1.42 1.42M1 12h2M4.22 19.78l1.42-1.42M22 12h-2M19.78 4.22l-1.42 1.42"/>
+                            <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+                            <path d="M9 12l2 2 4-4"/>
                         </svg>
                     </div>
-                    <h3>Timo Aula</h3>
-                    <p class="team-title">Tutkimusjohtaja & Matemaattinen innovaattori</p>
-                    <p class="team-bio">Monitieteellinen ajattelija, jonka tausta yhdistää matematiikan, keksinnöt ja tekoälytutkimuksen.</p>
+                    <h3>Mika Leppänen</h3>
+                    <p class="team-title" data-i18n="mikaTitle">Yhteistyökumppani & Kyberturvallisuusasiantuntija</p>
+                    <p class="team-bio" data-i18n="mikaBio">Vuosien kokemus kyberturvallisuudesta ja digitaalisesta forensiikasta. Laki- ja oikeusprosesseihin liittyvä asiantuntijatodistelu tuomioistuimissa.</p>
                     <div class="team-skills">
-                        <span class="team-skill">Matematiikka</span>
-                        <span class="team-skill">Tutkimus</span>
-                        <span class="team-skill">Innovaatiot</span>
+                        <span class="team-skill" data-i18n="mikaSkill1">Kyberturvallisuus</span>
+                        <span class="team-skill" data-i18n="mikaSkill2">Forensiikka</span>
+                        <span class="team-skill" data-i18n="mikaSkill3">Lausunnot</span>
                     </div>
                 </div>
             </div>
@@ -1541,51 +1653,51 @@
     <section id="referenssit" class="testimonials">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Asiakkaamme luottavat meihin</h2>
-                <p>Referenssejä tyytyväisiltä asiakkailtamme</p>
+                <h2 data-i18n="refsTitle">Asiakkaamme luottavat meihin</h2>
+                <p data-i18n="refsBody">Referenssejä tyytyväisiltä asiakkailtamme</p>
             </div>
             <div class="testimonial-grid">
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-quote">Toteutitte meille nopealla toimitusaikataululla tarvitsemamme ilmakuvausmateriaalin Hämeenlinna 2035 keskustavisio -hankkeeseen. Yhteistyö oli saumatonta ja sujuvaa.</p>
-                    <p style="font-size: 0.85rem; color: #10b981; margin-top: 0.75rem; font-weight: 500;">→ Materiaali käytössä kaupunginvaltuuston päätöksenteossa</p>
+                    <p class="testimonial-quote" data-i18n="ref1Quote">Toteutitte meille nopealla toimitusaikataululla tarvitsemamme ilmakuvausmateriaalin Hämeenlinna 2035 keskustavisio -hankkeeseen. Yhteistyö oli saumatonta ja sujuvaa.</p>
+                    <p style="font-size: 0.85rem; color: var(--accent); margin-top: 0.75rem; font-weight: 500;" data-i18n="ref1Note">→ Materiaali käytössä kaupunginvaltuuston päätöksenteossa</p>
                     <div class="testimonial-author">
                         <div class="testimonial-author-avatar">H</div>
                         <div class="testimonial-author-info">
-                            <strong>Hämeenlinnan kaupunki</strong>
-                            <span>Keskustavisio 2035</span>
+                            <strong data-i18n="ref1Org">Hämeenlinnan kaupunki</strong>
+                            <span data-i18n="ref1Proj">Keskustavisio 2035</span>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-quote">Toteutitte meille drone-mainosvideon alusta loppuun saakka. Saimme Web-sivustollemme uuden ilmeen, johon olemme erittäin tyytyväisiä.</p>
-                    <p style="font-size: 0.85rem; color: #10b981; margin-top: 0.75rem; font-weight: 500;">→ Ravintolan verkkosivuliikenne +40% lanseerauksen jälkeen</p>
+                    <p class="testimonial-quote" data-i18n="ref2Quote">Toteutitte meille drone-mainosvideon alusta loppuun saakka. Saimme Web-sivustollemme uuden ilmeen, johon olemme erittäin tyytyväisiä.</p>
+                    <p style="font-size: 0.85rem; color: var(--accent); margin-top: 0.75rem; font-weight: 500;" data-i18n="ref2Note">→ Ravintolan verkkosivuliikenne +40% lanseerauksen jälkeen</p>
                     <div class="testimonial-author">
                         <div class="testimonial-author-avatar">R</div>
                         <div class="testimonial-author-info">
-                            <strong>Ravintola Rantakasino</strong>
+                            <strong data-i18n="ref2Org">Ravintola Rantakasino</strong>
                             <span>rantakasino.fi</span>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-quote">Toteutitte meille laadukkaasti Mierolan Silta Café Web-sivut, jotka ovat lisänneet yrityksemme näkyvyyttä. Asiakaspalvelunne on ollut kiitettävää.</p>
-                    <p style="font-size: 0.85rem; color: #10b981; margin-top: 0.75rem; font-weight: 500;">→ Näkyvyys hakukoneissa parantunut merkittävästi</p>
+                    <p class="testimonial-quote" data-i18n="ref3Quote">Toteutitte meille laadukkaasti Mierolan Silta Café Web-sivut, jotka ovat lisänneet yrityksemme näkyvyyttä. Asiakaspalvelunne on ollut kiitettävää.</p>
+                    <p style="font-size: 0.85rem; color: var(--accent); margin-top: 0.75rem; font-weight: 500;" data-i18n="ref3Note">→ Näkyvyys hakukoneissa parantunut merkittävästi</p>
                     <div class="testimonial-author">
                         <div class="testimonial-author-avatar">M</div>
                         <div class="testimonial-author-info">
-                            <strong>Mierolan Silta Café</strong>
+                            <strong data-i18n="ref3Org">Mierolan Silta Café</strong>
                             <span>mierola.fi</span>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card fade-in">
-                    <p class="testimonial-quote">Asiantuntijatodistelulla olette auttaneet tuomioistuimia hahmottamaan teknisiä syy-seuraussuhteita. Ammattitaitoanne on arvostettu käräjäoikeuksissa ja hovioikeuksissa.</p>
-                    <p style="font-size: 0.85rem; color: #10b981; margin-top: 0.75rem; font-weight: 500;">→ Useita tapauksia ratkennut teknisen todistelun avulla</p>
+                    <p class="testimonial-quote" data-i18n="ref4Quote">Asiantuntijatodistelulla olette auttaneet tuomioistuimia hahmottamaan teknisiä syy-seuraussuhteita. Ammattitaitoanne on arvostettu käräjäoikeuksissa ja hovioikeuksissa.</p>
+                    <p style="font-size: 0.85rem; color: var(--accent); margin-top: 0.75rem; font-weight: 500;" data-i18n="ref4Note">→ Useita tapauksia ratkennut teknisen todistelun avulla</p>
                     <div class="testimonial-author">
-                        <div class="testimonial-author-avatar" style="background: linear-gradient(135deg, #8b5cf6, #6366f1);">⚖</div>
+                        <div class="testimonial-author-avatar" style="background: linear-gradient(135deg, var(--primary-light), var(--accent));">⚖</div>
                         <div class="testimonial-author-info">
-                            <strong>Tuomioistuintodistelu</strong>
-                            <span>Käräjä- ja hovioikeudet</span>
+                            <strong data-i18n="ref4Org">Tuomioistuintodistelu</strong>
+                            <span data-i18n="ref4Proj">Käräjä- ja hovioikeudet</span>
                         </div>
                     </div>
                 </div>
@@ -1600,39 +1712,39 @@
     <section id="aloitus">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Yhteistyö alkaa hallitusti</h2>
-                <p>Kaikki kokonaisuudet eivät ala suurena hankkeena. Rajattu aloitus mahdollistaa turvallisen käynnistyksen – ilman statustappiota.</p>
+                <h2 data-i18n="startTitle">Yhteistyö alkaa hallitusti</h2>
+                <p data-i18n="startBody">Kaikki kokonaisuudet eivät ala suurena hankkeena. Rajattu aloitus mahdollistaa turvallisen käynnistyksen – ilman statustappiota.</p>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; padding: 2rem; border: 1px solid rgba(8, 145, 178, 0.3);">
-                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #0891b2, #10b981); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; padding: 2rem; border: 1px solid rgba(var(--accent-rgb), 0.3);">
+                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), var(--primary-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"/>
                             <circle cx="12" cy="12" r="6"/>
                             <circle cx="12" cy="12" r="2"/>
                         </svg>
                     </div>
-                    <h3 style="color: #e2e8f0; font-size: 1.25rem; margin-bottom: 0.75rem;">Rajattu kartoitus</h3>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem;">Aloitetaan kartoituksella, joka paljastaa nykytilan, riskit ja mahdollisuudet. Ei sitoumuksia jatkosta.</p>
+                    <h3 style="color: #e2e8f0; font-size: 1.25rem; margin-bottom: 0.75rem;" data-i18n="startCard1Title">Rajattu kartoitus</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem;" data-i18n="startCard1Body">Aloitetaan kartoituksella, joka paljastaa nykytilan, riskit ja mahdollisuudet. Ei sitoumuksia jatkosta.</p>
                     <ul style="color: #94a3b8; font-size: 0.9rem; list-style: none; padding: 0; margin: 0;">
-                        <li style="margin-bottom: 0.5rem;">✓ Selkeä laajuus ja hinta etukäteen</li>
-                        <li style="margin-bottom: 0.5rem;">✓ Konkreettinen raportti tuloksena</li>
-                        <li>✓ Päätös jatkosta vasta sen jälkeen</li>
+                        <li style="margin-bottom: 0.5rem;">✓ <span data-i18n="startCard1Li1">Selkeä laajuus ja hinta etukäteen</span></li>
+                        <li style="margin-bottom: 0.5rem;">✓ <span data-i18n="startCard1Li2">Konkreettinen raportti tuloksena</span></li>
+                        <li>✓ <span data-i18n="startCard1Li3">Päätös jatkosta vasta sen jälkeen</span></li>
                     </ul>
                 </div>
-                <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; padding: 2rem; border: 1px solid rgba(139, 92, 246, 0.3);">
-                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #8b5cf6, #6366f1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <div class="fade-in" style="background: rgba(15, 23, 42, 0.6); border-radius: 16px; padding: 2rem; border: 1px solid rgba(var(--accent-rgb), 0.25);">
+                    <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary-light), var(--accent)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
                             <path d="M9 12l2 2 4-4"/>
                         </svg>
                     </div>
-                    <h3 style="color: #e2e8f0; font-size: 1.25rem; margin-bottom: 0.75rem;">Kokonaisvastuullinen kumppanuus</h3>
-                    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem;">Kun luottamus on rakennettu, voimme ottaa laajemman vastuun digitaalisesta kokonaisuudesta.</p>
+                    <h3 style="color: #e2e8f0; font-size: 1.25rem; margin-bottom: 0.75rem;" data-i18n="startCard2Title">Kokonaisvastuullinen kumppanuus</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem;" data-i18n="startCard2Body">Kun luottamus on rakennettu, voimme ottaa laajemman vastuun digitaalisesta kokonaisuudesta.</p>
                     <ul style="color: #94a3b8; font-size: 0.9rem; list-style: none; padding: 0; margin: 0;">
-                        <li style="margin-bottom: 0.5rem;">✓ Jatkuva kehitys ja ylläpito</li>
-                        <li style="margin-bottom: 0.5rem;">✓ Dokumentoitu osaamisen siirto</li>
-                        <li>✓ Vastuu säilyy meillä</li>
+                        <li style="margin-bottom: 0.5rem;">✓ <span data-i18n="startCard2Li1">Jatkuva kehitys ja ylläpito</span></li>
+                        <li style="margin-bottom: 0.5rem;">✓ <span data-i18n="startCard2Li2">Dokumentoitu osaamisen siirto</span></li>
+                        <li>✓ <span data-i18n="startCard2Li3">Vastuu säilyy meillä</span></li>
                     </ul>
                 </div>
             </div>
@@ -1643,30 +1755,30 @@
     <section id="kumppanuus">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Joissain hankkeissa toimimme kumppanina</h2>
-                <p>Tietyissä projekteissa voimme jakaa riskin ja hyödyn. Tämä ei ole alennus – se on strateginen yhteistyömalli.</p>
+                <h2 data-i18n="partnerTitle">Joissain hankkeissa toimimme kumppanina</h2>
+                <p data-i18n="partnerBody">Tietyissä projekteissa voimme jakaa riskin ja hyödyn. Tämä ei ole alennus – se on strateginen yhteistyömalli.</p>
             </div>
-            <div class="fade-in" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(8, 145, 178, 0.1)); border-radius: 16px; padding: 2rem; margin-top: 2rem; border: 1px solid rgba(139, 92, 246, 0.2);">
+            <div class="fade-in" style="background: linear-gradient(135deg, rgba(45, 90, 135, 0.12), rgba(var(--accent-rgb), 0.12)); border-radius: 16px; padding: 2rem; margin-top: 2rem; border: 1px solid rgba(var(--accent-rgb), 0.22);">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
                     <div>
-                        <h3 style="color: #8b5cf6; font-size: 1.1rem; margin-bottom: 1rem;">🔒 Perusvaihtoehto (oletus)</h3>
+                        <h3 style="color: var(--primary-light); font-size: 1.1rem; margin-bottom: 1rem;" data-i18n="partnerBaseTitle">🔒 Perusvaihtoehto (oletus)</h3>
                         <ul style="color: #94a3b8; font-size: 0.95rem; list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-bottom: 0.5rem;">• Selkeä kiinteä tai tuntipohjainen hinnoittelu</li>
-                            <li style="margin-bottom: 0.5rem;">• Normaali toimitus ja vastuu</li>
-                            <li>• Ei omistuksia, ei sitoumuksia</li>
+                            <li style="margin-bottom: 0.5rem;" data-i18n="partnerBaseLi1">• Selkeä kiinteä tai tuntipohjainen hinnoittelu</li>
+                            <li style="margin-bottom: 0.5rem;" data-i18n="partnerBaseLi2">• Normaali toimitus ja vastuu</li>
+                            <li data-i18n="partnerBaseLi3">• Ei omistuksia, ei sitoumuksia</li>
                         </ul>
                     </div>
                     <div style="text-align: left;">
-                        <h3 style="color: #10b981; font-size: 1.1rem; margin-bottom: 1rem;">💎 Kumppanuusmalli (valikoitu)</h3>
+                        <h3 style="color: var(--accent); font-size: 1.1rem; margin-bottom: 1rem;" data-i18n="partnerModelTitle">💎 Kumppanuusmalli (valikoitu)</h3>
                         <ul style="color: #94a3b8; font-size: 0.95rem; list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-bottom: 0.5rem;">• Jaamme riskin ja potentiaalin</li>
-                            <li style="margin-bottom: 0.5rem;">• Revenue share tai tuotto-oikeus</li>
-                            <li>• Codesphere osallistuu päätöksentekoon</li>
+                            <li style="margin-bottom: 0.5rem;" data-i18n="partnerModelLi1">• Jaamme riskin ja potentiaalin</li>
+                            <li style="margin-bottom: 0.5rem;" data-i18n="partnerModelLi2">• Revenue share tai tuotto-oikeus</li>
+                            <li data-i18n="partnerModelLi3">• Codesphere osallistuu päätöksentekoon</li>
                         </ul>
                     </div>
                 </div>
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 92, 246, 0.2);">
-                    <p style="color: #e2e8f0; font-size: 0.95rem; font-style: italic; margin: 0;">
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(var(--accent-rgb), 0.18);">
+                    <p style="color: #e2e8f0; font-size: 0.95rem; font-style: italic; margin: 0;" data-i18n="partnerQuote">
                         "Kumppanuusmalli edellyttää yhteistä visiota, selkeää tulovirtaa ja pitkäjänteisyyttä. Tämä ei ole kaikille projekteille – mutta oikeissa tilanteissa se avaa ovia, joihin pelkkä toimittajuus ei riitä."
                     </p>
                 </div>
@@ -1677,18 +1789,19 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-content fade-in">
-            <h2>Valitse aloitustapa</h2>
-            <p>Keskustellaan organisaationne tarpeista – ei myyntipuhetta, vaan aito kartoitus.</p>
+            <h2 data-i18n="ctaTitle">Valitse aloitustapa</h2>
+            <p data-i18n="ctaBody">Keskustellaan organisaationne tarpeista – ei myyntipuhetta, vaan aito kartoitus.</p>
             <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
-                <a href="mailto:Codesphere.pro@protonmail.com?subject=Rajattu%20kartoitus%20-%20yhteydenotto" class="btn btn-secondary" style="font-size: 1rem; padding: 1rem 2rem;">
-                    🎯 Aloita rajatulla kartoituksella
+                <a href="mailto:Codesphere.pro@protonmail.com?subject=Rajattu%20kartoitus%20-%20yhteydenotto" data-i18n-href="ctaMail1Href" class="btn btn-secondary" style="font-size: 1rem; padding: 1rem 2rem;">
+                    <img class="btn-icon" src="codesphere-logo-64.png" alt="" aria-hidden="true" />
+                    <span data-i18n="ctaBtn1">Aloita rajatulla kartoituksella</span>
                 </a>
-                <a href="mailto:Codesphere.pro@protonmail.com?subject=Kokonaisuus%20-%20yhteydenotto" class="btn btn-primary" style="font-size: 1rem; padding: 1rem 2rem;">
+                <a href="mailto:Codesphere.pro@protonmail.com?subject=Kokonaisuus%20-%20yhteydenotto" data-i18n-href="ctaMail2Href" class="btn btn-primary" style="font-size: 1rem; padding: 1rem 2rem;">
                     <svg width="20" height="20"><use href="#icon-mail"/></svg>
-                    Keskustele kokonaisuudesta
+                    <span data-i18n="ctaBtn2">Keskustele kokonaisuudesta</span>
                 </a>
             </div>
-            <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">Vastaamme yleensä saman päivän aikana</p>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;" data-i18n="ctaNote">Vastaamme yleensä saman päivän aikana</p>
         </div>
     </section>
 
@@ -1696,19 +1809,19 @@
     <section id="yhteystiedot">
         <div class="section-container">
             <div class="section-header fade-in">
-                <h2>Yhteystiedot</h2>
-                <p>Ota yhteyttä – vastaamme nopeasti</p>
+                <h2 data-i18n="contactTitle">Yhteystiedot</h2>
+                <p data-i18n="contactBody">Ota yhteyttä – vastaamme nopeasti</p>
             </div>
             <div class="contact-grid">
                 <div class="contact-info fade-in">
-                    <h3>Tavoita meidät</h3>
+                    <h3 data-i18n="contactReach">Tavoita meidät</h3>
                     <div class="contact-item">
                         <div class="contact-icon">
                             <svg width="24" height="24"><use href="#icon-phone"/></svg>
                         </div>
                         <div class="contact-item-text">
-                            <strong>Puhelin</strong>
-                            <a href="tel:+358465581732">+358 46 558 1732</a>
+                            <strong data-i18n="contactDigitalCard">Digitaalinen käyntikortti</strong>
+                            <a id="digitalCardLink" href="brand-kit/digital/business-card.html" target="_blank" rel="noopener" data-i18n="openDigitalCard">Avaa käyntikortti</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -1716,7 +1829,7 @@
                             <svg width="24" height="24"><use href="#icon-mail"/></svg>
                         </div>
                         <div class="contact-item-text">
-                            <strong>Sähköposti</strong>
+                            <strong data-i18n="contactEmail">Sähköposti</strong>
                             <a href="mailto:Codesphere.pro@protonmail.com">Codesphere.pro@protonmail.com</a>
                         </div>
                     </div>
@@ -1725,8 +1838,8 @@
                             <svg width="24" height="24"><use href="#icon-location"/></svg>
                         </div>
                         <div class="contact-item-text">
-                            <strong>Sijainti</strong>
-                            <span>Hämeenlinna, Suomi</span>
+                            <strong data-i18n="contactLocation">Sijainti</strong>
+                            <span data-i18n="contactLocationValue">Hyvinkää, Suomi</span>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -1734,36 +1847,36 @@
                             <svg width="24" height="24"><use href="#icon-building"/></svg>
                         </div>
                         <div class="contact-item-text">
-                            <strong>Y-tunnus</strong>
+                            <strong data-i18n="contactVat">Y-tunnus</strong>
                             <span>3509095-8</span>
                         </div>
                     </div>
                 </div>
                 <form class="contact-form fade-in" id="contactForm">
                     <div class="form-group">
-                        <label for="name">Nimi *</label>
-                        <input type="text" id="name" name="name" required placeholder="Nimesi">
+                        <label for="name" data-i18n="formName">Nimi *</label>
+                        <input type="text" id="name" name="name" required placeholder="Nimesi" data-i18n-placeholder="formNamePh">
                     </div>
                     <div class="form-group">
-                        <label for="email">Sähköposti *</label>
-                        <input type="email" id="email" name="email" required placeholder="nimi@esimerkki.fi">
+                        <label for="email" data-i18n="formEmail">Sähköposti *</label>
+                        <input type="email" id="email" name="email" required placeholder="nimi@esimerkki.fi" data-i18n-placeholder="formEmailPh">
                     </div>
                     <div class="form-group">
-                        <label for="subject">Aihe</label>
+                        <label for="subject" data-i18n="formSubject">Aihe</label>
                         <select id="subject" name="subject">
-                            <option value="">Valitse aihe...</option>
-                            <option value="kyber">Kyberturvallisuus</option>
-                            <option value="ai">Tekoäly & automaatio</option>
-                            <option value="drone">Ilmakuvaus</option>
-                            <option value="web">Digitaaliset ratkaisut</option>
-                            <option value="muu">Muu asia</option>
+                            <option value="" data-i18n="formSubjectPh">Valitse aihe...</option>
+                            <option value="kyber" data-i18n="formSubject1">Kyberturvallisuus</option>
+                            <option value="ai" data-i18n="formSubject2">Tekoäly & automaatio</option>
+                            <option value="drone" data-i18n="formSubject3">Ilmakuvaus</option>
+                            <option value="web" data-i18n="formSubject4">Digitaaliset ratkaisut</option>
+                            <option value="muu" data-i18n="formSubject5">Muu asia</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message">Viesti *</label>
-                        <textarea id="message" name="message" required placeholder="Kerro tarpeistasi..."></textarea>
+                        <label for="message" data-i18n="formMsg">Viesti *</label>
+                        <textarea id="message" name="message" required placeholder="Kerro tarpeistasi..." data-i18n-placeholder="formMsgPh"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Lähetä viesti</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="formSubmit">Lähetä viesti</button>
                 </form>
             </div>
         </div>
@@ -1776,14 +1889,15 @@
                 <img src="codesphere-logo-64.png" alt="Codesphere" style="width: 48px; height: 48px;">
                 <span>CODESPHERE</span>
             </div>
-            <p>© 2025 Codesphere. Kaikki oikeudet pidätetään.</p>
-            <p style="margin-top: 0.5rem; color: var(--accent);"><strong>Koodia maailmalle!</strong> • Globaalia ohjelmistokehitystä</p>
+            <p data-i18n="footerCopyright">© 2025 Codesphere. Kaikki oikeudet pidätetään.</p>
+            <p style="margin-top: 0.5rem; color: var(--accent);" data-i18n-html="footerTaglineHtml"><strong>Koodia maailmalle!</strong> • Globaalia ohjelmistokehitystä</p>
+            <p style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); opacity: 0.6;" data-i18n="footerDisclaimer">Codesphere on Böethius Oy:n markkinointinimi • Y-tunnus: 3552254-6</p>
             <div class="footer-links">
-                <a href="#palvelut">Palvelut</a>
-                <a href="#tiimi">Tiimi</a>
-                <a href="#referenssit">Referenssit</a>
-                <a href="#yhteystiedot">Yhteystiedot</a>
-                <a href="brand.html" style="color: #10b981;">📦 Brändimateriaali</a>
+                <a href="#palvelut" data-i18n="navServices">Palvelut</a>
+                <a href="#tiimi" data-i18n="navTeam">Tiimi</a>
+                <a href="#referenssit" data-i18n="navReferences">Referenssit</a>
+                <a href="#yhteystiedot" data-i18n="navContact">Yhteystiedot</a>
+                <a href="brand.html" style="color: var(--accent);" data-i18n="footerBrand">📦 Brändimateriaali</a>
             </div>
         </div>
     </footer>
@@ -1827,14 +1941,14 @@
                 bottom: 30px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: linear-gradient(135deg, #0891b2, #10b981);
+                background: linear-gradient(135deg, #00ffff, #2d5a87);
                 color: white;
                 padding: 1rem 2rem;
                 border-radius: 50px;
                 font-weight: 600;
                 z-index: 10000;
                 animation: slideUp 0.3s ease;
-                box-shadow: 0 10px 40px rgba(8, 145, 178, 0.4);
+                box-shadow: 0 10px 40px rgba(0, 255, 255, 0.35);
             `;
             document.body.appendChild(notification);
             
@@ -2123,9 +2237,9 @@
             mouseRadius: 200,
             baseSpeed: 0.3,
             colors: {
-                particle: 'rgba(8, 145, 178, 0.6)',
-                connection: 'rgba(8, 145, 178, 0.15)',
-                connectionHover: 'rgba(8, 145, 178, 0.3)'
+                particle: 'rgba(0, 255, 255, 0.55)',
+                connection: 'rgba(0, 255, 255, 0.14)',
+                connectionHover: 'rgba(0, 255, 255, 0.28)'
             }
         };
         
@@ -2170,7 +2284,7 @@
                 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(8, 145, 178, ${alpha})`;
+                ctx.fillStyle = `rgba(0, 255, 255, ${alpha})`;
                 ctx.fill();
             }
         }
@@ -2209,7 +2323,7 @@
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(8, 145, 178, ${finalOpacity})`;
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${finalOpacity})`;
                         ctx.lineWidth = 1;
                         ctx.stroke();
                     }
@@ -2301,7 +2415,7 @@
             const originalText = btn.innerHTML;
             
             btn.innerHTML = '✓ Viesti lähetetty!';
-            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            btn.style.background = 'linear-gradient(135deg, #00ffff, #2d5a87)';
             
             setTimeout(() => {
                 btn.innerHTML = originalText;
@@ -2324,7 +2438,7 @@
         });
 
         // ========================================
-        // LOGO ANIMAATIO
+        // LOGO ANIMAATIO + RGB WAVE
         // ========================================
 
         // Merkitse animaatio valmiiksi (4 sekunnin jälkeen)
@@ -2333,7 +2447,663 @@
             setTimeout(() => {
                 logoContainer.classList.add('animation-done');
             }, 4000);
+
+            // Mobiili: klikkaus aktivoi RGB waven
+            logoContainer.addEventListener('click', function(e) {
+                // Toggle RGB efekti
+                if (this.classList.contains('rgb-active')) {
+                    this.classList.remove('rgb-active');
+                } else {
+                    this.classList.add('rgb-active');
+                }
+            });
+
+            // Mobiili: touch-tapahtumat
+            logoContainer.addEventListener('touchstart', function(e) {
+                this.classList.add('rgb-active');
+            });
         }
+
+        // ========================================
+        // RGB WAVE - PIKSELÖITY LOGO + RGB VÄRIT
+        // ========================================
+        
+        (function() {
+            const canvas = document.getElementById('rgb-canvas');
+            const ctx = canvas.getContext('2d');
+            const pixelLogo = document.getElementById('pixelLogo'); // Käytä pikselöityä!
+            const container = document.querySelector('.logo-container');
+            
+            let offset = 0;
+            let animating = false;
+            let logoLoaded = false;
+            
+            // Aseta canvas koko
+            function resizeCanvas() {
+                const rect = container.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = Math.max(1, Math.round(rect.width * dpr));
+                canvas.height = Math.max(1, Math.round(rect.height * dpr));
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.imageSmoothingEnabled = false;
+            }
+
+            function drawPixelLogoIntegerScaled() {
+                const srcW = pixelLogo.naturalWidth || 64;
+                const srcH = pixelLogo.naturalHeight || 64;
+                const scale = Math.max(1, Math.floor(Math.min(canvas.width / srcW, canvas.height / srcH)));
+                const drawW = srcW * scale;
+                const drawH = srcH * scale;
+                const dx = Math.floor((canvas.width - drawW) / 2);
+                const dy = Math.floor((canvas.height - drawH) / 2);
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(pixelLogo, 0, 0, srcW, srcH, dx, dy, drawW, drawH);
+
+                return { dx, dy, drawW, drawH };
+            }
+            
+            // HSL -> RGB muunnos
+            function hslToRgb(h, s, l) {
+                let r, g, b;
+                if (s === 0) {
+                    r = g = b = l;
+                } else {
+                    const hue2rgb = (p, q, t) => {
+                        if (t < 0) t += 1;
+                        if (t > 1) t -= 1;
+                        if (t < 1/6) return p + (q - p) * 6 * t;
+                        if (t < 1/2) return q;
+                        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                        return p;
+                    };
+                    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                    const p = 2 * l - q;
+                    r = hue2rgb(p, q, h + 1/3);
+                    g = hue2rgb(p, q, h);
+                    b = hue2rgb(p, q, h - 1/3);
+                }
+                return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+            }
+            
+            // Piirrä RGB-logo PIKSELÖITYNÄ
+            function drawRgbLogo() {
+                if (!logoLoaded) return;
+
+                // Piirrä 64x64-logo kokonaislukuskaalalla (ei epätasaisia pikseleitä)
+                const b = drawPixelLogoIntegerScaled();
+
+                // Hae pikselidata vain piirtoalueelta
+                const imageData = ctx.getImageData(b.dx, b.dy, b.drawW, b.drawH);
+                const data = imageData.data;
+                
+                // Käy läpi jokainen pikseli piirtoalueella
+                for (let y = 0; y < b.drawH; y++) {
+                    for (let x = 0; x < b.drawW; x++) {
+                        const i = (y * b.drawW + x) * 4;
+                        const alpha = data[i + 3];
+                        
+                        // Vain TÄYSIN näkyvät pikselit (ei puoliläpinäkyviä)
+                        if (alpha > 200) {
+                            // Laske hue X-position + offset perusteella
+                            // HITAAMPI: offset kasvaa hitaammin (0.003 vs 0.01)
+                            const globalX = (b.dx + x) / canvas.width;
+                            const hue = (globalX + offset) % 1;
+                            const [r, g, b] = hslToRgb(hue, 1, 0.5);
+                            
+                            data[i] = r;     // R
+                            data[i + 1] = g; // G
+                            data[i + 2] = b; // B
+                            // Alpha pysyy samana
+                        }
+                    }
+                }
+                
+                ctx.putImageData(imageData, b.dx, b.dy);
+            }
+            
+            // Animaatioloop
+            function animate() {
+                if (!animating) return;
+                
+                // HITAAMPI vauhti: 0.003 per frame (oli 0.01)
+                offset += 0.003;
+                if (offset > 1) offset = 0;
+                
+                drawRgbLogo();
+                requestAnimationFrame(animate);
+            }
+            
+            // Käynnistä/pysäytä animaatio
+            function startAnimation() {
+                if (!logoLoaded) return;
+                resizeCanvas();
+                drawRgbLogo();
+                if (!animating) {
+                    animating = true;
+                    animate();
+                }
+            }
+            
+            function stopAnimation() {
+                animating = false;
+            }
+            
+            // Eventit
+            container.addEventListener('mouseenter', startAnimation);
+            container.addEventListener('mouseleave', () => {
+                if (!container.classList.contains('rgb-active')) {
+                    stopAnimation();
+                }
+            });
+            
+            // Click toggle mobiilille
+            container.addEventListener('click', () => {
+                if (container.classList.contains('rgb-active')) {
+                    startAnimation();
+                } else {
+                    stopAnimation();
+                }
+            });
+            
+            // Kun PIKSELÖITY logo latautuu
+            if (pixelLogo.complete) {
+                logoLoaded = true;
+                resizeCanvas();
+            } else {
+                pixelLogo.onload = () => {
+                    logoLoaded = true;
+                    resizeCanvas();
+                };
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+        })();
+
+        // ========================================
+        // MAIN SITE i18n (navbar + link sync)
+        // ========================================
+        (function initSiteI18n() {
+            const STORAGE_KEY = 'codesphere_lang';
+            const LANGS = [
+                { code: 'fi', label: 'Suomi', dir: 'ltr' },
+                { code: 'en', label: 'English', dir: 'ltr' },
+                { code: 'sv', label: 'Svenska', dir: 'ltr' },
+                { code: 'no', label: 'Norsk', dir: 'ltr' },
+                { code: 'da', label: 'Dansk', dir: 'ltr' },
+                { code: 'is', label: 'Íslenska', dir: 'ltr' },
+                { code: 'de', label: 'Deutsch', dir: 'ltr' },
+                { code: 'es', label: 'Español', dir: 'ltr' },
+                { code: 'ar', label: 'العربية', dir: 'rtl' },
+            ];
+
+            const I18N = {
+                fi: {
+                    pageTitle: 'Codesphere - Ohjelmistokehitystä maailmanlaajuisesti',
+                    metaDescription: 'Codesphere - Globaalia ohjelmistokehitystä, moderneja verkkosivuja ja digitaalisia ratkaisuja.',
+
+                    audioTitle: 'Taustamusiikki',
+
+                    navServices: 'Palvelut',
+                    navTeam: 'Tiimi',
+                    navReferences: 'Referenssit',
+                    navCoop: 'Yhteistyö',
+                    navContact: 'Yhteystiedot',
+                    navCta: 'Aloita keskustelu',
+
+                    heroTitle: 'Koodia, joka muuttaa maailmaa',
+                    heroSubtitle: 'Globaalia ohjelmistokehitystä ja moderneja digitaalisia ratkaisuja',
+                    heroBody: 'Verkkosivut, sovellukset ja ohjelmistot - suunnittelemme ja toteutamme visiosi todellisuudeksi.',
+                    heroPrimaryCta: 'Aloita projekti',
+                    heroStat1: 'Erikoisalaa',
+                    heroStat2: 'Asiantuntijaa',
+                    heroStat3: 'Asiakastyytyväisyys',
+
+                    pfTitle: 'Kun vastuu kasvaa, rakenteet paljastuvat',
+                    pfBody: 'Kasvun myötä järjestelmät, vastuut ja toimittajat monimutkaistuvat. Ilman selkeää rakennetta kokonaisuus alkaa hajota.',
+                    pfCard1Title: '⚠️ Riippuvuus yksilöistä',
+                    pfCard1Body: 'Kriittinen tieto yhden henkilön päässä. Kun hän lähtee, tieto lähtee mukana.',
+                    pfCard2Title: '⚠️ Hajautunut vastuu',
+                    pfCard2Body: 'Monta toimittajaa, ei yhtä vastuunkantajaa. Ongelmat pompotellaan ympäriinsä.',
+                    pfCard3Title: '⚠️ Dokumentaatio puuttuu',
+                    pfCard3Body: 'Järjestelmät toimivat, mutta kukaan ei tiedä miten. Muutokset ovat riskejä.',
+                    pfCta: '→ Codesphere ratkaisee nämä rakenteella, ei yksittäisillä sankareilla.',
+
+                    servicesTitle: 'Mitä kannamme vastuullemme',
+                    servicesBody: 'Neljä erikoisalaa, yksi kokonaisvaltainen kumppani. Toteutamme ratkaisut alusta loppuun – vastuu säilyy meillä.',
+
+                    service1Title: 'Tekninen vastuu ja asiantuntijatodistelu',
+                    service1Body: 'Asiantuntijalausunnot, tuomioistuintodistelu ja verkkohuijausten tutkinta. Autamme viranomaisia ja yrityksiä selvittämään monimutkaisia kybertapauksia – ja kannamme vastuun lausunnoistamme.',
+                    service1Tag1: 'Lausunnot',
+                    service1Tag2: 'Forensiikka',
+                    service1Tag3: 'Tutkinta',
+
+                    service2Title: 'Älykkäät järjestelmät ja automaatio',
+                    service2Body: 'AI-konsultointi, prosessiautomaatio ja tekoälypohjainen sisällöntuotanto. Konkreettisia ratkaisuja, jotka säästävät aikaa ja resursseja – järjestelmien ylläpito ja kehitys sisältyvat.',
+                    service2Tag1: 'AI-konsultointi',
+                    service2Tag2: 'Automaatio',
+                    service2Tag3: 'Sisällöntuotanto',
+
+                    service3Title: 'Visuaalinen data ja dokumentaatio',
+                    service3Body: 'Ammattitasoiset drone-kuvaukset kiinteistöihin, tapahtumiin ja viralliseen dokumentaatioon. Laadukasta materiaalia – käyttöoikeudet ja arkistointi sisältyvät.',
+                    service3Tag1: 'Kiinteistöt',
+                    service3Tag2: 'Dokumentaatio',
+                    service3Tag3: 'Mainokset',
+
+                    service4Title: 'Kokonaisarkkitehtuuri ja kehitys',
+                    service4Body: 'Web-sivustot, IT-konsultointi ja lohkoketjuratkaisut. Toteutamme digitaaliset kokonaisuudet alusta loppuun – ylläpito ja tuki mukana.',
+                    service4Tag1: 'Web-sivut',
+                    service4Tag2: 'IT-konsultointi',
+                    service4Tag3: 'Lohkoketju',
+
+                    teamTitle: 'Tiimimme',
+                    teamBody: 'Kokeneet asiantuntijat palveluksessasi. Yhdistämme vuosikymmenien kokemuksen kyberturvallisuudesta, tekoälystä ja matemaattisesta tutkimuksesta.',
+                    teamBoxHtml: '<strong>Toimitus perustuu malliin, ei yksittäiseen henkilöön.</strong><br><span style="font-size: 0.95rem; opacity: 0.9;">Codesphere toimii tiimimallilla, jossa osaaminen, dokumentaatio ja vastuu jakautuvat.<br>Asiakkaan projekti ei ole koskaan yhden ihmisen varassa.</span>',
+
+                    timoTitle: 'Toimitusjohtaja, Böethius Oy',
+                    timoBio: 'Böethius Oy:n (Y: 3552254-6) toimitusjohtaja. Tuotekehitys, tutkimus ja suunnittelupalvelut. Matemaattinen innovaattori.',
+                    timoSkill1: 'Matematiikka',
+                    timoSkill2: 'Tutkimus',
+                    timoSkill3: 'Innovaatiot',
+
+                    mattiTitle: 'Hallituksen jäsen • Markkinointijohtaja & Tekoälyarkkitehti',
+                    mattiBio: 'Rihmasto AI -oppivan muistijärjestelmän arkkitehti. Älykkäiden järjestelmien ja markkinointistrategioiden suunnittelu.',
+                    mattiSkill1: 'Tekoäly',
+                    mattiSkill2: 'Automaatio',
+                    mattiSkill3: 'Arkkitehtuuri',
+
+                    mikaTitle: 'Yhteistyökumppani & Kyberturvallisuusasiantuntija',
+                    mikaBio: 'Vuosien kokemus kyberturvallisuudesta ja digitaalisesta forensiikasta. Laki- ja oikeusprosesseihin liittyvä asiantuntijatodistelu tuomioistuimissa.',
+                    mikaSkill1: 'Kyberturvallisuus',
+                    mikaSkill2: 'Forensiikka',
+                    mikaSkill3: 'Lausunnot',
+
+                    refsTitle: 'Asiakkaamme luottavat meihin',
+                    refsBody: 'Referenssejä tyytyväisiltä asiakkailtamme',
+
+                    ref1Quote: 'Toteutitte meille nopealla toimitusaikataululla tarvitsemamme ilmakuvausmateriaalin Hämeenlinna 2035 keskustavisio -hankkeeseen. Yhteistyö oli saumatonta ja sujuvaa.',
+                    ref1Note: '→ Materiaali käytössä kaupunginvaltuuston päätöksenteossa',
+                    ref1Org: 'Hämeenlinnan kaupunki',
+                    ref1Proj: 'Keskustavisio 2035',
+
+                    ref2Quote: 'Toteutitte meille drone-mainosvideon alusta loppuun saakka. Saimme Web-sivustollemme uuden ilmeen, johon olemme erittäin tyytyväisiä.',
+                    ref2Note: '→ Ravintolan verkkosivuliikenne +40% lanseerauksen jälkeen',
+                    ref2Org: 'Ravintola Rantakasino',
+
+                    ref3Quote: 'Toteutitte meille laadukkaasti Mierolan Silta Café Web-sivut, jotka ovat lisänneet yrityksemme näkyvyyttä. Asiakaspalvelunne on ollut kiitettävää.',
+                    ref3Note: '→ Näkyvyys hakukoneissa parantunut merkittävästi',
+                    ref3Org: 'Mierolan Silta Café',
+
+                    ref4Quote: 'Asiantuntijatodistelulla olette auttaneet tuomioistuimia hahmottamaan teknisiä syy-seuraussuhteita. Ammattitaitoanne on arvostettu käräjäoikeuksissa ja hovioikeuksissa.',
+                    ref4Note: '→ Useita tapauksia ratkennut teknisen todistelun avulla',
+                    ref4Org: 'Tuomioistuintodistelu',
+                    ref4Proj: 'Käräjä- ja hovioikeudet',
+
+                    startTitle: 'Yhteistyö alkaa hallitusti',
+                    startBody: 'Kaikki kokonaisuudet eivät ala suurena hankkeena. Rajattu aloitus mahdollistaa turvallisen käynnistyksen – ilman statustappiota.',
+                    startCard1Title: 'Rajattu kartoitus',
+                    startCard1Body: 'Aloitetaan kartoituksella, joka paljastaa nykytilan, riskit ja mahdollisuudet. Ei sitoumuksia jatkosta.',
+                    startCard1Li1: 'Selkeä laajuus ja hinta etukäteen',
+                    startCard1Li2: 'Konkreettinen raportti tuloksena',
+                    startCard1Li3: 'Päätös jatkosta vasta sen jälkeen',
+                    startCard2Title: 'Kokonaisvastuullinen kumppanuus',
+                    startCard2Body: 'Kun luottamus on rakennettu, voimme ottaa laajemman vastuun digitaalisesta kokonaisuudesta.',
+                    startCard2Li1: 'Jatkuva kehitys ja ylläpito',
+                    startCard2Li2: 'Dokumentoitu osaamisen siirto',
+                    startCard2Li3: 'Vastuu säilyy meillä',
+
+                    partnerTitle: 'Joissain hankkeissa toimimme kumppanina',
+                    partnerBody: 'Tietyissä projekteissa voimme jakaa riskin ja hyödyn. Tämä ei ole alennus – se on strateginen yhteistyömalli.',
+                    partnerBaseTitle: '🔒 Perusvaihtoehto (oletus)',
+                    partnerBaseLi1: '• Selkeä kiinteä tai tuntipohjainen hinnoittelu',
+                    partnerBaseLi2: '• Normaali toimitus ja vastuu',
+                    partnerBaseLi3: '• Ei omistuksia, ei sitoumuksia',
+                    partnerModelTitle: '💎 Kumppanuusmalli (valikoitu)',
+                    partnerModelLi1: '• Jaamme riskin ja potentiaalin',
+                    partnerModelLi2: '• Revenue share tai tuotto-oikeus',
+                    partnerModelLi3: '• Codesphere osallistuu päätöksentekoon',
+                    partnerQuote: '"Kumppanuusmalli edellyttää yhteistä visiota, selkeää tulovirtaa ja pitkäjänteisyyttä. Tämä ei ole kaikille projekteille – mutta oikeissa tilanteissa se avaa ovia, joihin pelkkä toimittajuus ei riitä."',
+
+                    ctaTitle: 'Valitse aloitustapa',
+                    ctaBody: 'Keskustellaan organisaationne tarpeista – ei myyntipuhetta, vaan aito kartoitus.',
+                    ctaBtn1: 'Aloita rajatulla kartoituksella',
+                    ctaBtn2: 'Keskustele kokonaisuudesta',
+                    ctaNote: 'Vastaamme yleensä saman päivän aikana',
+                    ctaMail1Href: 'mailto:Codesphere.pro@protonmail.com?subject=Rajattu%20kartoitus%20-%20yhteydenotto',
+                    ctaMail2Href: 'mailto:Codesphere.pro@protonmail.com?subject=Kokonaisuus%20-%20yhteydenotto',
+
+                    contactTitle: 'Yhteystiedot',
+                    contactBody: 'Ota yhteyttä – vastaamme nopeasti',
+                    contactReach: 'Tavoita meidät',
+                    contactDigitalCard: 'Digitaalinen käyntikortti',
+                    openDigitalCard: 'Avaa käyntikortti',
+                    contactEmail: 'Sähköposti',
+                    contactLocation: 'Sijainti',
+                    contactLocationValue: 'Hyvinkää, Suomi',
+                    contactVat: 'Y-tunnus',
+
+                    formName: 'Nimi *',
+                    formNamePh: 'Nimesi',
+                    formEmail: 'Sähköposti *',
+                    formEmailPh: 'nimi@esimerkki.fi',
+                    formSubject: 'Aihe',
+                    formSubjectPh: 'Valitse aihe...',
+                    formSubject1: 'Kyberturvallisuus',
+                    formSubject2: 'Tekoäly & automaatio',
+                    formSubject3: 'Ilmakuvaus',
+                    formSubject4: 'Digitaaliset ratkaisut',
+                    formSubject5: 'Muu asia',
+                    formMsg: 'Viesti *',
+                    formMsgPh: 'Kerro tarpeistasi...',
+                    formSubmit: 'Lähetä viesti',
+
+                    footerCopyright: '© 2025 Codesphere. Kaikki oikeudet pidätetään.',
+                    footerTaglineHtml: '<strong>Koodia maailmalle!</strong> • Globaalia ohjelmistokehitystä',
+                    footerDisclaimer: 'Codesphere on Böethius Oy:n markkinointinimi • Y-tunnus: 3552254-6',
+                    footerBrand: '📦 Brändimateriaali',
+                },
+                en: {
+                    pageTitle: 'Codesphere - Software development worldwide',
+                    metaDescription: 'Codesphere - Global software development, modern websites, and digital solutions.',
+
+                    audioTitle: 'Background music',
+
+                    navServices: 'Services',
+                    navTeam: 'Team',
+                    navReferences: 'References',
+                    navCoop: 'Collaboration',
+                    navContact: 'Contact',
+                    navCta: 'Start a conversation',
+
+                    heroTitle: 'Code that changes the world',
+                    heroSubtitle: 'Global software development and modern digital solutions',
+                    heroBody: 'Websites, apps, and software — we design and build your vision into reality.',
+                    heroPrimaryCta: 'Start a project',
+                    heroStat1: 'Specialties',
+                    heroStat2: 'Experts',
+                    heroStat3: 'Customer satisfaction',
+
+                    pfTitle: 'As responsibility grows, structure is revealed',
+                    pfBody: 'As you grow, systems, responsibilities, and vendors become more complex. Without clear structure, the whole starts to fragment.',
+                    pfCard1Title: '⚠️ Single-person dependency',
+                    pfCard1Body: 'Critical knowledge lives in one person’s head. When they leave, the knowledge leaves with them.',
+                    pfCard2Title: '⚠️ Fragmented accountability',
+                    pfCard2Body: 'Many suppliers, no single owner. Issues get bounced around with no resolution.',
+                    pfCard3Title: '⚠️ Missing documentation',
+                    pfCard3Body: 'Things work, but nobody knows how. Changes become risks.',
+                    pfCta: '→ Codesphere solves this with structure — not lone heroes.',
+
+                    servicesTitle: 'What we take responsibility for',
+                    servicesBody: 'Four specialties, one end-to-end partner. We deliver from start to finish — accountability stays with us.',
+
+                    service1Title: 'Technical accountability & expert testimony',
+                    service1Body: 'Expert statements, court testimony, and online fraud investigations. We help authorities and companies untangle complex cyber cases — and we stand behind what we deliver.',
+                    service1Tag1: 'Statements',
+                    service1Tag2: 'Forensics',
+                    service1Tag3: 'Investigation',
+
+                    service2Title: 'Intelligent systems & automation',
+                    service2Body: 'AI consulting, process automation, and AI-assisted content production. Practical solutions that save time and resources — with maintenance and development included.',
+                    service2Tag1: 'AI consulting',
+                    service2Tag2: 'Automation',
+                    service2Tag3: 'Content',
+
+                    service3Title: 'Visual data & documentation',
+                    service3Body: 'Professional drone imaging for real estate, events, and official documentation. High-quality deliverables — usage rights and archiving included.',
+                    service3Tag1: 'Real estate',
+                    service3Tag2: 'Documentation',
+                    service3Tag3: 'Advertising',
+
+                    service4Title: 'Architecture & development',
+                    service4Body: 'Websites, IT consulting, and blockchain solutions. We deliver digital systems end-to-end — maintenance and support included.',
+                    service4Tag1: 'Web',
+                    service4Tag2: 'IT consulting',
+                    service4Tag3: 'Blockchain',
+
+                    teamTitle: 'Our team',
+                    teamBody: 'Experienced specialists at your service. We combine decades of cybersecurity, AI, and mathematical research experience.',
+                    teamBoxHtml: '<strong>Delivery is based on a model — not a single person.</strong><br><span style="font-size: 0.95rem; opacity: 0.9;">Codesphere operates as a team model where expertise, documentation, and accountability are shared.<br>Your project is never dependent on just one person.</span>',
+
+                    timoTitle: 'CEO, Böethius Oy',
+                    timoBio: 'CEO of Böethius Oy (Business ID: 3552254-6). Product development, research, and design services. Mathematical innovator.',
+                    timoSkill1: 'Mathematics',
+                    timoSkill2: 'Research',
+                    timoSkill3: 'Innovation',
+
+                    mattiTitle: 'Board member • Marketing lead & AI architect',
+                    mattiBio: 'Architect of the Rihmasto AI learning memory system. Designing intelligent systems and marketing strategies.',
+                    mattiSkill1: 'AI',
+                    mattiSkill2: 'Automation',
+                    mattiSkill3: 'Architecture',
+
+                    mikaTitle: 'Partner & cybersecurity specialist',
+                    mikaBio: 'Years of experience in cybersecurity and digital forensics. Expert testimony in legal and court processes.',
+                    mikaSkill1: 'Cybersecurity',
+                    mikaSkill2: 'Forensics',
+                    mikaSkill3: 'Statements',
+
+                    refsTitle: 'Clients trust us',
+                    refsBody: 'References from satisfied clients',
+
+                    ref1Quote: 'You delivered the aerial footage we needed for the Hämeenlinna 2035 city center vision project on a tight schedule. Collaboration was seamless and smooth.',
+                    ref1Note: '→ Material used in the city council’s decision-making',
+                    ref1Org: 'City of Hämeenlinna',
+                    ref1Proj: 'City Center Vision 2035',
+
+                    ref2Quote: 'You delivered a drone advertising video end-to-end. We got a fresh new look for our website, and we’re very happy with the result.',
+                    ref2Note: '→ Restaurant website traffic +40% after launch',
+                    ref2Org: 'Restaurant Rantakasino',
+
+                    ref3Quote: 'You built the Mierolan Silta Café website with high quality, increasing our visibility. Your customer service has been excellent.',
+                    ref3Note: '→ Search visibility improved significantly',
+                    ref3Org: 'Mierolan Silta Café',
+
+                    ref4Quote: 'Through expert testimony, you have helped courts understand technical cause-and-effect relationships. Your expertise is valued in district and appeal courts.',
+                    ref4Note: '→ Multiple cases resolved with technical evidence',
+                    ref4Org: 'Court testimony',
+                    ref4Proj: 'District & appeal courts',
+
+                    startTitle: 'Collaboration starts in a controlled way',
+                    startBody: 'Not every initiative starts as a large project. A scoped start enables safe momentum — without loss of status.',
+                    startCard1Title: 'Scoped assessment',
+                    startCard1Body: 'We start with an assessment that reveals the current state, risks, and opportunities. No commitments beyond that.',
+                    startCard1Li1: 'Clear scope and price upfront',
+                    startCard1Li2: 'Concrete report as the outcome',
+                    startCard1Li3: 'Decide on next steps afterward',
+                    startCard2Title: 'Accountable partnership',
+                    startCard2Body: 'Once trust is built, we can take broader responsibility for your digital whole.',
+                    startCard2Li1: 'Continuous development and maintenance',
+                    startCard2Li2: 'Documented knowledge transfer',
+                    startCard2Li3: 'Accountability stays with us',
+
+                    partnerTitle: 'In some projects, we operate as a partner',
+                    partnerBody: 'In selected cases we can share both risk and upside. This is not a discount — it is a strategic collaboration model.',
+                    partnerBaseTitle: '🔒 Standard option (default)',
+                    partnerBaseLi1: '• Clear fixed-fee or hourly pricing',
+                    partnerBaseLi2: '• Normal delivery and accountability',
+                    partnerBaseLi3: '• No ownership, no long-term commitments',
+                    partnerModelTitle: '💎 Partnership model (selected)',
+                    partnerModelLi1: '• We share risk and potential',
+                    partnerModelLi2: '• Revenue share or return rights',
+                    partnerModelLi3: '• Codesphere participates in decision-making',
+                    partnerQuote: '"A partnership model requires a shared vision, clear revenue, and long-term commitment. It’s not for every project — but in the right context it opens doors that vendor-only delivery can’t."',
+
+                    ctaTitle: 'Choose how to start',
+                    ctaBody: 'Let’s discuss your organization’s needs — no sales pitch, just a real assessment.',
+                    ctaBtn1: 'Start with a scoped assessment',
+                    ctaBtn2: 'Discuss the bigger picture',
+                    ctaNote: 'We typically reply the same day',
+                    ctaMail1Href: 'mailto:Codesphere.pro@protonmail.com?subject=Scoped%20assessment%20-%20contact',
+                    ctaMail2Href: 'mailto:Codesphere.pro@protonmail.com?subject=Full%20scope%20-%20contact',
+
+                    contactTitle: 'Contact',
+                    contactBody: 'Reach out — we respond quickly',
+                    contactReach: 'Get in touch',
+                    contactDigitalCard: 'Digital business card',
+                    openDigitalCard: 'Open business card',
+                    contactEmail: 'Email',
+                    contactLocation: 'Location',
+                    contactLocationValue: 'Hyvinkää, Finland',
+                    contactVat: 'Business ID',
+
+                    formName: 'Name *',
+                    formNamePh: 'Your name',
+                    formEmail: 'Email *',
+                    formEmailPh: 'name@example.com',
+                    formSubject: 'Subject',
+                    formSubjectPh: 'Choose a subject...',
+                    formSubject1: 'Cybersecurity',
+                    formSubject2: 'AI & automation',
+                    formSubject3: 'Aerial imaging',
+                    formSubject4: 'Digital solutions',
+                    formSubject5: 'Other',
+                    formMsg: 'Message *',
+                    formMsgPh: 'Tell us about your needs…',
+                    formSubmit: 'Send message',
+
+                    footerCopyright: '© 2025 Codesphere. All rights reserved.',
+                    footerTaglineHtml: '<strong>Code for the world!</strong> • Global software development',
+                    footerDisclaimer: 'Codesphere is a marketing name of Böethius Oy • Business ID: 3552254-6',
+                    footerBrand: '📦 Brand assets',
+                },
+                // Muut kielet: käännetään navbar (ja digikorttilinkki) omilla teksteillä, muu fallback EN.
+                sv: { navServices: 'Tjänster', navTeam: 'Team', navReferences: 'Referenser', navCoop: 'Samarbete', navContact: 'Kontakt', navCta: 'Starta en dialog', openDigitalCard: 'Öppna visitkort', footerBrand: '📦 Varumärke' },
+                no: { navServices: 'Tjenester', navTeam: 'Team', navReferences: 'Referanser', navCoop: 'Samarbeid', navContact: 'Kontakt', navCta: 'Start en samtale', openDigitalCard: 'Åpne visittkort', footerBrand: '📦 Merkevare' },
+                da: { navServices: 'Tjenester', navTeam: 'Team', navReferences: 'Referencer', navCoop: 'Samarbejde', navContact: 'Kontakt', navCta: 'Start en dialog', openDigitalCard: 'Åbn visitkort', footerBrand: '📦 Brand' },
+                is: { navServices: 'Þjónusta', navTeam: 'Teymi', navReferences: 'Tilvísanir', navCoop: 'Samstarf', navContact: 'Hafa samband', navCta: 'Hefja samtal', openDigitalCard: 'Opna nafnspjald', footerBrand: '📦 Vöruefni' },
+                de: { navServices: 'Leistungen', navTeam: 'Team', navReferences: 'Referenzen', navCoop: 'Zusammenarbeit', navContact: 'Kontakt', navCta: 'Gespräch starten', openDigitalCard: 'Visitenkarte öffnen', footerBrand: '📦 Markenmaterial' },
+                es: { navServices: 'Servicios', navTeam: 'Equipo', navReferences: 'Referencias', navCoop: 'Colaboración', navContact: 'Contacto', navCta: 'Iniciar conversación', openDigitalCard: 'Abrir tarjeta', footerBrand: '📦 Marca' },
+                ar: { navServices: 'الخدمات', navTeam: 'الفريق', navReferences: 'مراجع', navCoop: 'التعاون', navContact: 'تواصل', navCta: 'ابدأ محادثة', openDigitalCard: 'افتح بطاقة العمل', footerBrand: '📦 العلامة التجارية' },
+            };
+
+            const langSelect = document.getElementById('langSelect');
+            const digitalCardLink = document.getElementById('digitalCardLink');
+
+            function normalizeLang(raw) {
+                if (!raw) return 'fi';
+                const lowered = String(raw).trim().toLowerCase();
+                const base = lowered.split('-')[0];
+                const supported = new Set(LANGS.map(l => l.code));
+                if (supported.has(lowered)) return lowered;
+                if (supported.has(base)) return base;
+                return 'fi';
+            }
+
+            function getUrlLang() {
+                try {
+                    const url = new URL(window.location.href);
+                    return url.searchParams.get('lang');
+                } catch {
+                    return null;
+                }
+            }
+
+            function setUrlLang(lang) {
+                try {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('lang', lang);
+                    window.history.replaceState({}, '', url.toString());
+                } catch {
+                    // ignore
+                }
+            }
+
+            function updateDigitalCardLink(lang) {
+                if (!digitalCardLink) return;
+                const baseHref = 'brand-kit/digital/business-card.html';
+                digitalCardLink.href = `${baseHref}?lang=${encodeURIComponent(lang)}`;
+            }
+
+            function t(lang, key) {
+                return I18N?.[lang]?.[key] ?? I18N?.en?.[key] ?? I18N?.fi?.[key];
+            }
+
+            function applyLang(lang) {
+                const langInfo = LANGS.find(l => l.code === lang) || LANGS[0];
+                document.documentElement.lang = lang;
+                document.documentElement.dir = langInfo.dir;
+
+                // Title + meta description
+                const pageTitle = t(lang, 'pageTitle');
+                if (typeof pageTitle === 'string') document.title = pageTitle;
+                const metaDesc = document.querySelector('meta[name="description"]');
+                const metaDescription = t(lang, 'metaDescription');
+                if (metaDesc && typeof metaDescription === 'string') metaDesc.setAttribute('content', metaDescription);
+
+                // Text nodes
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    const value = t(lang, key);
+                    if (typeof value === 'string') el.textContent = value;
+                });
+
+                // HTML nodes
+                document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-html');
+                    const value = t(lang, key);
+                    if (typeof value === 'string') el.innerHTML = value;
+                });
+
+                // Attribute helpers
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder');
+                    const value = t(lang, key);
+                    if (typeof value === 'string') el.setAttribute('placeholder', value);
+                });
+
+                document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-title');
+                    const value = t(lang, key);
+                    if (typeof value === 'string') el.setAttribute('title', value);
+                });
+
+                document.querySelectorAll('[data-i18n-href]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-href');
+                    const value = t(lang, key);
+                    if (typeof value === 'string') el.setAttribute('href', value);
+                });
+
+                updateDigitalCardLink(lang);
+            }
+
+            function buildLangSelect() {
+                if (!langSelect) return;
+                langSelect.innerHTML = '';
+                for (const lang of LANGS) {
+                    const opt = document.createElement('option');
+                    opt.value = lang.code;
+                    opt.textContent = lang.label;
+                    langSelect.appendChild(opt);
+                }
+            }
+
+            const initial = normalizeLang(
+                getUrlLang() ||
+                window.localStorage.getItem(STORAGE_KEY) ||
+                window.localStorage.getItem('lang') ||
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+
+            buildLangSelect();
+            if (langSelect) {
+                langSelect.value = initial;
+                langSelect.addEventListener('change', () => {
+                    const lang = normalizeLang(langSelect.value);
+                    window.localStorage.setItem(STORAGE_KEY, lang);
+                    // backward-compat
+                    window.localStorage.setItem('lang', lang);
+                    setUrlLang(lang);
+                    applyLang(lang);
+                });
+            }
+
+            window.localStorage.setItem(STORAGE_KEY, initial);
+            window.localStorage.setItem('lang', initial);
+            setUrlLang(initial);
+            applyLang(initial);
+        })();
     </script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Aula;Timo;;;
+FN:Timo Aula
+TITLE:Toimitusjohtaja, Böethius Oy • Ohjelmistokehityksen asiantuntija
+ORG:Codesphere
+TEL;TYPE=CELL:+3584579773133
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Erholtz;Matti;;;
+FN:Matti Erholtz
+TITLE:Hallituksen jäsen • Markkinointijohtaja & Tekoälyarkkitehti
+ORG:Codesphere
+TEL;TYPE=CELL:+358401932714
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Leppänen;Mika;;;
+FN:Mika Leppänen
+TITLE:Kyberturvallisuusasiantuntija • Asiantuntijatodistelu (tuomioistuimet)
+ORG:Codesphere
+TEL;TYPE=CELL:+358465581732
+END:VCARD

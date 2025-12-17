@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codesphere – Brändimateriaalit</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <style>
+    :root {
+      --primary: #1e3a5f;
+      --primary-light: #2d5a87;
+      --accent: #00ffff;
+      --accent-rgb: 0, 255, 255;
+      --bg-dark: #0a0f1a;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
+      --text-white: #f1f5f9;
+      --text-muted: #94a3b8;
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg-dark);
+      color: var(--text-white);
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.35));
+    }
+
+    .back {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      line-height: 1.15;
+      margin: 0 0 0.25rem;
+      background: linear-gradient(135deg, var(--text-white), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      margin: 0.25rem 0 0;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem;
+    }
+
+    .card h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.05rem;
+    }
+
+    .preview {
+      height: 160px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin: 0.75rem 0 0.75rem;
+      border: 1px solid rgba(var(--accent-rgb), 0.12);
+      background: radial-gradient(circle, rgba(var(--accent-rgb), 0.08) 0%, transparent 60%);
+      overflow: hidden;
+    }
+
+    .preview img {
+      max-width: 120px;
+      max-height: 120px;
+      object-fit: contain;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(var(--accent-rgb), 0.35);
+      background: rgba(var(--accent-rgb), 0.08);
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(var(--accent-rgb), 0.14);
+      transform: translateY(-1px);
+    }
+
+    .note {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border: 1px solid rgba(var(--accent-rgb), 0.22);
+      border-radius: 14px;
+      background: rgba(var(--accent-rgb), 0.04);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="brand brand-link" href="index.html">
+        <img src="codesphere-logo-128.png" alt="Codesphere" />
+        <span>CODESPHERE</span>
+      </a>
+      <a class="back" href="index.html">← Takaisin sivustolle</a>
+    </div>
+
+    <h1>Brändimateriaalit</h1>
+    <p>Valmiit exportit someen, mainontaan ja printtiin. Lähteet ja ohjeet löytyvät myös tiedostosta <code>brand-kit/README.md</code>.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Logo (transparent)</h3>
+        <p>PNG, läpinäkyvä tausta</p>
+        <div class="preview"><img src="brand-kit/logo/codesphere-logo-1024-transparent.png" alt="Logo" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/logo/codesphere-logo-512-transparent.png" download>512</a>
+          <a class="btn" href="brand-kit/logo/codesphere-logo-1024-transparent.png" download>1024</a>
+          <a class="btn" href="brand-kit/logo/codesphere-logo-2048-transparent.png" download>2048</a>
+          <a class="btn" href="brand-kit/logo/codesphere-logo-4096-transparent.png" download>4096</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Some</h3>
+        <p>Profiili / postaus / story / OG</p>
+        <div class="preview"><img src="brand-kit/social/profile.png" alt="Social" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/social/profile.png" download>Profile</a>
+          <a class="btn" href="brand-kit/social/post.png" download>Post</a>
+          <a class="btn" href="brand-kit/social/story.png" download>Story</a>
+          <a class="btn" href="brand-kit/social/og.png" download>OG</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Mainonta (display)</h3>
+        <p>Yleisimmät bannerikoot</p>
+        <div class="preview"><img src="brand-kit/ads/300x250.png" alt="Ads" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/ads/300x250.png" download>300×250</a>
+          <a class="btn" href="brand-kit/ads/728x90.png" download>728×90</a>
+          <a class="btn" href="brand-kit/ads/160x600.png" download>160×600</a>
+          <a class="btn" href="brand-kit/ads/970x250.png" download>970×250</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Print</h3>
+        <p>PNG @300 DPI metadata</p>
+        <div class="preview"><img src="brand-kit/print/a4-portrait.png" alt="Print" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/print/a4-portrait.png" download>A4</a>
+          <a class="btn" href="brand-kit/print/a5-portrait.png" download>A5</a>
+          <a class="btn" href="brand-kit/print/business-card-3.5x2in.png" download>Käyntikortti</a>
+          <a class="btn" href="brand-kit/print/business-card-bleed-3.75x2.25in.png" download>Bleed</a>
+          <a class="btn" href="brand-kit/print-pdf/codesphere-a4-portrait.pdf" download>A4 PDF</a>
+          <a class="btn" href="brand-kit/print-pdf/codesphere-a5-portrait.pdf" download>A5 PDF</a>
+          <a class="btn" href="brand-kit/print-pdf/codesphere-business-card-85x55.pdf" download>Käyntikortti PDF</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Väripaletti</h3>
+        <p>Hexit ja swatch-kuva</p>
+        <div class="preview"><img src="brand-kit/palette/codesphere-palette.png" alt="Palette" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/palette/codesphere-palette.png" download>Lataa</a>
+          <a class="btn" href="brand-kit/README.md" download>README</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Pixel-logo</h3>
+        <p>Nearest scaling (retro)</p>
+        <div class="preview"><img src="brand-kit/logo/codesphere-logo-pixel-512.png" alt="Pixel logo" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/logo/codesphere-logo-pixel-256.png" download>256</a>
+          <a class="btn" href="brand-kit/logo/codesphere-logo-pixel-512.png" download>512</a>
+          <a class="btn" href="brand-kit/logo/codesphere-logo-pixel-1024.png" download>1024</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Digitaalinen käyntikortti</h3>
+        <p>PNG + vCard (yhteystiedot)</p>
+        <div class="preview"><img src="brand-kit/digital/business-card.png" alt="Digital business card" /></div>
+        <div class="actions">
+          <a class="btn" href="brand-kit/digital/business-card.png" download>PNG</a>
+          <a class="btn" href="brand-kit/digital/contacts.vcf" download>vCard</a>
+          <a class="btn" href="brand-kit/digital/business-card.html" target="_blank" rel="noopener">Live HTML</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      Paino-PDF:t löytyvät valmiina: <code>brand-kit/print-pdf/</code> (A4/A5/käyntikortti, bleed + turva-alueet).
+    </div>
+  </div>
+</body>
+</html>

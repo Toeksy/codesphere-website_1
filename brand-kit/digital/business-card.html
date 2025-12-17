@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codesphere – Digitaalinen käyntikortti</title>
+  <style>
+    :root {
+      --primary: #1e3a5f;
+      --accent: #00ffff;
+      --accent-rgb: 0, 255, 255;
+      --bg: #0a0f1a;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --panel: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.10);
+      --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: radial-gradient(1200px 700px at 15% 20%, rgba(var(--accent-rgb), 0.12), transparent 55%),
+                  radial-gradient(1100px 650px at 90% 85%, rgba(30, 58, 95, 0.20), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(1050px, 100%);
+      aspect-ratio: 1050 / 600;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 2px solid rgba(var(--accent-rgb), 0.22);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06) inset,
+        0 0 40px rgba(var(--accent-rgb), 0.10),
+        0 0 90px rgba(var(--accent-rgb), 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(var(--accent-rgb), 0.14), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(30,58,95,0.18), transparent 55%);
+      filter: blur(18px);
+      animation: floatGlow 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(24px, -18px, 0) scale(1.02); }
+    }
+
+    .inner {
+      position: absolute;
+      inset: 26px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+      z-index: 1;
+    }
+
+    .left {
+      display: grid;
+      align-items: center;
+    }
+
+    .right {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 8px 6px 8px 0;
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      font-size: clamp(20px, 2.4vw, 36px);
+      margin-top: 2px;
+      background: linear-gradient(135deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: clamp(12px, 1.2vw, 16px);
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.40), rgba(var(--accent-rgb), 0.05));
+      margin: 14px 0 18px;
+      border-radius: 999px;
+    }
+
+    .people {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .person .name {
+      font-weight: 800;
+      font-size: clamp(14px, 1.5vw, 22px);
+      margin: 0;
+    }
+
+    .person .title {
+      margin: 4px 0 0;
+      color: rgba(148, 163, 184, 0.95);
+      font-size: clamp(11px, 1.15vw, 15px);
+    }
+
+    .person .phone {
+      margin: 5px 0 0;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: clamp(12px, 1.15vw, 16px);
+    }
+
+    .footer {
+      color: rgba(148, 163, 184, 0.9);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      background: rgba(var(--accent-rgb), 0.08);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .footer button {
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      background: rgba(var(--accent-rgb), 0.08);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--font);
+    }
+
+    .footer a:hover { background: rgba(var(--accent-rgb), 0.13); }
+    .footer button:hover { background: rgba(var(--accent-rgb), 0.13); }
+
+    .footer-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .footer-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .share-label {
+      color: rgba(148, 163, 184, 0.9);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      margin-right: 2px;
+    }
+
+    .lang {
+      color: rgba(241,245,249,0.85);
+      border: 1px solid rgba(var(--accent-rgb), 0.20);
+      background: rgba(0,0,0,0.22);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .lang.top {
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+
+    .lang option { background: #0a0f1a; }
+
+    html[dir="rtl"] body { direction: rtl; }
+    html[dir="rtl"] .right { text-align: right; padding: 8px 0 8px 6px; }
+    html[dir="rtl"] .footer { flex-direction: row-reverse; }
+    html[dir="rtl"] .people { text-align: right; }
+    html[dir="rtl"] .person .phone { direction: ltr; unicode-bidi: plaintext; }
+
+    /* Browser mock */
+    .browser {
+      height: 100%;
+      border-radius: 18px;
+      background: rgba(8, 12, 20, 0.62);
+      border: 1px solid rgba(var(--accent-rgb), 0.18);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06) inset,
+        0 0 30px rgba(var(--accent-rgb), 0.10);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .browser::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.06), transparent 62%);
+      transform: translateX(-65%);
+      animation: sheen 6.5s ease-in-out infinite;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.85;
+    }
+
+    @keyframes sheen {
+      0%, 35% { transform: translateX(-70%); opacity: 0; }
+      50% { opacity: 0.95; }
+      70%, 100% { transform: translateX(70%); opacity: 0; }
+    }
+
+    .topbar {
+      height: 46px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dots { display: flex; gap: 7px; }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset;
+    }
+
+    .addr {
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.20);
+      background: rgba(0,0,0,0.22);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      color: rgba(241,245,249,0.85);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .addr::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb), 0.12) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: addrGlow 4.8s ease-in-out infinite;
+    }
+
+    @keyframes addrGlow {
+      0%, 50% { transform: translateX(-120%); opacity: 0; }
+      65% { opacity: 1; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    .viewport {
+      height: calc(100% - 46px);
+      background: #000;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+
+    .fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      background: #000;
+    }
+
+    .fallback img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+    }
+
+    .hint {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 11px;
+      color: rgba(241,245,249,0.72);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 999px;
+      padding: 6px 9px;
+      backdrop-filter: blur(6px);
+    }
+
+    @media (max-width: 900px) {
+      .inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1.1fr 0.9fr;
+      }
+      .footer { flex-direction: column; align-items: flex-start; }
+      .footer-actions { align-items: flex-start; }
+      .footer-row { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="img" aria-label="Codesphere digitaalinen käyntikortti">
+    <div class="inner">
+      <section class="left">
+        <div class="browser" aria-label="Selaimen esikatselu: Codesphere-sivusto">
+          <div class="topbar">
+            <div class="dots" aria-hidden="true">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <div class="addr"><span>codesphere</span><span style="opacity:.7">.fi</span></div>
+            <select class="lang top" id="langTop" aria-label="Language"></select>
+          </div>
+          <div class="viewport">
+            <iframe id="site" title="Codesphere-sivusto" src="../../index.html" loading="lazy"></iframe>
+            <div class="fallback" id="fallback" aria-hidden="true">
+              <img src="../social/og.png" alt="Codesphere esikatselu" />
+              <div class="hint">Jos iframe ei toimi, avaa kortti sivustolta (HTTP)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="right">
+        <header>
+          <div class="brand">CODESPHERE</div>
+          <div class="sub" data-i18n="subtitle">Yhteystiedot</div>
+          <div class="divider"></div>
+        </header>
+
+        <div class="people">
+          <div class="person">
+            <p class="name">Timo Aula</p>
+            <p class="title" data-i18n="timoTitle">Toimitusjohtaja, Böethius Oy • Ohjelmistokehityksen asiantuntija</p>
+            <p class="phone" data-phone="+358 45 7977 3133">puh +358 45 7977 3133</p>
+          </div>
+          <div class="person">
+            <p class="name">Matti Erholtz</p>
+            <p class="title" data-i18n="mattiTitle">Hallituksen jäsen • Markkinointijohtaja &amp; Tekoälyarkkitehti</p>
+            <p class="phone" data-phone="+358 40 193 2714">puh +358 40 193 2714</p>
+          </div>
+          <div class="person">
+            <p class="name">Mika Leppänen</p>
+            <p class="title" data-i18n="mikaTitle">Kyberturvallisuusasiantuntija • Asiantuntijatodistelu (tuomioistuimet)</p>
+            <p class="phone" data-phone="+358 46 558 1732">puh +358 46 558 1732</p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div data-i18n="tagline">codesphere | globaalia ohjelmistokehitystä</div>
+          <div class="footer-actions">
+            <div class="footer-row">
+              <select class="lang" id="lang" aria-label="Language"></select>
+              <a href="contacts.vcf" download data-i18n="downloadVcard">vCard</a>
+              <a href="business-card.png" target="_blank" rel="noopener" data-i18n="openPng">Avaa PNG-käyntikortti</a>
+            </div>
+            <div class="footer-row" aria-label="Share">
+              <span class="share-label" data-i18n="shareLabel">Jaa</span>
+              <a id="shareWhatsApp" href="#" target="_blank" rel="noopener" data-i18n="shareWhatsApp">WhatsApp</a>
+              <a id="shareFacebook" href="#" target="_blank" rel="noopener" data-i18n="shareFacebook">Facebook</a>
+              <button id="shareSignal" type="button" data-i18n="shareSignal">Signal</button>
+              <button id="shareInstagram" type="button" data-i18n="shareInstagram">Instagram</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Minimal i18n: auto language via ?lang=xx or navigator.language, with localStorage.
+    const SUPPORTED = [
+      { code: 'fi', label: 'Suomi' },
+      { code: 'en', label: 'English' },
+      { code: 'sv', label: 'Svenska' },
+      { code: 'no', label: 'Norsk' },
+      { code: 'da', label: 'Dansk' },
+      { code: 'is', label: 'Íslenska' },
+      { code: 'de', label: 'Deutsch' },
+      { code: 'es', label: 'Español' },
+      { code: 'ar', label: 'العربية' },
+    ];
+
+    const I18N = {
+      fi: {
+        title: 'Codesphere – Digitaalinen käyntikortti',
+        subtitle: 'Yhteystiedot',
+        tagline: 'codesphere | globaalia ohjelmistokehitystä',
+        downloadVcard: 'vCard',
+        openPng: 'Avaa PNG-käyntikortti',
+        shareLabel: 'Jaa',
+        shareWhatsApp: 'WhatsApp',
+        shareFacebook: 'Facebook',
+        shareSignal: 'Signal',
+        shareInstagram: 'Instagram',
+        shareCopied: 'Linkki kopioitu',
+        phonePrefix: 'puh',
+        timoTitle: 'Toimitusjohtaja, Böethius Oy • Ohjelmistokehityksen asiantuntija',
+        mattiTitle: 'Hallituksen jäsen • Markkinointijohtaja & Tekoälyarkkitehti',
+        mikaTitle: 'Kyberturvallisuusasiantuntija • Asiantuntijatodistelu (tuomioistuimet)',
+      },
+      en: {
+        title: 'Codesphere – Digital business card',
+        subtitle: 'Contact',
+        tagline: 'codesphere | global software development',
+        downloadVcard: 'vCard',
+        openPng: 'Open PNG card',
+        shareLabel: 'Share',
+        shareWhatsApp: 'WhatsApp',
+        shareFacebook: 'Facebook',
+        shareSignal: 'Signal',
+        shareInstagram: 'Instagram',
+        shareCopied: 'Link copied',
+        phonePrefix: 'tel',
+        timoTitle: 'CEO, Böethius Oy • Software development specialist',
+        mattiTitle: 'Board member • Marketing Director & AI Architect',
+        mikaTitle: 'Cybersecurity specialist • Expert testimony (courts)',
+      },
+      sv: {
+        title: 'Codesphere – Digitalt visitkort',
+        subtitle: 'Kontakt',
+        tagline: 'codesphere | global mjukvaruutveckling',
+        downloadVcard: 'vCard',
+        openPng: 'Öppna PNG-kort',
+        phonePrefix: 'tel',
+        timoTitle: 'VD, Böethius Oy • Expert inom mjukvaruutveckling',
+        mattiTitle: 'Styrelseledamot • Marknadschef & AI-arkitekt',
+        mikaTitle: 'Cybersäkerhetsexpert • Sakkunnigutlåtanden (domstolar)',
+      },
+      no: {
+        title: 'Codesphere – Digitalt visittkort',
+        subtitle: 'Kontakt',
+        tagline: 'codesphere | global programvareutvikling',
+        downloadVcard: 'vCard',
+        openPng: 'Åpne PNG-kort',
+        phonePrefix: 'tlf',
+        timoTitle: 'Daglig leder, Böethius Oy • Ekspert på programvareutvikling',
+        mattiTitle: 'Styremedlem • Markedsdirektør & AI-arkitekt',
+        mikaTitle: 'Cybersikkerhetsekspert • Sakkyndig vitnemål (domstoler)',
+      },
+      da: {
+        title: 'Codesphere – Digitalt visitkort',
+        subtitle: 'Kontakt',
+        tagline: 'codesphere | global softwareudvikling',
+        downloadVcard: 'vCard',
+        openPng: 'Åbn PNG-kort',
+        phonePrefix: 'tlf',
+        timoTitle: 'Direktør, Böethius Oy • Ekspert i softwareudvikling',
+        mattiTitle: 'Bestyrelsesmedlem • Marketingdirektør & AI-arkitekt',
+        mikaTitle: 'Cybersikkerhedsekspert • Sagkyndig vidneudsagn (domstole)',
+      },
+      is: {
+        title: 'Codesphere – Stafrænt nafnspjald',
+        subtitle: 'Samskipti',
+        tagline: 'codesphere | alþjóðleg hugbúnaðarþróun',
+        downloadVcard: 'vCard',
+        openPng: 'Opna PNG spjald',
+        phonePrefix: 'sími',
+        timoTitle: 'Forstjóri, Böethius Oy • Sérfræðingur í hugbúnaðarþróun',
+        mattiTitle: 'Stjórnarmaður • Markaðsstjóri & AI-arkitekt',
+        mikaTitle: 'Netöryggissérfræðingur • Sérfróð vitnisburður (dómstólar)',
+      },
+      de: {
+        title: 'Codesphere – Digitale Visitenkarte',
+        subtitle: 'Kontakt',
+        tagline: 'codesphere | globale Softwareentwicklung',
+        downloadVcard: 'vCard',
+        openPng: 'PNG-Karte öffnen',
+        phonePrefix: 'tel',
+        timoTitle: 'Geschäftsführer, Böethius Oy • Experte für Softwareentwicklung',
+        mattiTitle: 'Vorstandsmitglied • Marketing Director & KI-Architekt',
+        mikaTitle: 'Cybersicherheits-Experte • Sachverständigengutachten (Gerichte)',
+      },
+      es: {
+        title: 'Codesphere – Tarjeta digital',
+        subtitle: 'Contacto',
+        tagline: 'codesphere | desarrollo de software global',
+        downloadVcard: 'vCard',
+        openPng: 'Abrir tarjeta PNG',
+        phonePrefix: 'tel',
+        timoTitle: 'CEO, Böethius Oy • Especialista en desarrollo de software',
+        mattiTitle: 'Miembro del consejo • Director de Marketing y Arquitecto de IA',
+        mikaTitle: 'Especialista en ciberseguridad • Testimonio pericial (tribunales)',
+      },
+      ar: {
+        title: 'Codesphere – بطاقة عمل رقمية',
+        subtitle: 'معلومات التواصل',
+        tagline: 'codesphere | تطوير برمجيات عالمي',
+        downloadVcard: 'vCard',
+        openPng: 'فتح بطاقة PNG',
+        phonePrefix: 'هاتف',
+        timoTitle: 'المدير التنفيذي، Böethius Oy • مختص بتطوير البرمجيات',
+        mattiTitle: 'عضو مجلس الإدارة • مدير التسويق ومهندس معمارية ذكاء اصطناعي',
+        mikaTitle: 'مختص أمن سيبراني • شهادة خبير (المحاكم)',
+      },
+    };
+
+    function normalizeLang(raw) {
+      if (!raw) return 'fi';
+      const lc = String(raw).toLowerCase();
+      const base = lc.split('-')[0];
+      return I18N[base] ? base : 'fi';
+    }
+
+    function getLangFromUrl() {
+      const params = new URLSearchParams(location.search);
+      const l = params.get('lang');
+      return l ? normalizeLang(l) : null;
+    }
+
+    function setUrlLang(lang) {
+      try {
+        const url = new URL(location.href);
+        url.searchParams.set('lang', lang);
+        history.replaceState({}, '', url.toString());
+      } catch {}
+    }
+
+    function shareUrlForLang(lang) {
+      try {
+        const url = new URL(location.href);
+        url.searchParams.set('lang', lang);
+        return url.toString();
+      } catch {
+        return location.href;
+      }
+    }
+
+    function updateShareLinks(lang) {
+      const t = I18N[lang] || I18N.fi;
+      const shareUrl = shareUrlForLang(lang);
+      const text = `Codesphere: ${shareUrl}`;
+
+      const wa = document.getElementById('shareWhatsApp');
+      if (wa) wa.href = `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+      const fb = document.getElementById('shareFacebook');
+      if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+      const signalBtn = document.getElementById('shareSignal');
+      if (signalBtn) {
+        signalBtn.onclick = async () => {
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: t.title, text, url: shareUrl });
+              return;
+            } catch {}
+          }
+
+          // Fallback: try deep link; if blocked/not installed, copy URL.
+          try {
+            location.href = `signal://send?text=${encodeURIComponent(text)}`;
+            return;
+          } catch {}
+
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            alert(t.shareCopied);
+          } catch {
+            prompt(t.shareCopied, shareUrl);
+          }
+        };
+      }
+
+      const igBtn = document.getElementById('shareInstagram');
+      if (igBtn) {
+        igBtn.onclick = async () => {
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: t.title, text, url: shareUrl });
+              return;
+            } catch {}
+          }
+          // Instagram ei tue luotettavaa web-linkkijakoa desktopissa → kopioi linkki.
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            alert(t.shareCopied);
+          } catch {
+            prompt(t.shareCopied, shareUrl);
+          }
+        };
+      }
+    }
+
+    function applyLang(lang) {
+      const t = I18N[lang] || I18N.fi;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.title = t.title;
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (!key) return;
+        const value = t[key];
+        if (typeof value === 'string') el.textContent = value;
+      });
+
+      document.querySelectorAll('.phone[data-phone]').forEach((el) => {
+        const num = el.getAttribute('data-phone') || '';
+        el.textContent = `${t.phonePrefix} ${num}`.trim();
+      });
+
+      try { localStorage.setItem('codesphere_lang', lang); } catch {}
+
+      const sel = document.getElementById('lang');
+      if (sel) sel.value = lang;
+      const selTop = document.getElementById('langTop');
+      if (selTop) selTop.value = lang;
+
+      setUrlLang(lang);
+      updateShareLinks(lang);
+    }
+
+    function initLangUI() {
+      const sels = [document.getElementById('lang'), document.getElementById('langTop')].filter(Boolean);
+      for (const s of sels) {
+        const sel = s;
+        sel.innerHTML = '';
+        for (const opt of SUPPORTED) {
+          const o = document.createElement('option');
+          o.value = opt.code;
+          o.textContent = opt.label;
+          sel.appendChild(o);
+        }
+        sel.addEventListener('change', () => applyLang(normalizeLang(sel.value)));
+      }
+    }
+
+    function pickInitialLang() {
+      const fromUrl = getLangFromUrl();
+      if (fromUrl) return fromUrl;
+      try {
+        const saved = localStorage.getItem('codesphere_lang');
+        if (saved) return normalizeLang(saved);
+      } catch {}
+      return normalizeLang(navigator.language || 'fi');
+    }
+
+    initLangUI();
+    applyLang(pickInitialLang());
+
+    // Tee kortista "elävä": yritä skrollata iframe-sisältöä (vain jos sama origin).
+    const iframe = document.getElementById('site');
+    const fallback = document.getElementById('fallback');
+
+    function showFallback() {
+      if (!fallback) return;
+      fallback.style.display = 'block';
+    }
+
+    // Jos iframe ei lataudu nopeasti, näytä fallback-esikatselu.
+    const fallbackTimer = setTimeout(showFallback, 2500);
+
+    iframe.addEventListener('load', () => {
+      clearTimeout(fallbackTimer);
+
+      // Piilota fallback jos päästiin tähän.
+      if (fallback) fallback.style.display = 'none';
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+
+        let y = 0;
+        let dir = 1;
+
+        const tick = () => {
+          const max = Math.max(0, (doc.documentElement.scrollHeight || doc.body.scrollHeight || 0) - iframe.clientHeight);
+          if (max <= 0) return;
+
+          y += dir * 1.2;
+          if (y >= max) { y = max; dir = -1; }
+          if (y <= 0) { y = 0; dir = 1; }
+
+          doc.documentElement.scrollTop = y;
+          doc.body.scrollTop = y;
+        };
+
+        setInterval(tick, 30);
+      } catch {
+        // File:// tai eri-origin voi estää pääsyn → näytetään fallback.
+        showFallback();
+      }
+    });
+  </script>
+</body>
+</html>
