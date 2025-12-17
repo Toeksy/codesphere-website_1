@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="version" content="2025-12-17-2" />
+  <meta name="version" content="2025-12-17-3" />
   <title>Codesphere - Digitaalinen käyntikortti</title>
   <style>
     :root {
@@ -458,6 +458,27 @@
       .topbar { height: 38px; padding: 8px 10px; }
       .addr { font-size: 11px; height: 24px; padding: 0 8px; }
       .viewport { height: calc(100% - 38px); }
+    }
+
+    /* Force two columns even on small landscape widths */
+    @media (max-width: 900px) and (orientation: landscape) {
+      .card {
+        width: clamp(720px, 95vw, 1080px);
+        margin: 0 auto;
+      }
+      .inner {
+        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-rows: 1fr;
+        gap: 10px;
+      }
+      .brand { font-size: clamp(20px, 2.4vw, 28px); }
+      .sub { font-size: clamp(11px, 2vw, 13px); }
+      .people { gap: 8px; }
+      .person .name { font-size: clamp(14px, 2.2vw, 18px); }
+      .person .title { font-size: clamp(10px, 2vw, 13px); }
+      .person .phone { font-size: clamp(11px, 2vw, 14px); }
+      .footer { font-size: 10px; gap: 6px; }
+      .footer a, .footer button { padding: 7px 9px; font-size: 11px; }
     }
   </style>
 </head>
