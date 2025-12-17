@@ -101,6 +101,9 @@
       overflow: hidden;
       flex: 1 1 auto;
       position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
     }
 
     iframe {
@@ -146,48 +149,30 @@
 
   <section class="grid" aria-label="Laitteiden esikatselut">
     <article class="device">
-      <div class="device-header"><span>Mobiili</span><span>390 × 780 (pysty)</span></div>
+      <div class="device-header"><span>1 · Mobiili (pysty)</span><span>390 × 780</span></div>
       <div class="frame" style="width: 100%; height: 600px;">
-        <div class="label">Phone</div>
-        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-6" title="Mobiili" style="width: 640px; height: 1250px; transform: scale(0.40); transform-origin: top left;"></iframe>
+        <div class="label">Phone · portrait</div>
+        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-7" title="Mobiili pysty" style="width: 640px; height: 1250px; transform: scale(0.40); transform-origin: top left;"></iframe>
       </div>
-      <p class="hint">Pystytila: koko kortti näkyy kerralla; auto-lataus nopealla yhteydellä.</p>
+      <p class="hint">Pystytila: koko kortti näkyy yhdellä sivulla ja posterista voi avata live-sivuston.</p>
     </article>
 
     <article class="device">
-      <div class="device-header"><span>Mobiili (vaaka)</span><span>780 × 390 (vaaka)</span></div>
+      <div class="device-header"><span>2 · Mobiili (vaaka)</span><span>780 × 390</span></div>
       <div class="frame" style="width: 100%; height: 380px; justify-content: flex-start;">
-        <div class="label">Phone (landscape)</div>
-        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-6" title="Mobiili vaaka" style="width: 960px; height: 600px; transform: scale(0.42); transform-origin: top left; position: absolute; left: 0; top: 0;"></iframe>
+        <div class="label">Phone · landscape</div>
+        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-7" title="Mobiili vaaka" style="width: 960px; height: 600px; transform: scale(0.42); transform-origin: top left; position: absolute; left: 0; top: 0;"></iframe>
       </div>
-      <p class="hint">Vaakatila: kaksipalstainen layout, auto-lataus näkyy heti nopealla yhteydellä. Näyttö on pienempi ja ankkuroitu vasemmalle.</p>
+      <p class="hint">Vaakatila: kaksi palstaa, kontaktit oikealla. Tarkista posterin vaihtuminen live-tilaan.</p>
     </article>
 
     <article class="device">
-      <div class="device-header"><span>Tabletti (pysty)</span><span>900 × 1280 (pysty)</span></div>
-      <div class="frame" style="width: 100%; height: 860px;">
-        <div class="label">Tablet (portrait)</div>
-        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-6" title="Tabletti pysty" style="width: 900px; height: 1280px; transform: scale(0.44); transform-origin: top left;"></iframe>
-      </div>
-      <p class="hint">Pystytabletti: tarkista typografia ja posterin vaihtuminen liveen.</p>
-    </article>
-
-    <article class="device">
-      <div class="device-header"><span>Tabletti (vaaka)</span><span>1280 × 900 (vaaka)</span></div>
-      <div class="frame" style="width: 100%; height: 620px;">
-        <div class="label">Tablet (landscape)</div>
-        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-6" title="Tabletti vaaka" style="width: 1280px; height: 900px; transform: scale(0.45); transform-origin: top left;"></iframe>
-      </div>
-      <p class="hint">Vaakatabletti: kaksipalstainen layout; tarkista että poster/live-logiikka toimii.</p>
-    </article>
-
-    <article class="device">
-      <div class="device-header"><span>Desktop</span><span>1366 × 768 (vaaka)</span></div>
+      <div class="device-header"><span>3 · Selain</span><span>1366 × 768</span></div>
       <div class="frame" style="width: 100%; height: 520px;">
-        <div class="label">Desktop</div>
-        <iframe src="brand-kit/digital/business-card.html" title="Desktop" style="width: 1366px; height: 768px; transform: scale(0.5); transform-origin: top left;"></iframe>
+        <div class="label">Desktop · browser</div>
+        <iframe src="index.html?v=2025-12-17-7" title="Desktop" style="width: 1366px; height: 768px; transform: scale(0.5); transform-origin: top left;"></iframe>
       </div>
-      <p class="hint">Vaaka: kaksi palstaa ja automaattinen iframe-lataus näkyvissä.</p>
+      <p class="hint">Selain: suora Codesphere.fi-esikatselu samassa teemassa.</p>
     </article>
   </section>
 
