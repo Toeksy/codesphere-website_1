@@ -37,7 +37,7 @@ Värikartta: `palette/codesphere-palette.png`
 
 - PNG: `digital/business-card.png` (1050×600)
 - vCard: `digital/contacts.vcf`
-- Live: `digital/business-card.html` (selaimessa, sisältää Codesphere-sivun esikatselun)
+- Live: `digital/business-card.html` (selaimessa, sisältää Codesphere-sivun esikatselun; mobiilissa näyttää posterin ja latautuu automaattisesti nopealla yhteydellä tai napilla)
 
 ## Print (PNG, 300 DPI metadata)
 

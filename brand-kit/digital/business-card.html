@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Codesphere – Digitaalinen käyntikortti</title>
+  <title>Codesphere - Digitaalinen käyntikortti</title>
   <style>
     :root {
       --primary: #1e3a5f;
@@ -303,66 +303,107 @@
       background: #000;
     }
 
-    .fallback {
+    .poster {
       position: absolute;
       inset: 0;
-      display: none;
+      display: grid;
+      place-items: center;
       background: #000;
+      gap: 14px;
+      padding: 16px;
+      text-align: center;
+      color: rgba(241,245,249,0.92);
     }
 
-    .fallback img {
+    .poster img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.95;
+      border-radius: 12px;
+      border: 1px solid rgba(var(--accent-rgb), 0.15);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
     }
 
+    .poster button {
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      background: rgba(var(--accent-rgb), 0.08);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: var(--font);
+      letter-spacing: 0.01em;
+    }
+
+    .poster button:hover { background: rgba(var(--accent-rgb), 0.13); }
+
     .hint {
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
       font-size: 11px;
       color: rgba(241,245,249,0.72);
       background: rgba(0,0,0,0.35);
       border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 999px;
+      border-radius: 12px;
       padding: 6px 9px;
       backdrop-filter: blur(6px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
-    @media (max-width: 900px) {
-      body { padding: 12px; }
+    .orientation-tip {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(var(--accent-rgb), 0.26);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      display: none;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Portrait mobile: pin content vertically */
+    @media (max-width: 900px) and (orientation: portrait) {
+      body { padding: 8px; }
       
       .card {
         aspect-ratio: auto;
-        min-height: 100vh;
+        min-height: calc(100vh - 16px);
         border-radius: 20px;
       }
       
       .inner {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
-        gap: 18px;
-        inset: 18px;
+        gap: 14px;
+        inset: 12px;
       }
       
-      .left { min-height: 280px; }
-      .right { padding: 0; gap: 14px; }
+      .left { min-height: 300px; }
+      .right { padding: 0; gap: 10px; }
       
-      .brand { font-size: clamp(24px, 5vw, 32px); }
-      .sub { font-size: clamp(13px, 3vw, 15px); }
+      .brand { font-size: clamp(22px, 4.5vw, 30px); }
+      .sub { font-size: clamp(12px, 3vw, 14px); }
       
-      .person .name { font-size: clamp(16px, 4vw, 20px); }
-      .person .title { font-size: clamp(12px, 3vw, 14px); }
-      .person .phone { font-size: clamp(13px, 3vw, 15px); }
+      .person .name { font-size: clamp(15px, 3.6vw, 19px); }
+      .person .title { font-size: clamp(11px, 3vw, 13px); }
+      .person .phone { font-size: clamp(12px, 3vw, 14px); }
       
-      .people { gap: 14px; }
+      .people { gap: 10px; }
       
       .footer { 
         flex-direction: column; 
         align-items: flex-start; 
         gap: 10px;
-        font-size: 11px;
+        font-size: 10.5px;
       }
       
       .footer-actions { 
@@ -378,8 +419,8 @@
       }
       
       .footer a, .footer button { 
-        padding: 10px 12px; 
-        font-size: 13px;
+        padding: 9px 11px; 
+        font-size: 12px;
         flex: 0 1 auto;
       }
       
@@ -390,10 +431,40 @@
       .addr { font-size: 11px; padding: 0 8px; height: 24px; }
       .viewport { height: calc(100% - 40px); }
     }
+
+    /* Landscape mobile: säilytä kaksipalstaisuus */
+    @media (max-width: 900px) and (orientation: landscape) {
+      body { padding: 10px; }
+      .card {
+        aspect-ratio: auto;
+        border-radius: 18px;
+        min-height: 85vh;
+      }
+      .inner {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 12px;
+        inset: 12px;
+      }
+      .left { min-height: 220px; }
+      .right { padding: 0 6px; gap: 9px; }
+      .brand { font-size: clamp(20px, 2.8vw, 26px); }
+      .sub { font-size: clamp(11px, 2.2vw, 13px); }
+      .people { gap: 8px; }
+      .person .name { font-size: clamp(14px, 2.2vw, 18px); }
+      .person .title { font-size: clamp(10px, 2vw, 13px); }
+      .person .phone { font-size: clamp(11px, 2.1vw, 14px); }
+      .footer { font-size: 10px; gap: 6px; }
+      .footer a, .footer button { padding: 7px 9px; font-size: 11px; }
+      .topbar { height: 38px; padding: 8px 10px; }
+      .addr { font-size: 11px; height: 24px; padding: 0 8px; }
+      .viewport { height: calc(100% - 38px); }
+    }
   </style>
 </head>
 <body>
   <main class="card" role="img" aria-label="Codesphere digitaalinen käyntikortti">
+    <div class="orientation-tip" id="orientationTip">Paras kokemus vaakana</div>
     <div class="inner">
       <section class="left">
         <div class="browser" aria-label="Selaimen esikatselu: Codesphere-sivusto">
@@ -407,10 +478,11 @@
             <select class="lang top" id="langTop" aria-label="Language"></select>
           </div>
           <div class="viewport">
-            <iframe id="site" title="Codesphere-sivusto" src="../../index.html" loading="lazy"></iframe>
-            <div class="fallback" id="fallback" aria-hidden="true">
+            <iframe id="site" title="Codesphere-sivusto" data-src="../../index.html" loading="lazy"></iframe>
+            <div class="poster" id="poster">
               <img src="../social/og.png" alt="Codesphere esikatselu" />
-              <div class="hint">Jos iframe ei toimi, avaa kortti sivustolta (HTTP)</div>
+              <button id="openLive">Avaa live-versio</button>
+              <div class="hint">Hidas yhteys? Näytä staattinen esikatselu.</div>
             </div>
           </div>
         </div>
@@ -778,24 +850,62 @@
 
     // Iframe fallback-esikatselu (ilman automaattista scrollausta)
     const iframe = document.getElementById('site');
-    const fallback = document.getElementById('fallback');
+    const poster = document.getElementById('poster');
+    const openLive = document.getElementById('openLive');
+    const orientationTip = document.getElementById('orientationTip');
+    const IFRAME_SRC = iframe ? iframe.getAttribute('data-src') : '';
 
-    function showFallback() {
-      if (!fallback) return;
-      fallback.style.display = 'block';
+    function shouldAutoLoad() {
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (!conn) return true;
+      if (conn.saveData) return false;
+      if (typeof conn.downlink === 'number') return conn.downlink >= 2.5;
+      if (conn.effectiveType) return ['4g', 'wifi'].includes(conn.effectiveType);
+      return true;
     }
 
-    // Jos iframe ei lataudu nopeasti, näytä fallback-esikatselu.
-    const fallbackTimer = setTimeout(showFallback, 2500);
+    function loadIframe() {
+      if (!iframe || !IFRAME_SRC) return;
+      if (iframe.src === IFRAME_SRC) return;
+      iframe.src = IFRAME_SRC;
+    }
 
-    iframe.addEventListener('load', () => {
+    function showPoster(show) {
+      if (!poster) return;
+      poster.style.display = show ? 'grid' : 'none';
+    }
+
+    if (openLive) {
+      openLive.addEventListener('click', () => {
+        loadIframe();
+        showPoster(false);
+      });
+    }
+
+    // Auto-load if connection is likely fast; otherwise wait for tap.
+    if (shouldAutoLoad()) {
+      loadIframe();
+      showPoster(false);
+    } else {
+      showPoster(true);
+    }
+
+    // Fallback timeout: if iframe takes too long, keep poster visible.
+    const fallbackTimer = setTimeout(() => showPoster(true), 2500);
+
+    iframe?.addEventListener('load', () => {
       clearTimeout(fallbackTimer);
-
-      // Piilota fallback jos päästiin tähän.
-      if (fallback) fallback.style.display = 'none';
-
-      // Staattinen esikatselu - ei automaattista scrollausta
+      showPoster(false);
     });
+
+    function updateOrientationTip() {
+      if (!orientationTip) return;
+      const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+      orientationTip.style.display = isPortrait ? 'block' : 'none';
+    }
+
+    updateOrientationTip();
+    window.addEventListener('resize', updateOrientationTip);
   </script>
 </body>
 </html>

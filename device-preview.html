@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codesphere – Käyntikortin esikatselu (mobiili/tabletti)</title>
+  <style>
+    :root {
+      --bg: #050811;
+      --panel: #0e1624;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #00ffff;
+      --text: #f1f5f9;
+      --muted: #8da2bd;
+      --gap: 18px;
+      --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(1200px 700px at 20% 15%, rgba(0,255,255,0.08), transparent 55%),
+                  radial-gradient(1000px 600px at 80% 85%, rgba(12,25,42,0.35), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      padding: 18px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(18px, 2.2vw, 26px);
+      letter-spacing: 0.03em;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .button {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    }
+
+    .button.active {
+      border-color: rgba(0,255,255,0.5);
+      box-shadow: 0 0 0 1px rgba(0,255,255,0.15);
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .device {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      position: relative;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 360px;
+    }
+
+    .device-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .frame {
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      flex: 1 1 auto;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+
+    .label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.45);
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+      letter-spacing: 0.02em;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 6px 0 0;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Käyntikortti – monilaitetesti</h1>
+      <p class="hint">Esikatsele business-card.html eri katseluikkunoissa (mobiili, tabletti, desktop).</p>
+    </div>
+    <div class="controls">
+      <button class="button active" data-scale="1">100%</button>
+      <button class="button" data-scale="0.9">90%</button>
+      <button class="button" data-scale="0.8">80%</button>
+    </div>
+  </header>
+
+  <section class="grid" aria-label="Laitteiden esikatselut">
+    <article class="device">
+      <div class="device-header"><span>Mobiili</span><span>390 × 780 (pysty)</span></div>
+      <div class="frame" style="width: 100%; height: 600px;">
+        <div class="label">Phone</div>
+        <iframe src="brand-kit/digital/business-card.html" title="Mobiili" style="width: 640px; height: 1250px; transform: scale(0.40); transform-origin: top left;"></iframe>
+      </div>
+      <p class="hint">Pystytila: koko kortti näkyy kerralla; auto-lataus nopealla yhteydellä.</p>
+    </article>
+
+    <article class="device">
+      <div class="device-header"><span>Mobiili (vaaka)</span><span>780 × 390 (vaaka)</span></div>
+      <div class="frame" style="width: 100%; height: 380px; justify-content: flex-start;">
+        <div class="label">Phone (landscape)</div>
+        <iframe src="brand-kit/digital/business-card.html" title="Mobiili vaaka" style="width: 960px; height: 600px; transform: scale(0.42); transform-origin: top left; position: absolute; left: 0; top: 0;"></iframe>
+      </div>
+      <p class="hint">Vaakatila: kaksipalstainen layout, auto-lataus näkyy heti nopealla yhteydellä. Näyttö on pienempi ja ankkuroitu vasemmalle.</p>
+    </article>
+
+    <article class="device">
+      <div class="device-header"><span>Tabletti (pysty)</span><span>900 × 1280 (pysty)</span></div>
+      <div class="frame" style="width: 100%; height: 860px;">
+        <div class="label">Tablet (portrait)</div>
+        <iframe src="brand-kit/digital/business-card.html" title="Tabletti pysty" style="width: 900px; height: 1280px; transform: scale(0.44); transform-origin: top left;"></iframe>
+      </div>
+      <p class="hint">Pystytabletti: tarkista typografia ja posterin vaihtuminen liveen.</p>
+    </article>
+
+    <article class="device">
+      <div class="device-header"><span>Tabletti (vaaka)</span><span>1280 × 900 (vaaka)</span></div>
+      <div class="frame" style="width: 100%; height: 620px;">
+        <div class="label">Tablet (landscape)</div>
+        <iframe src="brand-kit/digital/business-card.html" title="Tabletti vaaka" style="width: 1280px; height: 900px; transform: scale(0.45); transform-origin: top left;"></iframe>
+      </div>
+      <p class="hint">Vaakatabletti: kaksipalstainen layout; tarkista että poster/live-logiikka toimii.</p>
+    </article>
+
+    <article class="device">
+      <div class="device-header"><span>Desktop</span><span>1366 × 768 (vaaka)</span></div>
+      <div class="frame" style="width: 100%; height: 520px;">
+        <div class="label">Desktop</div>
+        <iframe src="brand-kit/digital/business-card.html" title="Desktop" style="width: 1366px; height: 768px; transform: scale(0.5); transform-origin: top left;"></iframe>
+      </div>
+      <p class="hint">Vaaka: kaksi palstaa ja automaattinen iframe-lataus näkyvissä.</p>
+    </article>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll('.button[data-scale]');
+    const frames = document.querySelectorAll('iframe');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scale = parseFloat(btn.dataset.scale || '1');
+        buttons.forEach(b => b.classList.toggle('active', b === btn));
+        frames.forEach(f => {
+          const baseWidth = parseFloat(f.style.width);
+          const baseHeight = parseFloat(f.style.height);
+          f.style.transform = `scale(${scale})`;
+          f.parentElement.style.height = `${baseHeight * scale + 30}px`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
