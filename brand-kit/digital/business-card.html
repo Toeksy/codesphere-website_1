@@ -857,7 +857,9 @@
 
     function shouldAutoLoad() {
       const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      if (!conn) return true;
+      // iOS/Safari often lacks Network Information API. In that case, avoid auto-loading on small screens
+      // so mobile users get the poster + tap-to-load flow instead of a heavy iframe by default.
+      if (!conn) return !window.matchMedia('(max-width: 900px)').matches;
       if (conn.saveData) return false;
       if (typeof conn.downlink === 'number') return conn.downlink >= 2.5;
       if (conn.effectiveType) return ['4g', 'wifi'].includes(conn.effectiveType);
