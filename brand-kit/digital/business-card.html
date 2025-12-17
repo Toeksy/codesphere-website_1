@@ -43,6 +43,7 @@
         0 0 90px rgba(var(--accent-rgb), 0.08);
       position: relative;
       overflow: hidden;
+      min-height: 0;
     }
 
     .card::before {
@@ -330,13 +331,64 @@
     }
 
     @media (max-width: 900px) {
+      body { padding: 12px; }
+      
+      .card {
+        aspect-ratio: auto;
+        min-height: 100vh;
+        border-radius: 20px;
+      }
+      
       .inner {
         grid-template-columns: 1fr;
-        grid-template-rows: 1.1fr 0.9fr;
+        grid-template-rows: auto auto;
+        gap: 18px;
+        inset: 18px;
       }
-      .footer { flex-direction: column; align-items: flex-start; }
-      .footer-actions { align-items: flex-start; }
-      .footer-row { justify-content: flex-start; }
+      
+      .left { min-height: 280px; }
+      .right { padding: 0; gap: 14px; }
+      
+      .brand { font-size: clamp(24px, 5vw, 32px); }
+      .sub { font-size: clamp(13px, 3vw, 15px); }
+      
+      .person .name { font-size: clamp(16px, 4vw, 20px); }
+      .person .title { font-size: clamp(12px, 3vw, 14px); }
+      .person .phone { font-size: clamp(13px, 3vw, 15px); }
+      
+      .people { gap: 14px; }
+      
+      .footer { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 10px;
+        font-size: 11px;
+      }
+      
+      .footer-actions { 
+        width: 100%;
+        align-items: flex-start; 
+        gap: 8px;
+      }
+      
+      .footer-row { 
+        width: 100%;
+        justify-content: flex-start; 
+        gap: 8px;
+      }
+      
+      .footer a, .footer button { 
+        padding: 10px 12px; 
+        font-size: 13px;
+        flex: 0 1 auto;
+      }
+      
+      .browser { border-radius: 14px; }
+      .topbar { height: 40px; padding: 8px 10px; }
+      .dots { gap: 5px; }
+      .dot { width: 8px; height: 8px; }
+      .addr { font-size: 11px; padding: 0 8px; height: 24px; }
+      .viewport { height: calc(100% - 40px); }
     }
   </style>
 </head>
