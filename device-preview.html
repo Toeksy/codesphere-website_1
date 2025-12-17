@@ -149,19 +149,19 @@
 
   <section class="grid" aria-label="Laitteiden esikatselut">
     <article class="device">
-      <div class="device-header"><span>1 · Mobiili (pysty)</span><span>390 × 780</span></div>
+      <div class="device-header"><span>1 · Mobiili (pysty)</span><span>393 × 852</span></div>
       <div class="frame" style="width: 100%; height: 600px;">
         <div class="label">Phone · portrait</div>
-        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-9" title="Mobiili pysty" style="width: 640px; height: 1250px; transform: scale(0.40); transform-origin: top left;"></iframe>
+        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-9" title="Mobiili pysty" data-base-scale="0.65" style="width: 393px; height: 852px; transform: scale(0.65); transform-origin: top left;"></iframe>
       </div>
       <p class="hint">Pystytila: koko kortti näkyy yhdellä sivulla. Esikatselu on staattinen ja "Avaa codesphere.fi" avaa sivun uuteen välilehteen.</p>
     </article>
 
     <article class="device">
-      <div class="device-header"><span>2 · Mobiili (vaaka)</span><span>780 × 390</span></div>
+      <div class="device-header"><span>2 · Mobiili (vaaka)</span><span>852 × 393</span></div>
       <div class="frame" style="width: 100%; height: 380px; justify-content: flex-start;">
         <div class="label">Phone · landscape</div>
-        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-9" title="Mobiili vaaka" style="width: 960px; height: 600px; transform: scale(0.42); transform-origin: top left; position: absolute; left: 0; top: 0;"></iframe>
+        <iframe src="brand-kit/digital/business-card.html?v=2025-12-17-9" title="Mobiili vaaka" data-base-scale="0.72" style="width: 852px; height: 393px; transform: scale(0.72); transform-origin: top left; position: absolute; left: 0; top: 0;"></iframe>
       </div>
       <p class="hint">Vaakatila: kaksi palstaa, kontaktit oikealla. Esikatselu on staattinen ja linkki avaa sivun erikseen.</p>
     </article>
@@ -170,7 +170,7 @@
       <div class="device-header"><span>3 · Selain</span><span>1366 × 768</span></div>
       <div class="frame" style="width: 100%; height: 520px;">
         <div class="label">Desktop · browser</div>
-        <iframe src="index.html?v=2025-12-17-9" title="Desktop" style="width: 1366px; height: 768px; transform: scale(0.5); transform-origin: top left;"></iframe>
+        <iframe src="index.html?v=2025-12-17-9" title="Desktop" data-base-scale="0.5" style="width: 1366px; height: 768px; transform: scale(0.5); transform-origin: top left;"></iframe>
       </div>
       <p class="hint">Selain: näyttää `index.html` (sama teema kuin sivustolla).</p>
     </article>
@@ -182,11 +182,12 @@
 
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const scale = parseFloat(btn.dataset.scale || '1');
+        const multiplier = parseFloat(btn.dataset.scale || '1');
         buttons.forEach(b => b.classList.toggle('active', b === btn));
         frames.forEach(f => {
-          const baseWidth = parseFloat(f.style.width);
           const baseHeight = parseFloat(f.style.height);
+          const baseScale = parseFloat(f.dataset.baseScale || '1');
+          const scale = baseScale * multiplier;
           f.style.transform = `scale(${scale})`;
           f.parentElement.style.height = `${baseHeight * scale + 30}px`;
         });
