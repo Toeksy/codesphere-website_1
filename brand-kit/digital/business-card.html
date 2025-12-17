@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="version" content="2025-12-17-4" />
+  <meta name="version" content="2025-12-17-5" />
   <title>Codesphere - Digitaalinen käyntikortti</title>
   <style>
     :root {
@@ -464,25 +464,25 @@
     @media (max-width: 900px) and (orientation: landscape) {
       body { padding: 12px; display: block; overflow-y: auto; }
       .card {
-        width: clamp(680px, 90vw, 980px);
+        width: clamp(620px, 88vw, 900px);
         margin: 0 auto;
         min-height: auto;
       }
       .inner {
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: 1.08fr 0.92fr;
         grid-template-rows: 1fr;
-        gap: 10px;
+        gap: 8px;
       }
       .left { min-height: 200px; }
-      .right { padding: 0 6px; gap: 8px; }
-      .brand { font-size: clamp(18px, 2.2vw, 24px); }
-      .sub { font-size: clamp(11px, 1.9vw, 13px); }
-      .people { gap: 8px; }
-      .person .name { font-size: clamp(13px, 2vw, 17px); }
-      .person .title { font-size: clamp(10px, 1.8vw, 12px); }
-      .person .phone { font-size: clamp(11px, 1.9vw, 13px); }
+      .right { padding: 0 4px; gap: 6px; }
+      .brand { font-size: clamp(15px, 1.9vw, 20px); }
+      .sub { font-size: clamp(10px, 1.6vw, 12px); }
+      .people { gap: 6px; }
+      .person .name { font-size: clamp(11.5px, 1.8vw, 15px); }
+      .person .title { font-size: clamp(9px, 1.5vw, 11px); }
+      .person .phone { font-size: clamp(10px, 1.6vw, 12px); }
       .footer { font-size: 10px; gap: 6px; }
-      .footer a, .footer button { padding: 7px 9px; font-size: 11px; }
+      .footer a, .footer button { padding: 7px 8px; font-size: 11px; }
     }
   </style>
 </head>
