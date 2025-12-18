@@ -301,21 +301,20 @@
         .snowflake {
             position: absolute;
             top: -6%;
-            color: rgba(255, 255, 255, 0.995);
-            font-size: 2.0em;
-            text-shadow: 0 0 18px rgba(255, 255, 255, 1), 0 0 32px rgba(160, 230, 255, 0.95);
-            filter: drop-shadow(0 0 14px rgba(200, 240, 255, 0.9));
-            mix-blend-mode: screen;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 1.4em;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.55), 0 0 16px rgba(160, 230, 255, 0.35);
+            filter: blur(0.6px) drop-shadow(0 0 8px rgba(200, 240, 255, 0.35));
             animation: snowfall-anim linear infinite;
-            opacity: 0.78;
+            opacity: 0.45;
         }
         @keyframes snowfall-anim {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
+            10% { opacity: 0.6; }
             25% { transform: translateY(22vh) translateX(18px) rotate(90deg); }
             50% { transform: translateY(55vh) translateX(-12px) rotate(180deg); }
             75% { transform: translateY(85vh) translateX(14px) rotate(270deg); }
-            90% { opacity: 1; }
+            90% { opacity: 0.6; }
             100% { transform: translateY(110vh) translateX(-8px) rotate(360deg); opacity: 0; }
         }
         
@@ -3350,7 +3349,7 @@
             el.className = 'snowflake';
             el.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
             el.style.left = Math.random() * 100 + '%';
-            el.style.fontSize = (1.3 + Math.random() * 0.9) + 'em';
+            el.style.fontSize = (0.8 + Math.random() * 0.6) + 'em';
             el.style.animationDuration = (9 + Math.random() * 7) + 's';
             particlesContainer.appendChild(el);
             setTimeout(() => el.remove(), 22000);
@@ -3391,8 +3390,8 @@
             
             switch(theme) {
                 case 'winter':
-                    for (let i = 0; i < 39; i++) setTimeout(createSnowflake, i * 110);
-                    particleIntervals.push(setInterval(createSnowflake, 800));
+                    for (let i = 0; i < 27; i++) setTimeout(createSnowflake, i * 140);
+                    particleIntervals.push(setInterval(createSnowflake, 1100));
                     console.log('Winter snowflakes started');
                     setTimeout(() => console.log('flakes count', document.querySelectorAll('.snowflake').length), 1200);
                     break;
