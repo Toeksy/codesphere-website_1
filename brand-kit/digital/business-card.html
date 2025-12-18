@@ -62,8 +62,15 @@
       position: relative;
       overflow: hidden;
       min-height: 0;
-      transform: scale(var(--fitScale, 1));
+      --contentScale: 1;
+    }
+
+    .fit-content {
+      position: absolute;
+      inset: 0;
+      transform: scale(var(--contentScale, 1));
       transform-origin: center;
+      will-change: transform;
     }
 
     .card::before {
@@ -579,8 +586,9 @@
 <body>
   <div class="fit-stage" id="fitStage">
     <main class="card" role="img" aria-label="Codesphere digitaalinen käyntikortti">
-      <div class="orientation-tip" id="orientationTip">Paras kokemus vaakana</div>
-      <div class="inner">
+      <div class="fit-content" id="fitContent">
+        <div class="orientation-tip" id="orientationTip">Paras kokemus vaakana</div>
+        <div class="inner">
         <section class="left">
           <div class="browser" aria-label="Selaimen esikatselu: Codesphere-sivusto">
             <div class="topbar">
@@ -649,6 +657,7 @@
             </div>
           </div>
         </section>
+        </div>
       </div>
     </main>
   </div>
@@ -998,36 +1007,76 @@
       window.matchMedia('(min-width: 901px)').addEventListener('change', updateLivePreview);
     } catch {}
 
-    // Scale the whole card down to always fit viewport (prevents clipped contacts in short landscape).
+    // Fit-to-viewport: scale content (not the clipping card) so nothing gets cut off on Android.
     const fitStage = document.getElementById('fitStage');
     const card = document.querySelector('.card');
+    const fitContent = document.getElementById('fitContent');
     const rightCol = document.querySelector('.right');
+    const inner = document.querySelector('.inner');
     let fitRaf = 0;
+
+    function stageContentBox() {
+      if (!fitStage) return { w: 0, h: 0 };
+      const cs = getComputedStyle(fitStage);
+      const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+      const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      const vp = window.visualViewport;
+      const w = Math.max(0, (vp ? vp.width : fitStage.clientWidth) - padX);
+      const h = Math.max(0, (vp ? vp.height : fitStage.clientHeight) - padY);
+      return { w, h };
+    }
+
+    function isFixedAspectRatio() {
+      if (!card) return false;
+      const ar = getComputedStyle(card).aspectRatio;
+      return !!ar && ar !== 'auto' && ar !== '0 / 0';
+    }
 
     function fitNow() {
       fitRaf = 0;
-      if (!fitStage || !card) return;
+      if (!fitStage || !card || !fitContent) return;
 
-      const availableW = fitStage.clientWidth;
-      const availableH = fitStage.clientHeight;
-      const cardW = card.offsetWidth || 1;
-      const cardH = card.offsetHeight || 1;
+      // Reset before measuring.
+      card.style.setProperty('--contentScale', '1');
 
-      let scale = Math.min(1, availableW / cardW, availableH / cardH);
+      const box = stageContentBox();
 
-      if (rightCol) {
-        const overflow = rightCol.scrollHeight - rightCol.clientHeight;
-        if (overflow > 1) {
-          scale = Math.min(scale, rightCol.clientHeight / rightCol.scrollHeight);
-        }
+      // If aspect ratio is fixed, clamp card width by available height.
+      if (isFixedAspectRatio() && box.w > 0 && box.h > 0) {
+        const ratio = 1050 / 600;
+        const maxW = Math.min(1050, box.w, box.h * ratio);
+        card.style.width = `${Math.max(1, Math.floor(maxW))}px`;
+      } else {
+        card.style.width = '';
       }
 
-      card.style.setProperty('--fitScale', String(scale));
+      let contentScale = 1;
+
+      // If the right column overflows, scale content down until it fits.
+      if (rightCol) {
+        const overflow = rightCol.scrollHeight - rightCol.clientHeight;
+        if (overflow > 1) contentScale = Math.min(contentScale, rightCol.clientHeight / rightCol.scrollHeight);
+      }
+
+      // Extra safety: scale by overall inner overflow as well.
+      if (inner) {
+        const overflow = inner.scrollHeight - inner.clientHeight;
+        if (overflow > 1) contentScale = Math.min(contentScale, inner.clientHeight / inner.scrollHeight);
+      }
+
+      // Ensure the card itself fits into the available content box.
+      if (box.w > 0 && box.h > 0) {
+        const cardW = card.offsetWidth || 1;
+        const cardH = card.offsetHeight || 1;
+        contentScale = Math.min(contentScale, 1, box.w / cardW, box.h / cardH);
+      }
+
+      card.style.setProperty('--contentScale', String(contentScale));
     }
 
     function requestFit() {
       if (fitRaf) return;
-      fitRaf = requestAnimationFrame(fitNow);
+      fitRaf = requestAnimationFrame(() => requestAnimationFrame(fitNow));
     }
 
     window.requestFitCard = requestFit;
@@ -1035,6 +1084,10 @@
     requestFit();
     window.addEventListener('resize', requestFit, { passive: true });
     window.addEventListener('orientationchange', requestFit, { passive: true });
+    try {
+      window.visualViewport && window.visualViewport.addEventListener('resize', requestFit, { passive: true });
+      window.visualViewport && window.visualViewport.addEventListener('scroll', requestFit, { passive: true });
+    } catch {}
     try {
       new ResizeObserver(requestFit).observe(fitStage);
       new ResizeObserver(requestFit).observe(card);
