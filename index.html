@@ -3370,21 +3370,30 @@
         
         function startParticles(theme) {
             clearParticles();
-            if (!particlesContainer) return;
+            if (!particlesContainer) {
+                console.error('particlesContainer not found!');
+                return;
+            }
+            console.log('Starting particles for theme:', theme);
             
             switch(theme) {
                 case 'winter':
                     for (let i = 0; i < 25; i++) setTimeout(createSnowflake, i * 150);
                     particleIntervals.push(setInterval(createSnowflake, 400));
+                    console.log('Winter snowflakes started');
                     break;
                 case 'nature':
                     for (let i = 0; i < 15; i++) setTimeout(createLeaf, i * 200);
                     particleIntervals.push(setInterval(createLeaf, 600));
+                    console.log('Nature leaves started');
                     break;
                 case 'water':
                     for (let i = 0; i < 20; i++) setTimeout(createBubble, i * 180);
                     particleIntervals.push(setInterval(createBubble, 450));
+                    console.log('Water bubbles started');
                     break;
+                default:
+                    console.log('Space theme - no particles');
             }
         }
         
