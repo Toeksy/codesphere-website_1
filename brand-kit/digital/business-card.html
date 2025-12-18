@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <meta name="version" content="2025-12-18-v4" />
+  <meta name="version" content="2025-12-19-v6" />
   <title>Codesphere - Digitaalinen käyntikortti</title>
   <style>
     :root {
@@ -689,18 +689,18 @@
       height: 100%;
       border: 0;
       background: #000;
-      display: none;
+      display: block;
     }
-
-    .preview.is-live iframe { display: block; }
-    .preview.is-live img { display: none; }
 
     .preview img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      display: none;
     }
+
+    .preview.show-fallback iframe { display: none; }
+    .preview.show-fallback img { display: block; }
 
     .open-row {
       display: flex;
@@ -1148,9 +1148,9 @@
               <select class="lang top" id="langTop" aria-label="Language"></select>
             </div>
             <div class="viewport">
-                <div class="preview" aria-label="Staattinen esikatselu">
+            <div class="preview" aria-label="Staattinen esikatselu">
                   <img src="../social/og.png" alt="Codesphere esikatselu" />
-                  <iframe id="sitePreview" title="Codesphere sivuston esikatselu" loading="lazy"></iframe>
+                  <iframe id="sitePreview" title="Codesphere sivuston esikatselu" loading="lazy" src="../../index.html?v=2025-12-19-v6"></iframe>
                 </div>
                 <div class="open-row">
                   <a class="open-site" href="https://toeksy.github.io/codesphere-website_1/" target="_blank" rel="noopener">Avaa sivusto</a>
@@ -1543,28 +1543,23 @@
 
     const buildTag = document.getElementById('buildTag');
     const params = new URLSearchParams(location.search);
-    const v = params.get('v');
     const metaV = document.querySelector('meta[name="version"]')?.getAttribute('content');
-    if (buildTag) {
-      buildTag.textContent = `build ${v || metaV || 'main'}`;
-    }
+    const v = params.get('v') || metaV || 'main';
+    if (buildTag) buildTag.textContent = `build ${v}`;
 
     initLangUI();
     applyLang(pickInitialLang());
 
-    // Live preview on all devices.
+    // Live preview on all devices: force iframe src and hide fallback image.
     const sitePreview = document.getElementById('sitePreview');
     const previewBox = sitePreview?.closest('.preview');
-    const liveSrc = `../../index.html?v=${encodeURIComponent(v || metaV || 'main')}`;
-
-    function updateLivePreview() {
-      if (!sitePreview || !previewBox) return;
-      // Always show live preview (iframe), hide static image.
-      if (!sitePreview.getAttribute('src')) sitePreview.setAttribute('src', liveSrc);
-      previewBox.classList.add('is-live');
+    if (sitePreview && previewBox) {
+      const base = sitePreview.getAttribute('data-base') || sitePreview.getAttribute('src') || '../../index.html';
+      sitePreview.src = `${base.split('?')[0]}?v=${encodeURIComponent(v)}&r=${Date.now()}`;
+      previewBox.classList.remove('show-fallback');
+      sitePreview.addEventListener('error', () => previewBox.classList.add('show-fallback'));
+      sitePreview.addEventListener('load', () => previewBox.classList.remove('show-fallback'));
     }
-
-    updateLivePreview();
 
     // Fit-to-viewport: scale the entire card (including browser mock + contacts) to fill viewport.
     const BASE_W = 1050;
