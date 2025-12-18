@@ -1,0 +1,90 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "trmTask",
+      "type": "promptString",
+      "description": "TRM task description",
+      "default": ""
+    },
+    {
+      "id": "trmRound",
+      "type": "promptString",
+      "description": "TRM round number (1-10)",
+      "default": "1"
+    },
+    {
+      "id": "trmInsights",
+      "type": "promptString",
+      "description": "TRM insights for this round",
+      "default": ""
+    },
+    {
+      "id": "trmConclusion",
+      "type": "promptString",
+      "description": "TRM conclusion / summary",
+      "default": ""
+    }
+  ],
+  "tasks": [
+    {
+      "label": "TRM: Check (clean state)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "python tools/trm_check.py"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "TRM: Start session",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\tools\\trm_session.ps1",
+        "start",
+        "${input:trmTask}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "TRM: Update round",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\tools\\trm_session.ps1",
+        "update",
+        "${input:trmRound}",
+        "${input:trmInsights}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "TRM: Finalize session",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".\\tools\\trm_session.ps1",
+        "finalize",
+        "${input:trmConclusion}"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

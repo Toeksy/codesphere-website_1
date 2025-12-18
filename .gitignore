@@ -11,3 +11,6 @@ Thumbs.db
 
 # UI smoke test artifacts
 /tools/ui-smoke-artifacts/
+
+# TRM session state (local only, do not commit active session)
+/trm/state.json
