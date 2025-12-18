@@ -670,7 +670,7 @@
 
     /* Force two columns even on small landscape widths */
     @media (max-width: 900px) and (orientation: landscape) {
-      .fit-stage { padding: 12px; }
+      .fit-stage { padding: 10px; }
       
       /* Show mobile hero instead of browser */
       .left .browser { display: none !important; }
@@ -682,20 +682,20 @@
         min-height: auto;
       }
       .inner {
-        grid-template-columns: 1.08fr 0.92fr;
+        grid-template-columns: 0.9fr 1.1fr;
         grid-template-rows: 1fr;
-        gap: 8px;
+        gap: 6px;
       }
-      .left { min-height: 200px; }
-      .right { padding: 0 4px; gap: 6px; }
-      .brand { font-size: clamp(15px, 1.9vw, 20px); }
-      .sub { font-size: clamp(10px, 1.6vw, 12px); }
-      .people { gap: 6px; }
-      .person .name { font-size: clamp(11.5px, 1.8vw, 15px); }
-      .person .title { font-size: clamp(9px, 1.5vw, 11px); }
-      .person .phone { font-size: clamp(10px, 1.6vw, 12px); }
-      .footer { font-size: 10px; gap: 6px; }
-      .footer a, .footer button { padding: 7px 8px; font-size: 11px; }
+      .left { min-height: 180px; }
+      .right { padding: 0 4px; gap: 4px; }
+      .brand { font-size: clamp(13px, 1.7vw, 18px) !important; }
+      .sub { font-size: clamp(8px, 1.3vw, 10px) !important; }
+      .people { gap: 3px; }
+      .person { margin-bottom: 0; }
+      .person .name { font-size: clamp(10px, 1.5vw, 13px) !important; }
+      .person .title { font-size: clamp(7px, 1.2vw, 9px) !important; line-height: 1.2; }
+      .person .phone { font-size: clamp(8px, 1.3vw, 10px) !important; }
+      .footer { font-size: 9px; gap: 4px; display: none; }
     }
 
     /* Final override for very short viewports (phone landscape):
