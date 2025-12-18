@@ -2732,35 +2732,35 @@
                 if (!logoLoaded) return;
 
                 // Piirrä 64x64-logo kokonaislukuskaalalla (ei epätasaisia pikseleitä)
-                const b = drawPixelLogoIntegerScaled();
+                const box = drawPixelLogoIntegerScaled();
 
                 // Hae pikselidata vain piirtoalueelta
-                const imageData = ctx.getImageData(b.dx, b.dy, b.drawW, b.drawH);
+                const imageData = ctx.getImageData(box.dx, box.dy, box.drawW, box.drawH);
                 const data = imageData.data;
                 
                 // Käy läpi jokainen pikseli piirtoalueella
-                for (let y = 0; y < b.drawH; y++) {
-                    for (let x = 0; x < b.drawW; x++) {
-                        const i = (y * b.drawW + x) * 4;
+                for (let y = 0; y < box.drawH; y++) {
+                    for (let x = 0; x < box.drawW; x++) {
+                        const i = (y * box.drawW + x) * 4;
                         const alpha = data[i + 3];
                         
                         // Vain TÄYSIN näkyvät pikselit (ei puoliläpinäkyviä)
                         if (alpha > 200) {
                             // Laske hue X-position + offset perusteella
                             // HITAAMPI: offset kasvaa hitaammin (0.003 vs 0.01)
-                            const globalX = (b.dx + x) / canvas.width;
+                            const globalX = (box.dx + x) / canvas.width;
                             const hue = (globalX + offset) % 1;
-                            const [r, g, b] = hslToRgb(hue, 1, 0.5);
+                            const [r, g, bColor] = hslToRgb(hue, 1, 0.5);
                             
                             data[i] = r;     // R
                             data[i + 1] = g; // G
-                            data[i + 2] = b; // B
+                            data[i + 2] = bColor; // B
                             // Alpha pysyy samana
                         }
                     }
                 }
                 
-                ctx.putImageData(imageData, b.dx, b.dy);
+                ctx.putImageData(imageData, box.dx, box.dy);
             }
             
             // Animaatioloop
