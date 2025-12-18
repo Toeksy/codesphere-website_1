@@ -232,34 +232,44 @@
       50% { opacity: 0.4; }
     }
     
-    /* Theme indicator */
-    .theme-indicator {
+    /* Theme switch button in top bar */
+    .theme-switch-btn {
       position: fixed;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
+      top: 15px;
+      right: 15px;
       z-index: 100;
-      padding: 8px 12px;
-      background: rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 20px;
       backdrop-filter: blur(10px);
-    }
-    .theme-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-family: var(--font);
     }
-    .theme-dot:hover { background: rgba(255,255,255,0.6); }
-    .theme-dot.active { background: var(--accent); transform: scale(1.3); }
-    .theme-dot[data-theme="space"] { box-shadow: 0 0 5px rgba(0,255,255,0.5); }
-    .theme-dot[data-theme="winter"] { box-shadow: 0 0 5px rgba(150,220,255,0.5); }
-    .theme-dot[data-theme="nature"] { box-shadow: 0 0 5px rgba(100,255,150,0.5); }
-    .theme-dot[data-theme="water"] { box-shadow: 0 0 5px rgba(80,180,255,0.5); }
+    .theme-switch-btn:hover {
+      background: rgba(0,0,0,0.6);
+      border-color: rgba(var(--theme-accent), 0.4);
+      transform: scale(1.02);
+    }
+    .theme-switch-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      transition: transform 0.3s ease;
+    }
+    .theme-switch-btn:hover svg {
+      transform: rotate(30deg);
+    }
+    .theme-name {
+      opacity: 0.9;
+    }
 
     .fit-stage {
       position: fixed;
@@ -1030,13 +1040,11 @@
   <div class="bg-layer bg-nature fade-out" id="bgNature"></div>
   <div class="bg-layer bg-water fade-out" id="bgWater"></div>
   
-  <!-- Theme indicator dots -->
-  <div class="theme-indicator">
-    <div class="theme-dot active" data-theme="space" title="Avaruus"></div>
-    <div class="theme-dot" data-theme="winter" title="Talvi & Revontulet"></div>
-    <div class="theme-dot" data-theme="nature" title="Luonto"></div>
-    <div class="theme-dot" data-theme="water" title="Vesi"></div>
-  </div>
+  <!-- Theme switch button -->
+  <button class="theme-switch-btn" id="themeSwitchBtn" title="Vaihda taustateema">
+    <svg viewBox="0 0 24 24"><path d="M12 4V2M12 22v-2M6.34 6.34L4.93 4.93M19.07 19.07l-1.41-1.41M4 12H2M22 12h-2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M12 17a5 5 0 100-10 5 5 0 000 10z"/></svg>
+    <span class="theme-name" id="themeName">Avaruus</span>
+  </button>
   
   <div class="fit-stage" id="fitStage">
     <main class="card" role="img" aria-label="Codesphere digitaalinen käyntikortti">
@@ -1539,13 +1547,20 @@
   <script>
     (function() {
       const themes = ['space', 'winter', 'nature', 'water'];
+      const themeNames = {
+        space: 'Avaruus',
+        winter: 'Talvi',
+        nature: 'Luonto',
+        water: 'Vesi'
+      };
       const bgLayers = {
         space: document.getElementById('bgSpace'),
         winter: document.getElementById('bgWinter'),
         nature: document.getElementById('bgNature'),
         water: document.getElementById('bgWater')
       };
-      const dots = document.querySelectorAll('.theme-dot');
+      const switchBtn = document.getElementById('themeSwitchBtn');
+      const themeNameEl = document.getElementById('themeName');
       let currentIndex = 0;
       let autoRotateInterval;
       
@@ -1566,10 +1581,10 @@
           }
         });
         
-        // Update dots
-        dots.forEach(dot => {
-          dot.classList.toggle('active', dot.dataset.theme === themeName);
-        });
+        // Update button text
+        if (themeNameEl) {
+          themeNameEl.textContent = themeNames[themeName] || themeName;
+        }
         
         // Save preference
         if (save) {
@@ -1595,13 +1610,13 @@
         }
       }
       
-      // Click on dots to change theme
-      dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-          setTheme(dot.dataset.theme);
+      // Click button to change theme
+      if (switchBtn) {
+        switchBtn.addEventListener('click', () => {
+          nextTheme();
           startAutoRotate(); // Reset timer after manual change
         });
-      });
+      }
       
       // Initialize
       setTheme(themes[currentIndex], false);
