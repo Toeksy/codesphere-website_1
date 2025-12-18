@@ -154,9 +154,93 @@
       }
     }
     
-    @keyframes snowfall {
+    @keyframes snowfall-static {
       0% { transform: translateY(0) rotate(0deg); }
       100% { transform: translateY(20px) rotate(5deg); }
+    }
+    
+    /* Animated particles container */
+    .particles-container {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    /* Snowflakes for Winter theme */
+    .snowflake {
+      position: absolute;
+      top: -5%;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1em;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      animation: snowfall-anim linear infinite;
+      opacity: 0;
+    }
+    @keyframes snowfall-anim {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      5% { opacity: 0.9; }
+      95% { opacity: 0.9; }
+      100% {
+        transform: translateY(110vh) translateX(30px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Leaves for Nature theme */
+    .leaf {
+      position: absolute;
+      top: -5%;
+      font-size: 1.2em;
+      animation: leaffall-anim ease-in-out infinite;
+      opacity: 0;
+    }
+    @keyframes leaffall-anim {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      5% { opacity: 0.85; }
+      25% { transform: translateY(27vh) translateX(40px) rotate(90deg); }
+      50% { transform: translateY(55vh) translateX(-20px) rotate(180deg); }
+      75% { transform: translateY(82vh) translateX(30px) rotate(270deg); }
+      95% { opacity: 0.7; }
+      100% {
+        transform: translateY(110vh) translateX(10px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Bubbles for Water theme */
+    .bubble {
+      position: absolute;
+      bottom: -10%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, 
+        rgba(255, 255, 255, 0.9), 
+        rgba(150, 220, 255, 0.4) 50%,
+        rgba(100, 180, 255, 0.2));
+      box-shadow: inset 0 -2px 4px rgba(0, 100, 200, 0.2),
+                  0 0 8px rgba(150, 220, 255, 0.3);
+      animation: bubble-rise ease-in infinite;
+      opacity: 0;
+    }
+    @keyframes bubble-rise {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.5);
+        opacity: 0;
+      }
+      10% { opacity: 0.7; transform: scale(0.8); }
+      50% { transform: translateY(-55vh) translateX(15px) scale(1); }
+      90% { opacity: 0.5; }
+      100% {
+        transform: translateY(-115vh) translateX(-10px) scale(1.1);
+        opacity: 0;
+      }
     }
     
     /* Nature theme */
@@ -1543,6 +1627,9 @@
     try { document.fonts && document.fonts.ready && document.fonts.ready.then(requestFit); } catch {}
   </script>
   
+  <!-- Particles container -->
+  <div class="particles-container" id="particlesContainer"></div>
+  
   <!-- Theme rotation script -->
   <script>
     (function() {
@@ -1559,10 +1646,99 @@
         nature: document.getElementById('bgNature'),
         water: document.getElementById('bgWater')
       };
+      const particlesContainer = document.getElementById('particlesContainer');
       const switchBtn = document.getElementById('themeSwitchBtn');
       const themeNameEl = document.getElementById('themeName');
       let currentIndex = 0;
       let autoRotateInterval;
+      let particleIntervals = [];
+      
+      // Particle configurations
+      const snowflakes = ['❄', '❅', '❆', '✻', '✼', '❉'];
+      const leaves = ['🍂', '🍁', '🍃', '🌿'];
+      
+      function clearParticles() {
+        particleIntervals.forEach(clearInterval);
+        particleIntervals = [];
+        if (particlesContainer) {
+          particlesContainer.innerHTML = '';
+        }
+      }
+      
+      function createSnowflake() {
+        const el = document.createElement('div');
+        el.className = 'snowflake';
+        el.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (0.6 + Math.random() * 0.8) + 'em';
+        el.style.animationDuration = (8 + Math.random() * 6) + 's';
+        el.style.animationDelay = Math.random() * 2 + 's';
+        particlesContainer.appendChild(el);
+        setTimeout(() => el.remove(), 16000);
+      }
+      
+      function createLeaf() {
+        const el = document.createElement('div');
+        el.className = 'leaf';
+        el.textContent = leaves[Math.floor(Math.random() * leaves.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.fontSize = (0.8 + Math.random() * 0.6) + 'em';
+        el.style.animationDuration = (10 + Math.random() * 8) + 's';
+        el.style.animationDelay = Math.random() * 2 + 's';
+        particlesContainer.appendChild(el);
+        setTimeout(() => el.remove(), 20000);
+      }
+      
+      function createBubble() {
+        const el = document.createElement('div');
+        el.className = 'bubble';
+        const size = 6 + Math.random() * 14;
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+        el.style.left = Math.random() * 100 + '%';
+        el.style.animationDuration = (8 + Math.random() * 6) + 's';
+        el.style.animationDelay = Math.random() * 2 + 's';
+        particlesContainer.appendChild(el);
+        setTimeout(() => el.remove(), 16000);
+      }
+      
+      function startParticles(theme) {
+        clearParticles();
+        if (!particlesContainer) return;
+        
+        switch(theme) {
+          case 'winter':
+            // Create initial batch of snowflakes
+            for (let i = 0; i < 25; i++) {
+              setTimeout(createSnowflake, i * 150);
+            }
+            // Continue creating snowflakes
+            particleIntervals.push(setInterval(createSnowflake, 400));
+            break;
+            
+          case 'nature':
+            // Create initial batch of leaves
+            for (let i = 0; i < 15; i++) {
+              setTimeout(createLeaf, i * 200);
+            }
+            // Continue creating leaves
+            particleIntervals.push(setInterval(createLeaf, 600));
+            break;
+            
+          case 'water':
+            // Create initial batch of bubbles
+            for (let i = 0; i < 20; i++) {
+              setTimeout(createBubble, i * 180);
+            }
+            // Continue creating bubbles
+            particleIntervals.push(setInterval(createBubble, 450));
+            break;
+            
+          default:
+            // Space theme - no additional particles (stars are in CSS)
+            break;
+        }
+      }
       
       // Load saved theme
       const savedTheme = localStorage.getItem('codesphere-theme');
@@ -1580,6 +1756,9 @@
             bgLayers[t].classList.toggle('fade-out', t !== themeName);
           }
         });
+        
+        // Start theme-specific particles
+        startParticles(themeName);
         
         // Update button text
         if (themeNameEl) {
@@ -1626,8 +1805,10 @@
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
           stopAutoRotate();
+          clearParticles();
         } else {
           startAutoRotate();
+          startParticles(themes[currentIndex]);
         }
       });
     })();
