@@ -30,7 +30,14 @@
             --text-muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.08);
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --theme-accent: 0, 255, 255;
         }
+
+        /* Theme definitions */
+        [data-theme="space"] { --theme-accent: 0, 255, 255; --bg-dark: #0a0f1a; }
+        [data-theme="winter"] { --theme-accent: 150, 220, 255; --bg-dark: #0a1628; }
+        [data-theme="nature"] { --theme-accent: 100, 255, 150; --bg-dark: #0a1a0f; }
+        [data-theme="water"] { --theme-accent: 80, 180, 255; --bg-dark: #0a1420; }
 
         /* ========================================
            RESET & BASE
@@ -173,6 +180,71 @@
         }
 
         .nav-lang option { background: var(--bg-dark); }
+
+        /* Theme selector dropdown */
+        .theme-select {
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid rgba(var(--accent-rgb), 0.20);
+            background: rgba(0,0,0,0.22);
+            color: rgba(241,245,249,0.9);
+            padding: 0 0.65rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .theme-select:hover {
+            border-color: rgba(var(--theme-accent), 0.5);
+        }
+        .theme-select option { background: var(--bg-dark); }
+
+        /* Background layers for themes */
+        .bg-theme-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        .bg-theme-layer.active { opacity: 1; }
+        
+        .bg-space-overlay {
+            background: 
+                radial-gradient(1200px 700px at 15% 20%, rgba(0, 255, 255, 0.08), transparent 55%),
+                radial-gradient(1100px 650px at 90% 85%, rgba(30, 58, 95, 0.15), transparent 60%);
+        }
+        .bg-winter-overlay {
+            background: 
+                radial-gradient(ellipse 150% 100% at 50% 0%, rgba(100, 255, 200, 0.06), transparent 40%),
+                radial-gradient(ellipse 120% 80% at 30% 10%, rgba(150, 220, 255, 0.08), transparent 50%),
+                radial-gradient(ellipse 100% 60% at 70% 20%, rgba(200, 150, 255, 0.05), transparent 45%);
+        }
+        .bg-winter-overlay::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(100, 255, 180, 0.1) 0%, rgba(100, 200, 255, 0.06) 30%, transparent 100%);
+            animation: auroraMain 12s ease-in-out infinite;
+            filter: blur(40px);
+        }
+        @keyframes auroraMain {
+            0%, 100% { transform: translateX(-5%) scaleY(1); opacity: 0.5; }
+            50% { transform: translateX(5%) scaleY(1.2); opacity: 0.8; }
+        }
+        .bg-nature-overlay {
+            background: 
+                radial-gradient(1200px 700px at 20% 30%, rgba(80, 200, 120, 0.1), transparent 55%),
+                radial-gradient(1000px 600px at 80% 70%, rgba(50, 150, 80, 0.08), transparent 50%);
+        }
+        .bg-water-overlay {
+            background: 
+                radial-gradient(ellipse 120% 80% at 30% 70%, rgba(60, 150, 255, 0.1), transparent 50%),
+                radial-gradient(ellipse 100% 60% at 70% 30%, rgba(30, 100, 180, 0.08), transparent 45%);
+        }
 
         .nav-cta:hover {
             transform: translateY(-2px);
@@ -1339,6 +1411,12 @@
 <body>
     <!-- 3D Background Canvas -->
     <canvas id="bg-canvas"></canvas>
+    
+    <!-- Theme background overlays -->
+    <div class="bg-theme-layer bg-space-overlay active" id="bgSpaceOverlay"></div>
+    <div class="bg-theme-layer bg-winter-overlay" id="bgWinterOverlay"></div>
+    <div class="bg-theme-layer bg-nature-overlay" id="bgNatureOverlay"></div>
+    <div class="bg-theme-layer bg-water-overlay" id="bgWaterOverlay"></div>
 
     <!-- Navigation -->
     <nav class="nav">
@@ -1354,6 +1432,13 @@
             <li><a href="#yhteystiedot" data-i18n="navContact">Yhteystiedot</a></li>
         </ul>
         <div class="nav-actions">
+            <select class="theme-select" id="themeSelect" aria-label="Taustateema">
+                <option value="space">🌌 Avaruus</option>
+                <option value="winter">❄️ Talvi</option>
+                <option value="nature">🌿 Luonto</option>
+                <option value="water">🌊 Vesi</option>
+                <option value="auto">🔄 Auto 30s</option>
+            </select>
             <select class="nav-lang" id="langSelect" aria-label="Language"></select>
             <a href="#aloitus" class="nav-cta" data-i18n="navCta">Aloita keskustelu</a>
         </div>
@@ -3115,7 +3200,93 @@
             applyLang(initial);
         })();
     </script>
+    
+    <!-- Theme Switcher Script -->
+    <script>
+    (function() {
+        const themes = ['space', 'winter', 'nature', 'water'];
+        const themeSelect = document.getElementById('themeSelect');
+        const overlays = {
+            space: document.getElementById('bgSpaceOverlay'),
+            winter: document.getElementById('bgWinterOverlay'),
+            nature: document.getElementById('bgNatureOverlay'),
+            water: document.getElementById('bgWaterOverlay')
+        };
+        let currentIndex = 0;
+        let autoInterval = null;
+        let isAuto = false;
+        
+        // Load saved theme
+        const saved = localStorage.getItem('codesphere-site-theme');
+        if (saved === 'auto') {
+            isAuto = true;
+            if (themeSelect) themeSelect.value = 'auto';
+        } else if (saved && themes.includes(saved)) {
+            currentIndex = themes.indexOf(saved);
+            if (themeSelect) themeSelect.value = saved;
+        }
+        
+        function setTheme(name) {
+            document.documentElement.setAttribute('data-theme', name);
+            document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-dark');
+            
+            // Toggle overlays
+            themes.forEach(t => {
+                if (overlays[t]) {
+                    overlays[t].classList.toggle('active', t === name);
+                }
+            });
+            
+            currentIndex = themes.indexOf(name);
+        }
+        
+        function nextTheme() {
+            currentIndex = (currentIndex + 1) % themes.length;
+            setTheme(themes[currentIndex]);
+        }
+        
+        function startAuto() {
+            stopAuto();
+            isAuto = true;
+            autoInterval = setInterval(nextTheme, 30000);
+        }
+        
+        function stopAuto() {
+            isAuto = false;
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+            }
+        }
+        
+        // Select change handler
+        if (themeSelect) {
+            themeSelect.addEventListener('change', function() {
+                const val = this.value;
+                if (val === 'auto') {
+                    localStorage.setItem('codesphere-site-theme', 'auto');
+                    startAuto();
+                } else {
+                    stopAuto();
+                    setTheme(val);
+                    localStorage.setItem('codesphere-site-theme', val);
+                }
+            });
+        }
+        
+        // Initialize
+        setTheme(themes[currentIndex]);
+        if (isAuto) startAuto();
+        
+        // Pause when hidden
+        document.addEventListener('visibilitychange', () => {
+            if (isAuto) {
+                document.hidden ? stopAuto() : startAuto();
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
 
-<!-- cache-bust: 20251218173502 -->
+<!-- cache-bust: 20251218180000 -->
