@@ -478,7 +478,7 @@
       z-index: 1;
       font-weight: 900;
       letter-spacing: 0.08em;
-      font-size: clamp(32px, 10vw, 48px);
+      font-size: clamp(36px, 12vw, 56px);
       background: linear-gradient(135deg, var(--text), var(--accent));
       -webkit-background-clip: text;
       background-clip: text;
@@ -490,9 +490,9 @@
     .left .mobile-hero .hero-icon {
       position: relative;
       z-index: 1;
-      width: clamp(80px, 22vw, 130px);
+      width: clamp(100px, 30vw, 180px);
       height: auto;
-      filter: drop-shadow(0 0 20px rgba(var(--accent-rgb), 0.4));
+      filter: drop-shadow(0 0 25px rgba(var(--accent-rgb), 0.5));
       animation: logoGlow 3s ease-in-out infinite;
     }
 
@@ -710,38 +710,54 @@
 
     /* Very short landscape: reduce inner insets so all contacts fit. */
     @media (max-height: 520px) and (orientation: landscape) {
+      .fit-stage { 
+        padding: 8px;
+        align-items: flex-start;
+      }
       .card {
         height: calc(100dvh - 16px);
         width: auto;
         aspect-ratio: 1050 / 600;
+        margin-top: 0;
       }
-      .inner { inset: 8px; gap: 6px; }
-      .divider { margin: 4px 0 6px; }
+      .inner { 
+        inset: 6px; 
+        gap: 6px;
+        align-items: stretch;
+      }
+      .divider { margin: 3px 0 4px; }
       .right { 
-        padding: 0 4px; 
-        gap: 2px;
+        padding: 2px 4px; 
+        gap: 1px;
         grid-template-rows: auto 1fr auto;
+        align-content: start;
       }
       header { margin-bottom: 0; }
-      .brand { font-size: clamp(12px, 2.2vh, 16px); margin-top: 0; }
-      .sub { font-size: clamp(8px, 1.5vh, 10px); margin-top: 2px; }
-      .people { gap: 2px; align-content: start; }
+      .brand { font-size: clamp(11px, 2vh, 14px); margin-top: 0; }
+      .sub { font-size: clamp(7px, 1.3vh, 9px); margin-top: 1px; }
+      .people { gap: 1px; align-content: start; }
       .person { margin-bottom: 0; }
-      .person .name { font-size: clamp(9px, 1.8vh, 12px); margin: 0; }
-      .person .title { font-size: clamp(7px, 1.3vh, 9px); margin: 2px 0 0; }
-      .person .phone { font-size: clamp(8px, 1.4vh, 10px); margin: 1px 0 0; }
-      .footer { gap: 3px; font-size: 8px; flex-wrap: wrap; }
-      .footer-actions { gap: 3px; }
-      .footer-row { gap: 3px; }
-      .footer a, .footer button { padding: 4px 5px; font-size: 8px; }
-      .lang { padding: 4px 5px; font-size: 8px; }
-      .build { font-size: 7px; }
+      .person .name { font-size: clamp(8px, 1.6vh, 11px); margin: 0; }
+      .person .title { font-size: clamp(6px, 1.1vh, 8px); margin: 1px 0 0; }
+      .person .phone { font-size: clamp(7px, 1.2vh, 9px); margin: 1px 0 0; }
+      .footer { gap: 2px; font-size: 7px; flex-wrap: wrap; }
+      .footer-actions { gap: 2px; }
+      .footer-row { gap: 2px; }
+      .footer a, .footer button { padding: 3px 4px; font-size: 7px; }
+      .lang { padding: 3px 4px; font-size: 7px; }
+      .build { font-size: 6px; }
       
-      /* Hero in landscape - bigger logo */
-      .left .mobile-hero { gap: 8px; min-height: 0; padding: 10px; }
-      .left .mobile-hero .hero-icon { width: clamp(50px, 15vh, 80px); }
-      .left .mobile-hero .hero-logo { font-size: clamp(16px, 4.5vh, 24px); }
-      .left .mobile-hero .hero-btn { padding: 6px 12px; font-size: 10px; }
+      /* Hero in landscape - centered with visible content */
+      .left { min-height: 0; }
+      .left .mobile-hero { 
+        gap: 6px; 
+        min-height: 0; 
+        padding: 8px;
+        justify-content: center;
+      }
+      .left .mobile-hero .hero-icon { width: clamp(40px, 12vh, 60px); }
+      .left .mobile-hero .hero-logo { font-size: clamp(14px, 4vh, 20px); }
+      .left .mobile-hero .hero-btn { padding: 5px 10px; font-size: 9px; }
     }
   </style>
 </head>
