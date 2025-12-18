@@ -27,16 +27,22 @@
                   radial-gradient(1100px 650px at 90% 85%, rgba(30, 58, 95, 0.20), transparent 60%),
                   var(--bg);
       color: var(--text);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .fit-stage {
+      position: fixed;
+      inset: 0;
+      padding: 24px;
       display: grid;
       place-items: center;
-      padding: 24px;
-      overflow-x: hidden;
     }
 
     /* Short viewports (e.g., phone landscape): avoid vertical centering.
        Keep aspect-ratio so the card doesn't collapse (its content is absolutely positioned). */
     @media (max-height: 520px) {
-      body { display: block; overflow-y: auto; padding: 12px; }
+      .fit-stage { padding: 12px; }
       .card {
         margin: 0 auto;
         width: min(100%, calc((100dvh - 24px) * 1.75));
@@ -56,6 +62,8 @@
       position: relative;
       overflow: hidden;
       min-height: 0;
+      transform: scale(var(--fitScale, 1));
+      transform-origin: center;
     }
 
     .card::before {
@@ -397,7 +405,7 @@
 
     /* Narrow screens: stack content vertically */
     @media (max-width: 720px) {
-      body { padding: 8px; }
+      .fit-stage { padding: 8px; }
       
       .card {
         aspect-ratio: auto;
@@ -460,7 +468,7 @@
 
     /* Wider mobiles / small tablets: keep two columns (no orientation dependency) */
     @media (min-width: 721px) and (max-width: 900px) {
-      body { padding: 10px; }
+      .fit-stage { padding: 10px; }
       .card {
         aspect-ratio: auto;
         border-radius: 18px;
@@ -492,7 +500,7 @@
 
     /* Mid landscape (900-1280px width) */
     @media (min-width: 901px) and (max-width: 1280px) and (orientation: landscape) {
-      body { padding: 14px; display: block; overflow-y: auto; }
+      .fit-stage { padding: 14px; }
       .card {
         width: clamp(760px, 90vw, 980px);
         margin: 0 auto;
@@ -517,7 +525,7 @@
 
     /* Force two columns even on small landscape widths */
     @media (max-width: 900px) and (orientation: landscape) {
-      body { padding: 12px; display: block; overflow-y: auto; }
+      .fit-stage { padding: 12px; }
       .card {
         width: clamp(620px, 88vw, 900px);
         margin: 0 auto;
@@ -569,79 +577,81 @@
   </style>
 </head>
 <body>
-  <main class="card" role="img" aria-label="Codesphere digitaalinen käyntikortti">
-    <div class="orientation-tip" id="orientationTip">Paras kokemus vaakana</div>
-    <div class="inner">
-      <section class="left">
-        <div class="browser" aria-label="Selaimen esikatselu: Codesphere-sivusto">
-          <div class="topbar">
-            <div class="dots" aria-hidden="true">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-            </div>
-            <div class="addr"><span>toeksy.github.io</span><span style="opacity:.7">/codesphere-website_1</span></div>
-            <select class="lang top" id="langTop" aria-label="Language"></select>
-          </div>
-          <div class="viewport">
-              <div class="preview" aria-label="Staattinen esikatselu">
-                <img src="../social/og.png" alt="Codesphere esikatselu" />
-                <iframe id="sitePreview" title="Codesphere sivuston esikatselu" loading="lazy"></iframe>
+  <div class="fit-stage" id="fitStage">
+    <main class="card" role="img" aria-label="Codesphere digitaalinen käyntikortti">
+      <div class="orientation-tip" id="orientationTip">Paras kokemus vaakana</div>
+      <div class="inner">
+        <section class="left">
+          <div class="browser" aria-label="Selaimen esikatselu: Codesphere-sivusto">
+            <div class="topbar">
+              <div class="dots" aria-hidden="true">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
               </div>
-              <div class="open-row">
-                <a class="open-site" href="https://toeksy.github.io/codesphere-website_1/" target="_blank" rel="noopener">Avaa sivusto</a>
-                <span class="open-hint">Staattinen esikatselu (mobiiliystävällinen)</span>
+              <div class="addr"><span>toeksy.github.io</span><span style="opacity:.7">/codesphere-website_1</span></div>
+              <select class="lang top" id="langTop" aria-label="Language"></select>
+            </div>
+            <div class="viewport">
+                <div class="preview" aria-label="Staattinen esikatselu">
+                  <img src="../social/og.png" alt="Codesphere esikatselu" />
+                  <iframe id="sitePreview" title="Codesphere sivuston esikatselu" loading="lazy"></iframe>
+                </div>
+                <div class="open-row">
+                  <a class="open-site" href="https://toeksy.github.io/codesphere-website_1/" target="_blank" rel="noopener">Avaa sivusto</a>
+                  <span class="open-hint">Staattinen esikatselu (mobiiliystävällinen)</span>
+                </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="right">
+          <header>
+            <a class="brand brand-link" href="https://toeksy.github.io/codesphere-website_1/" target="_blank" rel="noopener">CODESPHERE</a>
+            <div class="sub" data-i18n="subtitle">Yhteystiedot</div>
+            <div class="divider"></div>
+          </header>
+
+          <div class="people">
+            <div class="person">
+              <p class="name">Timo Aula</p>
+              <p class="title" data-i18n="timoTitle">Toimitusjohtaja, Böethius Oy • Ohjelmistokehityksen asiantuntija</p>
+              <p class="phone" data-phone="+358 45 7977 3133">puh +358 45 7977 3133</p>
+            </div>
+            <div class="person">
+              <p class="name">Matti Erholtz</p>
+              <p class="title" data-i18n="mattiTitle">Hallituksen jäsen • Markkinointijohtaja &amp; Tekoälyarkkitehti</p>
+              <p class="phone" data-phone="+358 40 193 2714">puh +358 40 193 2714</p>
+            </div>
+            <div class="person">
+              <p class="name">Mika Leppänen</p>
+              <p class="title" data-i18n="mikaTitle">Kyberturvallisuusasiantuntija • Asiantuntijatodistelu (tuomioistuimet)</p>
+              <p class="phone" data-phone="+358 46 558 1732">puh +358 46 558 1732</p>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div data-i18n="tagline">codesphere | globaalia ohjelmistokehitystä</div>
+            <div class="build" id="buildTag" aria-label="Build"></div>
+            <div class="footer-actions">
+              <div class="footer-row">
+                <select class="lang" id="lang" aria-label="Language"></select>
+                <a href="contacts.vcf" download data-i18n="downloadVcard">vCard</a>
+                <a href="business-card.png" target="_blank" rel="noopener" data-i18n="openPng">Avaa PNG-käyntikortti</a>
               </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="right">
-        <header>
-          <a class="brand brand-link" href="https://toeksy.github.io/codesphere-website_1/" target="_blank" rel="noopener">CODESPHERE</a>
-          <div class="sub" data-i18n="subtitle">Yhteystiedot</div>
-          <div class="divider"></div>
-        </header>
-
-        <div class="people">
-          <div class="person">
-            <p class="name">Timo Aula</p>
-            <p class="title" data-i18n="timoTitle">Toimitusjohtaja, Böethius Oy • Ohjelmistokehityksen asiantuntija</p>
-            <p class="phone" data-phone="+358 45 7977 3133">puh +358 45 7977 3133</p>
-          </div>
-          <div class="person">
-            <p class="name">Matti Erholtz</p>
-            <p class="title" data-i18n="mattiTitle">Hallituksen jäsen • Markkinointijohtaja &amp; Tekoälyarkkitehti</p>
-            <p class="phone" data-phone="+358 40 193 2714">puh +358 40 193 2714</p>
-          </div>
-          <div class="person">
-            <p class="name">Mika Leppänen</p>
-            <p class="title" data-i18n="mikaTitle">Kyberturvallisuusasiantuntija • Asiantuntijatodistelu (tuomioistuimet)</p>
-            <p class="phone" data-phone="+358 46 558 1732">puh +358 46 558 1732</p>
-          </div>
-        </div>
-
-        <div class="footer">
-          <div data-i18n="tagline">codesphere | globaalia ohjelmistokehitystä</div>
-          <div class="build" id="buildTag" aria-label="Build"></div>
-          <div class="footer-actions">
-            <div class="footer-row">
-              <select class="lang" id="lang" aria-label="Language"></select>
-              <a href="contacts.vcf" download data-i18n="downloadVcard">vCard</a>
-              <a href="business-card.png" target="_blank" rel="noopener" data-i18n="openPng">Avaa PNG-käyntikortti</a>
-            </div>
-            <div class="footer-row" aria-label="Share">
-              <span class="share-label" data-i18n="shareLabel">Jaa</span>
-              <a id="shareWhatsApp" href="#" target="_blank" rel="noopener" data-i18n="shareWhatsApp">WhatsApp</a>
-              <a id="shareFacebook" href="#" target="_blank" rel="noopener" data-i18n="shareFacebook">Facebook</a>
-              <button id="shareSignal" type="button" data-i18n="shareSignal">Signal</button>
-              <button id="shareInstagram" type="button" data-i18n="shareInstagram">Instagram</button>
+              <div class="footer-row" aria-label="Share">
+                <span class="share-label" data-i18n="shareLabel">Jaa</span>
+                <a id="shareWhatsApp" href="#" target="_blank" rel="noopener" data-i18n="shareWhatsApp">WhatsApp</a>
+                <a id="shareFacebook" href="#" target="_blank" rel="noopener" data-i18n="shareFacebook">Facebook</a>
+                <button id="shareSignal" type="button" data-i18n="shareSignal">Signal</button>
+                <button id="shareInstagram" type="button" data-i18n="shareInstagram">Instagram</button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
-  </main>
+        </section>
+      </div>
+    </main>
+  </div>
 
   <script>
     // Minimal i18n: auto language via ?lang=xx or navigator.language, with localStorage.
@@ -927,6 +937,7 @@
 
       setUrlLang(lang);
       updateShareLinks(lang);
+      window.requestFitCard && window.requestFitCard();
     }
 
     function initLangUI() {
@@ -986,6 +997,49 @@
     try {
       window.matchMedia('(min-width: 901px)').addEventListener('change', updateLivePreview);
     } catch {}
+
+    // Scale the whole card down to always fit viewport (prevents clipped contacts in short landscape).
+    const fitStage = document.getElementById('fitStage');
+    const card = document.querySelector('.card');
+    const rightCol = document.querySelector('.right');
+    let fitRaf = 0;
+
+    function fitNow() {
+      fitRaf = 0;
+      if (!fitStage || !card) return;
+
+      const availableW = fitStage.clientWidth;
+      const availableH = fitStage.clientHeight;
+      const cardW = card.offsetWidth || 1;
+      const cardH = card.offsetHeight || 1;
+
+      let scale = Math.min(1, availableW / cardW, availableH / cardH);
+
+      if (rightCol) {
+        const overflow = rightCol.scrollHeight - rightCol.clientHeight;
+        if (overflow > 1) {
+          scale = Math.min(scale, rightCol.clientHeight / rightCol.scrollHeight);
+        }
+      }
+
+      card.style.setProperty('--fitScale', String(scale));
+    }
+
+    function requestFit() {
+      if (fitRaf) return;
+      fitRaf = requestAnimationFrame(fitNow);
+    }
+
+    window.requestFitCard = requestFit;
+
+    requestFit();
+    window.addEventListener('resize', requestFit, { passive: true });
+    window.addEventListener('orientationchange', requestFit, { passive: true });
+    try {
+      new ResizeObserver(requestFit).observe(fitStage);
+      new ResizeObserver(requestFit).observe(card);
+    } catch {}
+    try { document.fonts && document.fonts.ready && document.fonts.ready.then(requestFit); } catch {}
   </script>
 </body>
 </html>
