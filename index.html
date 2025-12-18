@@ -76,7 +76,7 @@
         /* Ensure content layers sit above background/overlays/particles */
         body > :not(#bg-canvas):not(.bg-theme-layer):not(.particles-container) {
             position: relative;
-            z-index: 2;
+            z-index: 10;
         }
 
         /* ========================================
@@ -3388,20 +3388,20 @@
             
             switch(theme) {
                 case 'winter':
-                    for (let i = 0; i < 110; i++) setTimeout(createSnowflake, i * 70);
-                    particleIntervals.push(setInterval(createSnowflake, 280));
+                    for (let i = 0; i < 55; i++) setTimeout(createSnowflake, i * 90);
+                    particleIntervals.push(setInterval(createSnowflake, 560));
                     console.log('Winter snowflakes started');
                     setTimeout(() => console.log('flakes count', document.querySelectorAll('.snowflake').length), 1200);
                     break;
                 case 'nature':
-                    for (let i = 0; i < 40; i++) setTimeout(createLeaf, i * 160);
-                    particleIntervals.push(setInterval(createLeaf, 720));
+                    for (let i = 0; i < 20; i++) setTimeout(createLeaf, i * 240);
+                    particleIntervals.push(setInterval(createLeaf, 1440));
                     console.log('Nature leaves started');
                     setTimeout(() => console.log('leaf count', document.querySelectorAll('.leaf').length), 1200);
                     break;
                 case 'water':
-                    for (let i = 0; i < 45; i++) setTimeout(createBubble, i * 120);
-                    particleIntervals.push(setInterval(createBubble, 520));
+                    for (let i = 0; i < 22; i++) setTimeout(createBubble, i * 180);
+                    particleIntervals.push(setInterval(createBubble, 1040));
                     console.log('Water bubbles started');
                     setTimeout(() => console.log('bubble count', document.querySelectorAll('.bubble').length), 1200);
                     break;

@@ -1704,29 +1704,29 @@
         switch(theme) {
           case 'winter':
             // Create initial batch of snowflakes
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 6; i++) {
               setTimeout(createSnowflake, i * 150);
             }
             // Continue creating snowflakes
-            particleIntervals.push(setInterval(createSnowflake, 800));
+            particleIntervals.push(setInterval(createSnowflake, 1600));
             break;
             
           case 'nature':
             // Create initial batch of leaves
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 4; i++) {
               setTimeout(createLeaf, i * 200);
             }
             // Continue creating leaves
-            particleIntervals.push(setInterval(createLeaf, 1200));
+            particleIntervals.push(setInterval(createLeaf, 2400));
             break;
             
           case 'water':
             // Create initial batch of bubbles
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 5; i++) {
               setTimeout(createBubble, i * 180);
             }
             // Continue creating bubbles
-            particleIntervals.push(setInterval(createBubble, 900));
+            particleIntervals.push(setInterval(createBubble, 1800));
             break;
             
           default:
