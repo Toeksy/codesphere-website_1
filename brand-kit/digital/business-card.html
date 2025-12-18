@@ -414,7 +414,7 @@
     .orientation-tip { display: none !important; }
 
     /* Mobile hero: animated space background + logo (shown only on mobile) */
-    .mobile-hero {
+    .left .mobile-hero {
       display: none;
       flex-direction: column;
       align-items: center;
@@ -422,9 +422,11 @@
       gap: 24px;
       border-radius: 18px;
       background: var(--bg);
+      border: 1px solid rgba(var(--accent-rgb), 0.18);
       position: relative;
       overflow: hidden;
       min-height: 280px;
+      height: 100%;
     }
 
     .mobile-hero::before {
@@ -443,7 +445,7 @@
     }
 
     /* Animated stars */
-    .mobile-hero .stars {
+    .left .mobile-hero .stars {
       position: absolute;
       inset: 0;
       background-image:
@@ -465,7 +467,7 @@
       50% { opacity: 0.6; }
     }
 
-    .mobile-hero .hero-logo {
+    .left .mobile-hero .hero-logo {
       position: relative;
       z-index: 1;
       font-weight: 900;
@@ -484,7 +486,7 @@
       50% { filter: drop-shadow(0 0 35px rgba(var(--accent-rgb), 0.5)); }
     }
 
-    .mobile-hero .hero-btn {
+    .left .mobile-hero .hero-btn {
       position: relative;
       z-index: 1;
       display: inline-flex;
@@ -505,15 +507,15 @@
       box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.15);
     }
 
-    .mobile-hero .hero-btn:hover,
-    .mobile-hero .hero-btn:active {
+    .left .mobile-hero .hero-btn:hover,
+    .left .mobile-hero .hero-btn:active {
       background: rgba(var(--accent-rgb), 0.2);
       border-color: rgba(var(--accent-rgb), 0.6);
       box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.25);
       transform: scale(1.02);
     }
 
-    .mobile-hero .hero-btn svg {
+    .left .mobile-hero .hero-btn svg {
       width: 18px;
       height: 18px;
       fill: currentColor;
@@ -541,8 +543,8 @@
       }
       
       /* Hide browser, show mobile hero */
-      .browser { display: none !important; }
-      .mobile-hero { display: flex !important; }
+      .left .browser { display: none !important; }
+      .left .mobile-hero { display: flex !important; }
       
       .left { min-height: 220px; }
       .right { padding: 0; gap: 10px; }
@@ -592,6 +594,11 @@
     /* Wider mobiles / small tablets: keep two columns (no orientation dependency) */
     @media (min-width: 721px) and (max-width: 900px) {
       .fit-stage { padding: 10px; }
+      
+      /* Show mobile hero instead of browser on tablets */
+      .left .browser { display: none !important; }
+      .left .mobile-hero { display: flex !important; }
+      
       .card {
         aspect-ratio: auto;
         border-radius: 18px;
@@ -649,6 +656,11 @@
     /* Force two columns even on small landscape widths */
     @media (max-width: 900px) and (orientation: landscape) {
       .fit-stage { padding: 12px; }
+      
+      /* Show mobile hero instead of browser */
+      .left .browser { display: none !important; }
+      .left .mobile-hero { display: flex !important; }
+      
       .card {
         width: clamp(620px, 88vw, 900px);
         margin: 0 auto;
