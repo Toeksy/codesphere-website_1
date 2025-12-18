@@ -562,6 +562,24 @@
       .left .browser { display: none !important; }
       .left .mobile-hero { display: flex !important; }
       
+      /* Portrait: logo pienempi margin, CODESPHERE ylemmäksi, nappi pienempi */
+      .left .mobile-hero .hero-icon { 
+        margin-top: clamp(10px, 3vw, 20px); /* Pienempi margin ylhäällä */
+      }
+      .left .mobile-hero .hero-logo { 
+        margin-bottom: 8px; /* Pieni väli napin ja tekstin väliin */
+      }
+      .left .mobile-hero .hero-btn {
+        padding: 10px 20px; /* Pienempi nappi */
+        font-size: 13px;
+        border-radius: 12px;
+        gap: 6px;
+      }
+      .left .mobile-hero .hero-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+      
       .left { min-height: 200px; }
       .right { padding: 0 !important; gap: 6px !important; }
       
