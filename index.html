@@ -227,20 +227,49 @@
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            /* Repeating starfield layers so stars are always visible on any viewport */
+            /* Non-repeating star map (avoids visible tiling / symmetry) */
             background-image:
-                radial-gradient(rgba(255, 255, 255, 0.42) 1px, transparent 1.6px),
-                radial-gradient(rgba(180, 255, 255, 0.30) 1px, transparent 1.7px),
-                radial-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1.8px);
-            background-size:
-                220px 220px,
-                340px 340px,
-                520px 520px;
-            background-position:
-                0 0,
-                120px 80px,
-                200px 140px;
-            opacity: 0.95;
+                radial-gradient(1px 1px at 7% 12%, rgba(255,255,255,0.55), transparent 60%),
+                radial-gradient(1px 1px at 14% 72%, rgba(180,255,255,0.32), transparent 60%),
+                radial-gradient(2px 2px at 18% 22%, rgba(255,255,255,0.40), transparent 60%),
+                radial-gradient(1px 1px at 22% 46%, rgba(200,255,255,0.26), transparent 60%),
+                radial-gradient(1px 1px at 28% 10%, rgba(255,255,255,0.34), transparent 60%),
+                radial-gradient(2px 2px at 31% 78%, rgba(200,255,255,0.28), transparent 60%),
+                radial-gradient(1px 1px at 36% 34%, rgba(255,255,255,0.30), transparent 60%),
+                radial-gradient(1px 1px at 39% 58%, rgba(180,255,255,0.22), transparent 60%),
+                radial-gradient(2px 2px at 41% 18%, rgba(255,255,255,0.36), transparent 60%),
+                radial-gradient(1px 1px at 46% 86%, rgba(200,255,255,0.22), transparent 60%),
+                radial-gradient(1px 1px at 52% 26%, rgba(255,255,255,0.26), transparent 60%),
+                radial-gradient(2px 2px at 57% 44%, rgba(180,255,255,0.28), transparent 60%),
+                radial-gradient(1px 1px at 61% 12%, rgba(255,255,255,0.30), transparent 60%),
+                radial-gradient(1px 1px at 64% 66%, rgba(200,255,255,0.20), transparent 60%),
+                radial-gradient(2px 2px at 69% 30%, rgba(255,255,255,0.32), transparent 60%),
+                radial-gradient(1px 1px at 73% 52%, rgba(180,255,255,0.22), transparent 60%),
+                radial-gradient(1px 1px at 78% 18%, rgba(255,255,255,0.28), transparent 60%),
+                radial-gradient(2px 2px at 82% 80%, rgba(200,255,255,0.24), transparent 60%),
+                radial-gradient(1px 1px at 88% 40%, rgba(255,255,255,0.26), transparent 60%),
+                radial-gradient(1px 1px at 93% 14%, rgba(180,255,255,0.20), transparent 60%),
+                radial-gradient(1px 1px at 9% 38%, rgba(255,255,255,0.26), transparent 60%),
+                radial-gradient(2px 2px at 12% 54%, rgba(200,255,255,0.22), transparent 60%),
+                radial-gradient(1px 1px at 16% 90%, rgba(255,255,255,0.22), transparent 60%),
+                radial-gradient(1px 1px at 24% 64%, rgba(180,255,255,0.20), transparent 60%),
+                radial-gradient(2px 2px at 27% 36%, rgba(255,255,255,0.30), transparent 60%),
+                radial-gradient(1px 1px at 33% 6%, rgba(200,255,255,0.18), transparent 60%),
+                radial-gradient(1px 1px at 35% 92%, rgba(255,255,255,0.18), transparent 60%),
+                radial-gradient(2px 2px at 43% 72%, rgba(180,255,255,0.20), transparent 60%),
+                radial-gradient(1px 1px at 47% 12%, rgba(255,255,255,0.22), transparent 60%),
+                radial-gradient(1px 1px at 49% 48%, rgba(200,255,255,0.18), transparent 60%),
+                radial-gradient(2px 2px at 54% 88%, rgba(255,255,255,0.20), transparent 60%),
+                radial-gradient(1px 1px at 58% 58%, rgba(180,255,255,0.18), transparent 60%),
+                radial-gradient(1px 1px at 63% 40%, rgba(255,255,255,0.20), transparent 60%),
+                radial-gradient(2px 2px at 67% 8%, rgba(200,255,255,0.18), transparent 60%),
+                radial-gradient(1px 1px at 71% 70%, rgba(255,255,255,0.18), transparent 60%),
+                radial-gradient(1px 1px at 76% 34%, rgba(180,255,255,0.16), transparent 60%),
+                radial-gradient(2px 2px at 80% 56%, rgba(255,255,255,0.20), transparent 60%),
+                radial-gradient(1px 1px at 85% 26%, rgba(200,255,255,0.16), transparent 60%),
+                radial-gradient(1px 1px at 90% 92%, rgba(255,255,255,0.16), transparent 60%),
+                radial-gradient(2px 2px at 95% 64%, rgba(180,255,255,0.18), transparent 60%);
+            opacity: 0.86;
             animation: spaceTwinkle 4.8s ease-in-out infinite;
             filter: drop-shadow(0 0 10px rgba(120, 220, 255, 0.16));
         }
