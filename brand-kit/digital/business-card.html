@@ -1665,7 +1665,7 @@
         el.className = 'snowflake';
         el.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
         el.style.left = Math.random() * 100 + '%';
-        el.style.fontSize = (0.6 + Math.random() * 0.8) + 'em';
+        el.style.fontSize = (0.5 + Math.random() * 0.6) + 'em';
         el.style.animationDuration = (8 + Math.random() * 6) + 's';
         el.style.animationDelay = Math.random() * 2 + 's';
         particlesContainer.appendChild(el);
@@ -1677,7 +1677,7 @@
         el.className = 'leaf';
         el.textContent = leaves[Math.floor(Math.random() * leaves.length)];
         el.style.left = Math.random() * 100 + '%';
-        el.style.fontSize = (0.8 + Math.random() * 0.6) + 'em';
+        el.style.fontSize = (0.65 + Math.random() * 0.45) + 'em';
         el.style.animationDuration = (10 + Math.random() * 8) + 's';
         el.style.animationDelay = Math.random() * 2 + 's';
         particlesContainer.appendChild(el);
@@ -1687,7 +1687,7 @@
       function createBubble() {
         const el = document.createElement('div');
         el.className = 'bubble';
-        const size = 6 + Math.random() * 14;
+        const size = 5 + Math.random() * 10;
         el.style.width = size + 'px';
         el.style.height = size + 'px';
         el.style.left = Math.random() * 100 + '%';
@@ -1704,29 +1704,29 @@
         switch(theme) {
           case 'winter':
             // Create initial batch of snowflakes
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 12; i++) {
               setTimeout(createSnowflake, i * 150);
             }
             // Continue creating snowflakes
-            particleIntervals.push(setInterval(createSnowflake, 400));
+            particleIntervals.push(setInterval(createSnowflake, 800));
             break;
             
           case 'nature':
             // Create initial batch of leaves
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 8; i++) {
               setTimeout(createLeaf, i * 200);
             }
             // Continue creating leaves
-            particleIntervals.push(setInterval(createLeaf, 600));
+            particleIntervals.push(setInterval(createLeaf, 1200));
             break;
             
           case 'water':
             // Create initial batch of bubbles
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 10; i++) {
               setTimeout(createBubble, i * 180);
             }
             // Continue creating bubbles
-            particleIntervals.push(setInterval(createBubble, 450));
+            particleIntervals.push(setInterval(createBubble, 900));
             break;
             
           default:
