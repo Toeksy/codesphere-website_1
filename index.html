@@ -213,10 +213,11 @@
         
         .bg-space-overlay {
             /* Slight transparency lets the canvas geometry breathe underneath */
-            background-color: rgba(10, 15, 26, 0.92);
+            background-color: rgba(10, 15, 26, 0.82);
             background-image:
-                radial-gradient(1200px 700px at 15% 20%, rgba(0, 255, 255, 0.12), transparent 55%),
-                radial-gradient(1100px 650px at 90% 85%, rgba(30, 58, 95, 0.20), transparent 60%);
+                radial-gradient(1200px 700px at 15% 20%, rgba(0, 255, 255, 0.18), transparent 55%),
+                radial-gradient(1100px 650px at 90% 85%, rgba(30, 58, 95, 0.26), transparent 60%),
+                radial-gradient(900px 520px at 55% 35%, rgba(120, 220, 255, 0.10), transparent 62%);
             overflow: hidden;
         }
 
@@ -268,15 +269,15 @@
                 radial-gradient(circle at 63% 90%, rgba(180,255,255,0.16) 0 0.8px, transparent 2.3px),
                 radial-gradient(circle at 71% 70%, rgba(255,255,255,0.18) 0 0.85px, transparent 2.4px),
                 radial-gradient(circle at 90% 92%, rgba(255,255,255,0.16) 0 0.8px, transparent 2.2px);
-            opacity: 0.9;
+            opacity: 0.95;
             animation: spaceTwinkle 4.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(120, 220, 255, 0.16));
+            filter: drop-shadow(0 0 12px rgba(120, 220, 255, 0.22));
         }
 
         .bg-space-overlay::before {
             content: "";
             position: absolute;
-            z-index: 2;
+            z-index: 3;
             width: 52px;
             height: 52px;
             left: -20vw;
@@ -292,9 +293,85 @@
             animation: logoFlyby 16s linear infinite;
         }
 
+        .bg-space-overlay .space-satellite {
+            position: absolute;
+            z-index: 2;
+            width: 56px;
+            height: 18px;
+            pointer-events: none;
+            opacity: 0.18;
+            border-radius: 5px;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.20) 0%, rgba(120,220,255,0.14) 55%, rgba(255,255,255,0.18) 100%);
+            border: 1px solid rgba(120, 220, 255, 0.12);
+            filter: drop-shadow(0 0 14px rgba(120, 220, 255, 0.18));
+            transform: translate3d(-30vw, 0, 0) rotate(10deg);
+        }
+
+        .bg-space-overlay .space-satellite::before,
+        .bg-space-overlay .space-satellite::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            width: 22px;
+            height: 14px;
+            border-radius: 3px;
+            background:
+                linear-gradient(180deg, rgba(0,255,255,0.14) 0%, rgba(30,58,95,0.22) 100%);
+            border: 1px solid rgba(120, 220, 255, 0.10);
+        }
+        .bg-space-overlay .space-satellite::before { left: -28px; }
+        .bg-space-overlay .space-satellite::after { right: -28px; }
+
+        .bg-space-overlay .space-satellite.sat-1 {
+            top: 22vh;
+            animation: satelliteDrift1 84s linear infinite;
+        }
+
+        .bg-space-overlay .space-satellite.sat-2 {
+            top: 58vh;
+            width: 62px;
+            height: 20px;
+            opacity: 0.14;
+            transform: translate3d(-35vw, 0, 0) rotate(-8deg) scale(0.95);
+            animation: satelliteDrift2 108s linear infinite;
+            animation-delay: -36s;
+        }
+        .bg-space-overlay .space-satellite.sat-2::before,
+        .bg-space-overlay .space-satellite.sat-2::after {
+            top: 3px;
+            height: 14px;
+        }
+
+        @keyframes satelliteDrift1 {
+            0% { transform: translate3d(-35vw, -6vh, 0) rotate(10deg); opacity: 0; }
+            10% { opacity: 0.18; }
+            90% { opacity: 0.18; }
+            100% { transform: translate3d(145vw, 18vh, 0) rotate(14deg); opacity: 0; }
+        }
+
+        @keyframes satelliteDrift2 {
+            0% { transform: translate3d(-40vw, 8vh, 0) rotate(-8deg) scale(0.95); opacity: 0; }
+            12% { opacity: 0.14; }
+            88% { opacity: 0.14; }
+            100% { transform: translate3d(150vw, -10vh, 0) rotate(-4deg) scale(0.98); opacity: 0; }
+        }
+
         @keyframes spaceTwinkle {
-            0%, 100% { opacity: 0.45; transform: translateY(0); }
-            50% { opacity: 0.75; transform: translateY(-2px); }
+            0%, 100% { opacity: 0.55; transform: translateY(0); }
+            50% { opacity: 0.9; transform: translateY(-2px); }
+        }
+
+        @media (max-width: 768px) {
+            .bg-space-overlay .space-satellite { opacity: 0.12; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bg-space-overlay::after,
+            .bg-space-overlay::before,
+            .bg-space-overlay .space-satellite {
+                animation: none !important;
+            }
         }
 
         @keyframes logoFlyby {
@@ -1655,7 +1732,10 @@
     <canvas id="bg-canvas"></canvas>
     
     <!-- Theme background overlays -->
-    <div class="bg-theme-layer bg-space-overlay active" id="bgSpaceOverlay"></div>
+    <div class="bg-theme-layer bg-space-overlay active" id="bgSpaceOverlay">
+        <div class="space-satellite sat-1" aria-hidden="true"></div>
+        <div class="space-satellite sat-2" aria-hidden="true"></div>
+    </div>
     <div class="bg-theme-layer bg-winter-overlay" id="bgWinterOverlay"></div>
     <div class="bg-theme-layer bg-nature-overlay" id="bgNatureOverlay"></div>
     <div class="bg-theme-layer bg-water-overlay" id="bgWaterOverlay"></div>
